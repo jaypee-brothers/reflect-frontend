@@ -332,7 +332,7 @@ const InstituteLevelEngagement = ({
       </div>
 
       {/* Engagement Categories */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
+      {/* <div className="mt-6 pt-6 border-t border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Engagement Categories</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-green-50 rounded-md p-4 text-center">
@@ -371,10 +371,10 @@ const InstituteLevelEngagement = ({
             <div className="text-xs text-red-600">&lt;40% usage</div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Insights and Recommendations */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
+      {/* <div className="mt-6 pt-6 border-t border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Insights & Recommendations</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-emerald-50 rounded-md p-4">
@@ -411,18 +411,18 @@ const InstituteLevelEngagement = ({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Summary Statistics */}
       <div className="mt-6 pt-6 border-t border-gray-200">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-emerald-600">
               {instituteData.length + lowEngagementData.length}
             </div>
             <div className="text-sm text-gray-600">Total Colleges</div>
           </div>
-          <div className="text-center">
+          {/* <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">
               {Math.round(
                 [...instituteData, ...lowEngagementData].reduce(
@@ -434,7 +434,7 @@ const InstituteLevelEngagement = ({
               %
             </div>
             <div className="text-sm text-gray-600">Avg. Engagement</div>
-          </div>
+          </div> */}
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">
               ₹

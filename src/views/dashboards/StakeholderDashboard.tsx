@@ -78,12 +78,12 @@ const StakeholderDashboard = () => {
               <div className="flex gap-2 rounded-md mt-4 bg-white/20 ">
                 {[
                   { id: 'overview', label: 'Overview', icon: 'solar:chart-2-bold-duotone' },
-                  {
-                    id: 'revenue',
-                    label: 'Revenue',
-                    icon: 'solar:dollar-minimalistic-bold-duotone',
-                  },
-                  { id: 'courses', label: 'Courses', icon: 'solar:book-bold-duotone' },
+                  //   {
+                  //     id: 'revenue',
+                  //     label: 'Revenue',
+                  //     icon: 'solar:dollar-minimalistic-bold-duotone',
+                  //   },
+                  //   { id: 'courses', label: 'Courses', icon: 'solar:book-bold-duotone' },
                   { id: 'colleges', label: 'Colleges', icon: 'solar:buildings-3-bold-duotone' },
                   { id: 'geography', label: 'Geography', icon: 'solar:map-point-bold-duotone' },
                   {
@@ -146,8 +146,7 @@ const StakeholderDashboard = () => {
           />
           {/* </div> */}
 
-          {/* Institute Engagement */}
-          <InstituteLevelEngagement
+          <CourseRevenueTable
             timeRange={selectedTimeRange}
             selectedSubject={selectedSubject}
             selectedZone={selectedZone}

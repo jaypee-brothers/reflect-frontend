@@ -1,10 +1,8 @@
-
-
-import Logo from "/src/assets/images/logos/logo.svg";
-import { Link } from "react-router";
+import Logo from '/src/assets/images/logos/reflect.png';
+import { Link } from 'react-router';
 const FullLogo = () => {
   return (
-    <Link to={"/"}>
+    <Link to={'/'}>
       <img src={Logo} alt="logo" className="block" />
     </Link>
   );

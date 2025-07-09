@@ -282,7 +282,7 @@ const CollegeEngagementAnalytics = ({
       </div>
 
       {/* Detailed Engagement Table */}
-      <div>
+      {/* <div>
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Detailed Engagement Metrics</h3>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-200 rounded-lg">
@@ -352,7 +352,7 @@ const CollegeEngagementAnalytics = ({
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Chart from 'react-apexcharts';
+// import Chart from 'react-apexcharts';
 import { MEDICAL_SUBJECTS, generateInstituteData } from '../../utils/constants';
 
 interface CollegeSubjectPerformanceProps {
@@ -71,94 +71,94 @@ const CollegeSubjectPerformance = ({
   ];
 
   // Aggregate data for chart
-  const getChartData = () => {
-    const dataToShow =
-      selectedCollege === 'all'
-        ? collegeSubjectData
-        : collegeSubjectData.filter((c) => c.name === selectedCollege);
+  //   const getChartData = () => {
+  //     const dataToShow =
+  //       selectedCollege === 'all'
+  //         ? collegeSubjectData
+  //         : collegeSubjectData.filter((c) => c.name === selectedCollege);
 
-    if (dataToShow.length === 0) return { series: [], options: {} };
+  //     if (dataToShow.length === 0) return { series: [], options: {} };
 
-    // Aggregate by subject across selected colleges
-    const subjectAggregates = new Map();
+  //     // Aggregate by subject across selected colleges
+  //     const subjectAggregates = new Map();
 
-    dataToShow.forEach((college) => {
-      college.subjects.forEach((subject) => {
-        if (subjectAggregates.has(subject.name)) {
-          const existing = subjectAggregates.get(subject.name);
-          existing.enrollments += subject.enrollments;
-          existing.revenue += subject.revenue;
-          existing.avgScore = (existing.avgScore + subject.avgScore) / 2;
-          existing.completionRate = (existing.completionRate + subject.completionRate) / 2;
-        } else {
-          subjectAggregates.set(subject.name, { ...subject });
-        }
-      });
-    });
+  //     dataToShow.forEach((college) => {
+  //       college.subjects.forEach((subject) => {
+  //         if (subjectAggregates.has(subject.name)) {
+  //           const existing = subjectAggregates.get(subject.name);
+  //           existing.enrollments += subject.enrollments;
+  //           existing.revenue += subject.revenue;
+  //           existing.avgScore = (existing.avgScore + subject.avgScore) / 2;
+  //           existing.completionRate = (existing.completionRate + subject.completionRate) / 2;
+  //         } else {
+  //           subjectAggregates.set(subject.name, { ...subject });
+  //         }
+  //       });
+  //     });
 
-    const aggregatedData = Array.from(subjectAggregates.values());
+  //     const aggregatedData = Array.from(subjectAggregates.values());
 
-    return {
-      series: [
-        {
-          name: 'Enrollments',
-          type: 'column',
-          data: aggregatedData.map((d) => d.enrollments),
-        },
-        {
-          name: 'Avg Score (%)',
-          type: 'line',
-          data: aggregatedData.map((d) => d.avgScore),
-        },
-        {
-          name: 'Completion Rate (%)',
-          type: 'line',
-          data: aggregatedData.map((d) => d.completionRate),
-        },
-      ],
-      options: {
-        chart: {
-          height: 350,
-          type: 'line' as const,
-          toolbar: { show: true },
-        },
-        stroke: {
-          width: [0, 3, 3],
-          curve: 'smooth' as const,
-        },
-        plotOptions: {
-          bar: {
-            columnWidth: '50%',
-          },
-        },
-        colors: ['#10b981', '#3b82f6', '#8b5cf6'],
-        xaxis: {
-          categories: aggregatedData.map((d) => d.name.split(' ')[0]),
-          title: { text: 'Medical Subjects' },
-        },
-        yaxis: [
-          {
-            title: { text: 'Number of Enrollments' },
-            seriesName: 'Enrollments',
-          },
-          {
-            opposite: true,
-            title: { text: 'Percentage (%)' },
-            seriesName: 'Avg Score (%)',
-          },
-        ],
-        legend: {
-          position: 'top' as const,
-        },
-        dataLabels: {
-          enabled: true,
-          enabledOnSeries: [1, 2],
-        },
-      },
-    };
-  };
+  //     return {
+  //       series: [
+  //         {
+  //           name: 'Enrollments',
+  //           type: 'column',
+  //           data: aggregatedData.map((d) => d.enrollments),
+  //         },
+  //         {
+  //           name: 'Avg Score (%)',
+  //           type: 'line',
+  //           data: aggregatedData.map((d) => d.avgScore),
+  //         },
+  //         {
+  //           name: 'Completion Rate (%)',
+  //           type: 'line',
+  //           data: aggregatedData.map((d) => d.completionRate),
+  //         },
+  //       ],
+  //       options: {
+  //         chart: {
+  //           height: 350,
+  //           type: 'line' as const,
+  //           toolbar: { show: true },
+  //         },
+  //         stroke: {
+  //           width: [0, 3, 3],
+  //           curve: 'smooth' as const,
+  //         },
+  //         plotOptions: {
+  //           bar: {
+  //             columnWidth: '50%',
+  //           },
+  //         },
+  //         colors: ['#10b981', '#3b82f6', '#8b5cf6'],
+  //         xaxis: {
+  //           categories: aggregatedData.map((d) => d.name.split(' ')[0]),
+  //           title: { text: 'Medical Subjects' },
+  //         },
+  //         yaxis: [
+  //           {
+  //             title: { text: 'Number of Enrollments' },
+  //             seriesName: 'Enrollments',
+  //           },
+  //           {
+  //             opposite: true,
+  //             title: { text: 'Percentage (%)' },
+  //             seriesName: 'Avg Score (%)',
+  //           },
+  //         ],
+  //         legend: {
+  //           position: 'top' as const,
+  //         },
+  //         dataLabels: {
+  //           enabled: true,
+  //           enabledOnSeries: [1, 2],
+  //         },
+  //       },
+  //     };
+  //   };
 
-  const chartData = getChartData();
+  //   const chartData = getChartData();
 
   // Get top performing subjects
   const getTopSubjects = () => {
@@ -202,9 +202,9 @@ const CollegeSubjectPerformance = ({
       </div>
 
       {/* Performance Chart */}
-      <div className="bg-gray-50 rounded-lg p-4 mb-6">
+      {/* <div className="bg-gray-50 rounded-lg p-4 mb-6">
         <Chart options={chartData.options} series={chartData.series} type="line" height={350} />
-      </div>
+      </div> */}
 
       {/* Top Performing Subjects */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
