@@ -6,7 +6,6 @@ import {
   SUBJECT_CATEGORIES,
   formatCurrency,
   filterDataBySubject,
-  filterDataByZone,
 } from '../../utils/constants';
 
 interface CoursePerformanceProps {
@@ -15,11 +14,7 @@ interface CoursePerformanceProps {
   selectedZone?: string;
 }
 
-const CoursePerformance = ({
-  timeRange,
-  selectedSubject = 'all',
-  selectedZone = 'all',
-}: CoursePerformanceProps) => {
+const CoursePerformance = ({ timeRange, selectedSubject = 'all' }: CoursePerformanceProps) => {
   const allCourseData = generateCourseData(timeRange);
   const allSubjectData = generateSubjectData(timeRange);
 

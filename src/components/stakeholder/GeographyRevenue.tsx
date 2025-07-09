@@ -17,25 +17,25 @@ const GeographyRevenue = ({
 
   // Generate dynamic data based on filters
   const allInstituteData = generateInstituteData(timeRange);
-  
+
   const filteredData = useMemo(() => {
     let data = allInstituteData;
-    
+
     // Apply zone filter
     if (selectedZone !== 'all') {
-      data = data.filter(institute => institute.zone === selectedZone);
+      data = data.filter((institute) => institute.zone === selectedZone);
     }
-    
+
     // Apply subject filter by adjusting revenue
     let subjectMultiplier = 1;
     if (selectedSubject !== 'all') {
       const subjectIndex = MEDICAL_SUBJECTS.indexOf(selectedSubject);
       subjectMultiplier = subjectIndex !== -1 ? (20 - subjectIndex) / 20 : 0.5;
     }
-    
-    return data.map(institute => ({
+
+    return data.map((institute) => ({
       ...institute,
-      revenue: Math.floor(institute.revenue * subjectMultiplier)
+      revenue: Math.floor(institute.revenue * subjectMultiplier),
     }));
   }, [allInstituteData, selectedZone, selectedSubject]);
 
@@ -51,34 +51,36 @@ const GeographyRevenue = ({
     { name: 'Rajasthan', revenue: 8500000, colleges: 68, growth: '+11.8%', intensity: 48 },
     { name: 'Andhra Pradesh', revenue: 7800000, colleges: 62, growth: '+13.2%', intensity: 44 },
     { name: 'Telangana', revenue: 7200000, colleges: 55, growth: '+19.5%', intensity: 40 },
-  ].map(state => {
-    // Apply filters to state data
-    let multiplier = 1;
-    if (selectedSubject !== 'all') {
-      const subjectIndex = MEDICAL_SUBJECTS.indexOf(selectedSubject);
-      multiplier *= subjectIndex !== -1 ? (20 - subjectIndex) / 20 : 0.5;
-    }
-    if (selectedZone !== 'all') {
-      // Filter states based on zone (simplified mapping)
-      const zoneStates = {
-        'North Zone': ['Delhi', 'Uttar Pradesh', 'Rajasthan'],
-        'South Zone': ['Karnataka', 'Tamil Nadu', 'Andhra Pradesh', 'Telangana'],
-        'West Zone': ['Maharashtra', 'Gujarat'],
-        'East Zone': ['West Bengal'],
-        'Central Zone': []
-      };
-      const zoneStatesList = zoneStates[selectedZone as keyof typeof zoneStates] || [];
-      if (!zoneStatesList.includes(state.name)) {
-        multiplier = 0;
+  ]
+    .map((state) => {
+      // Apply filters to state data
+      let multiplier = 1;
+      if (selectedSubject !== 'all') {
+        const subjectIndex = MEDICAL_SUBJECTS.indexOf(selectedSubject);
+        multiplier *= subjectIndex !== -1 ? (20 - subjectIndex) / 20 : 0.5;
       }
-    }
-    
-    return {
-      ...state,
-      revenue: Math.floor(state.revenue * multiplier),
-      colleges: Math.floor(state.colleges * multiplier)
-    };
-  }).filter(state => state.revenue > 0);
+      if (selectedZone !== 'all') {
+        // Filter states based on zone (simplified mapping)
+        const zoneStates: { [key: string]: string[] } = {
+          'North Zone': ['Delhi', 'Uttar Pradesh', 'Rajasthan'],
+          'South Zone': ['Karnataka', 'Tamil Nadu', 'Andhra Pradesh', 'Telangana'],
+          'West Zone': ['Maharashtra', 'Gujarat'],
+          'East Zone': ['West Bengal'],
+          'Central Zone': ['Madhya Pradesh', 'Chhattisgarh'],
+        };
+        const zoneStatesList = zoneStates[selectedZone] || [];
+        if (!zoneStatesList.includes(state.name)) {
+          multiplier = 0;
+        }
+      }
+
+      return {
+        ...state,
+        revenue: Math.floor(state.revenue * multiplier),
+        colleges: Math.floor(state.colleges * multiplier),
+      };
+    })
+    .filter((state) => state.revenue > 0);
 
   const cityData = [
     { name: 'Mumbai', revenue: 8200000, colleges: 45, growth: '+25.2%' },
@@ -95,7 +97,7 @@ const GeographyRevenue = ({
     name: institute.name,
     revenue: institute.revenue,
     students: institute.students,
-    growth: `+${(15 + Math.random() * 15).toFixed(1)}%`
+    growth: `+${(15 + Math.random() * 15).toFixed(1)}%`,
   }));
 
   const getIntensityColor = (intensity: number) => {
@@ -214,9 +216,7 @@ const GeographyRevenue = ({
                 </div>
 
                 <div className="text-right">
-                  <div className="font-bold text-gray-900">
-                    {formatCurrency(item.revenue)}
-                  </div>
+                  <div className="font-bold text-gray-900">{formatCurrency(item.revenue)}</div>
                   <div className={`text-sm font-medium ${getGrowthColor(item.growth)}`}>
                     {item.growth}
                   </div>

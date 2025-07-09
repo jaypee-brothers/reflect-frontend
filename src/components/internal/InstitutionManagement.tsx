@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import {
   generateInstituteData,
-  TOP_MEDICAL_COLLEGES,
   formatCurrency,
   GEOGRAPHIC_ZONES,
   filterDataByZone,
@@ -26,8 +25,18 @@ const InstitutionManagement = ({
     if (selectedZone !== 'all') {
       data = filterDataByZone(data, selectedZone);
     }
+
+    // Apply subject filter by adjusting revenue
+    if (selectedSubject !== 'all') {
+      const subjectMultiplier = 0.7; // Subject-specific impact
+      data = data.map((institute) => ({
+        ...institute,
+        revenue: Math.floor(institute.revenue * subjectMultiplier),
+      }));
+    }
+
     return data;
-  }, [allInstituteData, selectedZone]);
+  }, [allInstituteData, selectedZone, selectedSubject]);
 
   const institutions = filteredInstituteData
     .map((institute, index) => ({

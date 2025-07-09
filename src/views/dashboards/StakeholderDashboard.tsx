@@ -207,11 +207,11 @@ const StakeholderDashboard = () => {
             selectedSubject={selectedSubject}
             selectedZone={selectedZone}
           />
-          {/* <CollegeSubjectPerformance
+          <CollegeSubjectPerformance
             timeRange={selectedTimeRange}
             selectedSubject={selectedSubject}
             selectedZone={selectedZone}
-          /> */}
+          />
           <InstituteLevelEngagement
             timeRange={selectedTimeRange}
             selectedSubject={selectedSubject}

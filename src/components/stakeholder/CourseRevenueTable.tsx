@@ -21,31 +21,37 @@ const CourseRevenueTable = ({
   const courseData = MEDICAL_SUBJECTS.map((subject, index) => {
     const baseRevenue = 3000000 + index * 500000;
     const baseEnrollments = 100 + index * 20;
-    const timeMultiplier = timeRange === '1week' ? 0.25 : timeRange === '1month' ? 1 : timeRange === '3months' ? 3 : 12;
-    
+    const timeMultiplier =
+      timeRange === '1week' ? 0.25 : timeRange === '1month' ? 1 : timeRange === '3months' ? 3 : 12;
+
     // Apply filters
     let subjectMultiplier = 1;
     if (selectedSubject !== 'all' && selectedSubject !== subject) {
       subjectMultiplier = 0; // Hide if not selected
     }
-    
+
     let zoneMultiplier = selectedZone !== 'all' ? 0.4 : 1;
-    
+
     const revenue = Math.floor(baseRevenue * timeMultiplier * subjectMultiplier * zoneMultiplier);
-    const enrollments = Math.floor(baseEnrollments * timeMultiplier * subjectMultiplier * zoneMultiplier);
-    
+    const enrollments = Math.floor(
+      baseEnrollments * timeMultiplier * subjectMultiplier * zoneMultiplier,
+    );
+
     if (subjectMultiplier === 0) return null; // Skip if filtered out
-    
+
     return {
       id: index + 1,
       course: `${subject} - Complete Course`,
-      category: index < 5 ? 'Core Medical Subject' : index < 10 ? 'Clinical Subject' : 'Specialty Subject',
+      category:
+        index < 5 ? 'Core Medical Subject' : index < 10 ? 'Clinical Subject' : 'Specialty Subject',
       revenue,
       enrollments,
       avgPrice: revenue > 0 ? Math.floor(revenue / enrollments) : 0,
       growth: `+${(12 + Math.random() * 20).toFixed(1)}%`,
       status: 'Active',
-      lastUpdated: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      lastUpdated: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split('T')[0],
     };
   }).filter(Boolean) as any[]; // Remove null entries
 

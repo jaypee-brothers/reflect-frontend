@@ -190,7 +190,7 @@ export const SALES_AGENTS = [
 ];
 
 // Generate sample data based on filters
-export const generateSubjectData = (timeRange: string, filters?: any) => {
+export const generateSubjectData = (timeRange: string) => {
   const multiplier = getTimeRangeMultiplier(timeRange);
 
   return MEDICAL_SUBJECTS.map((subject, index) => {
@@ -216,7 +216,7 @@ export const generateSubjectData = (timeRange: string, filters?: any) => {
   });
 };
 
-export const generateCourseData = (timeRange: string, filters?: any) => {
+export const generateCourseData = (timeRange: string) => {
   const multiplier = getTimeRangeMultiplier(timeRange);
 
   return COURSE_TYPES.map((courseType, index) => {
@@ -267,7 +267,7 @@ export const generateGeographyData = (
   });
 };
 
-export const generateSalesAgentData = (timeRange: string, filters?: any) => {
+export const generateSalesAgentData = (timeRange: string) => {
   const multiplier = getTimeRangeMultiplier(timeRange);
 
   return SALES_AGENTS.map((agent, index) => {
@@ -299,7 +299,7 @@ export const generateSalesAgentData = (timeRange: string, filters?: any) => {
   });
 };
 
-export const generateInstituteData = (timeRange: string, filters?: any) => {
+export const generateInstituteData = (timeRange: string) => {
   const multiplier = getTimeRangeMultiplier(timeRange);
 
   return TOP_MEDICAL_COLLEGES.map((college, index) => {

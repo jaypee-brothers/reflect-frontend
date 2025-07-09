@@ -51,6 +51,11 @@ const YearOnYearComparison = ({
       baseMultiplier *= 0.4; // Zone-specific data
     }
 
+    // Apply time range multiplier
+    const timeMultiplier =
+      timeRange === '1week' ? 0.25 : timeRange === '1month' ? 1 : timeRange === '3months' ? 3 : 12;
+    baseMultiplier *= timeMultiplier;
+
     const baseCurrent = [
       2800000, 3200000, 2900000, 3500000, 3800000, 3400000, 4200000, 4000000, 4500000, 4300000,
       4800000, 4600000,

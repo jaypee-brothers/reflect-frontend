@@ -19,6 +19,9 @@ const ContentAnalytics = ({
   const allSubjectData = generateSubjectData(timeRange);
   const multiplier = getTimeRangeMultiplier(timeRange);
 
+  // Apply zone multiplier for regional content variations
+  const zoneMultiplier = selectedZone !== 'all' ? 0.6 : 1;
+
   // Filter data based on selected filters
   const filteredSubjectData = useMemo(() => {
     let data = allSubjectData;
@@ -28,7 +31,7 @@ const ContentAnalytics = ({
     return data;
   }, [allSubjectData, selectedSubject]);
 
-  const totalContent = Math.floor(1400 * multiplier);
+  const totalContent = Math.floor(1400 * multiplier * zoneMultiplier);
   const totalVideos = Math.floor(totalContent * 0.6);
   const totalQuestions = Math.floor(totalContent * 8.5);
   const totalDocuments = Math.floor(totalContent * 0.4);

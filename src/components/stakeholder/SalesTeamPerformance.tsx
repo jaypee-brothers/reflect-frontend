@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Icon } from '@iconify/react';
+import { MEDICAL_SUBJECTS } from '../../utils/constants';
 
 interface SalesTeamPerformanceProps {
   timeRange: string;
@@ -16,8 +17,8 @@ const SalesTeamPerformance = ({
   const [sortBy, setSortBy] = useState('revenue');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
-  // Sample sales team data
-  const salesTeamData = [
+  // Generate dynamic sales team data based on filters
+  const allSalesTeamData = [
     {
       id: 1,
       name: 'Rajesh Kumar',
@@ -31,7 +32,7 @@ const SalesTeamPerformance = ({
       growth: '+28.5%',
       status: 'Active',
       lastActivity: '2024-01-08',
-      topCourse: 'NEET Foundation',
+      topCourse: MEDICAL_SUBJECTS[0],
     },
     {
       id: 2,
@@ -46,7 +47,7 @@ const SalesTeamPerformance = ({
       growth: '+24.2%',
       status: 'Active',
       lastActivity: '2024-01-08',
-      topCourse: 'AIIMS Preparation',
+      topCourse: MEDICAL_SUBJECTS[1],
     },
     {
       id: 3,
@@ -61,7 +62,7 @@ const SalesTeamPerformance = ({
       growth: '+22.1%',
       status: 'Active',
       lastActivity: '2024-01-07',
-      topCourse: 'MBBS Complete Course',
+      topCourse: MEDICAL_SUBJECTS[2],
     },
     {
       id: 4,
@@ -76,7 +77,7 @@ const SalesTeamPerformance = ({
       growth: '+19.8%',
       status: 'Active',
       lastActivity: '2024-01-08',
-      topCourse: 'Medical Foundation Bundle',
+      topCourse: MEDICAL_SUBJECTS[3],
     },
     {
       id: 5,
@@ -91,7 +92,7 @@ const SalesTeamPerformance = ({
       growth: '+17.5%',
       status: 'Active',
       lastActivity: '2024-01-06',
-      topCourse: 'NEET Complete Package',
+      topCourse: MEDICAL_SUBJECTS[4],
     },
     {
       id: 6,
@@ -139,6 +140,36 @@ const SalesTeamPerformance = ({
       topCourse: 'Pathology Essentials',
     },
   ];
+
+  // Apply filters to sales team data
+  const salesTeamData = useMemo(() => {
+    let data = allSalesTeamData;
+
+    // Apply zone filter
+    if (selectedZone !== 'all') {
+      data = data.filter((agent) => agent.zone === selectedZone);
+    }
+
+    // Apply subject filter by adjusting revenue
+    if (selectedSubject !== 'all') {
+      const subjectIndex = MEDICAL_SUBJECTS.indexOf(selectedSubject);
+      const subjectMultiplier = subjectIndex !== -1 ? (20 - subjectIndex) / 20 : 0.5;
+      data = data.map((agent) => ({
+        ...agent,
+        revenue: Math.floor(agent.revenue * subjectMultiplier),
+        collegesClosed: Math.floor(agent.collegesClosed * subjectMultiplier),
+      }));
+    }
+
+    // Apply time range multiplier
+    const timeMultiplier =
+      timeRange === '1week' ? 0.25 : timeRange === '1month' ? 1 : timeRange === '3months' ? 3 : 12;
+    return data.map((agent) => ({
+      ...agent,
+      revenue: Math.floor(agent.revenue * timeMultiplier),
+      collegesClosed: Math.floor(agent.collegesClosed * timeMultiplier),
+    }));
+  }, [allSalesTeamData, selectedZone, selectedSubject, timeRange]);
 
   // Sort data
   const sortedData = [...salesTeamData].sort((a, b) => {

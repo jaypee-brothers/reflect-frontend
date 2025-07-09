@@ -6,7 +6,6 @@ import {
   formatCurrency,
   filterDataBySubject,
   filterDataByZone,
-  MEDICAL_SUBJECTS,
 } from '../../utils/constants';
 
 interface BusinessOverviewProps {
