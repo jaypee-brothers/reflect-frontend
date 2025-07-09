@@ -287,7 +287,7 @@ const CourseSalesDistribution = ({
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">{courseData[0].percentage}%</div>
-            <div className="text-sm text-gray-600">Market Share</div>
+            <div className="text-sm text-gray-600">{courseData[0].course} Share</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">

@@ -256,7 +256,7 @@ const YearOnYearComparison = ({
       </div>
 
       {/* Quarterly Comparison */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
+      {/* <div className="mt-6 pt-6 border-t border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Quarterly Performance</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {['Q1', 'Q2', 'Q3', 'Q4'].map((quarter, index) => {
@@ -293,7 +293,7 @@ const YearOnYearComparison = ({
             );
           })}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
