@@ -146,6 +146,14 @@ const StakeholderDashboard = () => {
           />
           {/* </div> */}
 
+          {/* Geography Revenue with India Map */}
+          <GeographyRevenue
+            timeRange={selectedTimeRange}
+            selectedSubject={selectedSubject}
+            selectedZone={selectedZone}
+            showFullMetrics={false}
+          />
+
           <CourseRevenueTable
             timeRange={selectedTimeRange}
             selectedSubject={selectedSubject}
