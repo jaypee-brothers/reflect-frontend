@@ -165,10 +165,10 @@ const ContentAnalytics = ({
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-gray-900">Top Performing Content</h3>
           <div className="flex items-center gap-2">
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
               Upload Content
             </button>
-            <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+            <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors">
               Content Calendar
             </button>
           </div>
@@ -253,7 +253,7 @@ const ContentAnalytics = ({
         </h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {contentBySpecialty.map((specialty: any) => (
-            <div key={specialty.specialty} className="p-4 bg-gray-50 rounded-lg">
+            <div key={specialty.specialty} className="p-4 bg-gray-50 rounded-md">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="font-semibold text-gray-900">{specialty.specialty}</h4>
                 <div className="text-sm text-gray-500">

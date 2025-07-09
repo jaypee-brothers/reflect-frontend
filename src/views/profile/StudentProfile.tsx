@@ -231,21 +231,21 @@ const StudentProfile = () => {
           {/* Stats Grid */}
           <div className="lg:col-span-1">
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-blue-50 rounded-lg p-4 text-center">
+              <div className="bg-blue-50 rounded-md p-4 text-center">
                 <div className="text-2xl font-bold text-blue-700">{studentData.totalHours}</div>
                 <div className="text-sm text-blue-600">Total Hours</div>
               </div>
-              <div className="bg-purple-50 rounded-lg p-4 text-center">
+              <div className="bg-purple-50 rounded-md p-4 text-center">
                 <div className="text-2xl font-bold text-purple-700">
                   {studentData.videosWatched}
                 </div>
                 <div className="text-sm text-purple-600">Videos Watched</div>
               </div>
-              <div className="bg-green-50 rounded-lg p-4 text-center">
+              <div className="bg-green-50 rounded-md p-4 text-center">
                 <div className="text-2xl font-bold text-green-700">{studentData.mcqsAttempted}</div>
                 <div className="text-sm text-green-600">MCQs Attempted</div>
               </div>
-              <div className="bg-orange-50 rounded-lg p-4 text-center">
+              <div className="bg-orange-50 rounded-md p-4 text-center">
                 <div className="text-2xl font-bold text-orange-700">{studentData.testsTaken}</div>
                 <div className="text-sm text-orange-600">Tests Taken</div>
               </div>
@@ -302,7 +302,7 @@ const StudentProfile = () => {
                 <button
                   key={period}
                   onClick={() => setTimeRange(period)}
-                  className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+                  className={`px-3 py-1 text-sm rounded-md transition-colors ${
                     timeRange === period
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -331,7 +331,7 @@ const StudentProfile = () => {
               {recentVideos.map((video) => (
                 <div
                   key={video.id}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-md"
                 >
                   <div className="flex-1">
                     <div className="font-medium text-gray-900 text-sm">{video.title}</div>
@@ -376,13 +376,13 @@ const StudentProfile = () => {
 
           {/* Performance Summary */}
           <div className="grid grid-cols-2 gap-4 mb-6">
-            <div className="bg-green-50 rounded-lg p-4 text-center">
+            <div className="bg-green-50 rounded-md p-4 text-center">
               <div className="text-2xl font-bold text-green-700">
                 {studentData.overallAccuracy}%
               </div>
               <div className="text-sm text-green-600">Overall Accuracy</div>
             </div>
-            <div className="bg-blue-50 rounded-lg p-4 text-center">
+            <div className="bg-blue-50 rounded-md p-4 text-center">
               <div className="text-2xl font-bold text-blue-700">{studentData.avgScore}%</div>
               <div className="text-sm text-blue-600">Average Score</div>
             </div>
@@ -465,7 +465,7 @@ const StudentProfile = () => {
         <h2 className="text-xl font-semibold text-gray-900 mb-6">Performance Insights</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4">
+          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-md p-4">
             <div className="flex items-center gap-3 mb-2">
               <Icon icon="solar:star-bold" className="text-green-600" width={24} />
               <span className="font-semibold text-green-800">Strengths</span>
@@ -477,7 +477,7 @@ const StudentProfile = () => {
             </ul>
           </div>
 
-          <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-4">
+          <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-md p-4">
             <div className="flex items-center gap-3 mb-2">
               <Icon icon="solar:target-bold" className="text-yellow-600" width={24} />
               <span className="font-semibold text-yellow-800">Focus Areas</span>
@@ -489,7 +489,7 @@ const StudentProfile = () => {
             </ul>
           </div>
 
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-md p-4">
             <div className="flex items-center gap-3 mb-2">
               <Icon icon="solar:graph-up-bold" className="text-blue-600" width={24} />
               <span className="font-semibold text-blue-800">Progress Trend</span>

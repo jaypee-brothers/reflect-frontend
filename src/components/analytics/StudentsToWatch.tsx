@@ -217,15 +217,15 @@ const StudentsToWatch = () => {
 
       {/* Action Buttons */}
       <div className="mt-6 flex flex-wrap gap-3">
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
           <Icon icon="solar:crown-bold" className="inline mr-2" width={16} />
           Recognize Achievement
         </button>
-        <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium">
           <Icon icon="solar:medal-star-bold" className="inline mr-2" width={16} />
           Advanced Challenges
         </button>
-        <button className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm font-medium">
           <Icon icon="solar:document-text-bold" className="inline mr-2" width={16} />
           Detailed Report
         </button>

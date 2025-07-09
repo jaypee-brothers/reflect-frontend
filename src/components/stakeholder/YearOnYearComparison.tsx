@@ -1,37 +1,25 @@
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import Chart from 'react-apexcharts';
+import { MEDICAL_SUBJECTS, GEOGRAPHIC_ZONES } from '../../utils/constants';
 
 interface YearOnYearComparisonProps {
   timeRange: string;
+  selectedSubject?: string;
+  selectedZone?: string;
 }
 
-const YearOnYearComparison = ({ timeRange }: YearOnYearComparisonProps) => {
+const YearOnYearComparison = ({
+  timeRange,
+  selectedSubject = 'all',
+  selectedZone = 'all',
+}: YearOnYearComparisonProps) => {
   const [selectedCourse, setSelectedCourse] = useState('all');
   const [selectedArea, setSelectedArea] = useState('all');
 
-  const courses = [
-    'All Courses',
-    'NEET Foundation',
-    'AIIMS Preparation',
-    'MBBS Complete Course',
-    'NEET Complete Package',
-    'Medical Foundation Bundle',
-  ];
+  const courses = ['All Courses', ...MEDICAL_SUBJECTS];
 
-  const areas = [
-    'All Areas',
-    'North Zone',
-    'South Zone',
-    'East Zone',
-    'West Zone',
-    'Central Zone',
-    'Maharashtra',
-    'Karnataka',
-    'Tamil Nadu',
-    'Delhi',
-    'Uttar Pradesh',
-  ];
+  const areas = ['All Areas', ...GEOGRAPHIC_ZONES];
 
   const months = [
     'Jan',
@@ -48,28 +36,54 @@ const YearOnYearComparison = ({ timeRange }: YearOnYearComparisonProps) => {
     'Dec',
   ];
 
-  // Generate sample data for current year and previous year
-  const currentYearData = [
-    2800000, 3200000, 2900000, 3500000, 3800000, 3400000, 4200000, 4000000, 4500000, 4300000,
-    4800000, 4600000,
-  ];
+  // Generate sample data for current year and previous year with filters
+  const generateData = () => {
+    let baseMultiplier = 1;
 
-  const previousYearData = [
-    2200000, 2500000, 2300000, 2800000, 3000000, 2700000, 3300000, 3100000, 3600000, 3400000,
-    3900000, 3700000,
-  ];
+    // Apply subject filter
+    if (selectedSubject !== 'all') {
+      const subjectIndex = MEDICAL_SUBJECTS.indexOf(selectedSubject);
+      baseMultiplier *= subjectIndex !== -1 ? (20 - subjectIndex) / 20 : 0.5;
+    }
+
+    // Apply zone filter
+    if (selectedZone !== 'all') {
+      baseMultiplier *= 0.4; // Zone-specific data
+    }
+
+    const baseCurrent = [
+      2800000, 3200000, 2900000, 3500000, 3800000, 3400000, 4200000, 4000000, 4500000, 4300000,
+      4800000, 4600000,
+    ];
+
+    const basePrevious = [
+      2200000, 2500000, 2300000, 2800000, 3000000, 2700000, 3300000, 3100000, 3600000, 3400000,
+      3900000, 3700000,
+    ];
+
+    return {
+      currentYearData: baseCurrent.map((value) =>
+        Math.floor(value * baseMultiplier * (0.9 + Math.random() * 0.2)),
+      ),
+      previousYearData: basePrevious.map((value) =>
+        Math.floor(value * baseMultiplier * (0.9 + Math.random() * 0.2)),
+      ),
+    };
+  };
+
+  const { currentYearData, previousYearData } = generateData();
 
   const chartData = {
     series: [
       {
+        name: '2023',
+        data: previousYearData,
+        color: '#635BFF',
+      },
+      {
         name: '2024',
         data: currentYearData,
         color: '#10b981',
-      },
-      {
-        name: '2023',
-        data: previousYearData,
-        color: '#6b7280',
       },
     ],
     options: {
@@ -130,7 +144,7 @@ const YearOnYearComparison = ({ timeRange }: YearOnYearComparisonProps) => {
       },
       legend: {
         position: 'top' as const,
-        horizontalAlign: 'right' as const,
+        horizontalAlign: 'center' as const,
       },
       grid: {
         strokeDashArray: 4,
@@ -163,7 +177,7 @@ const YearOnYearComparison = ({ timeRange }: YearOnYearComparisonProps) => {
           <select
             value={selectedCourse}
             onChange={(e) => setSelectedCourse(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
           >
             {courses.map((course, index) => (
               <option key={index} value={course.toLowerCase().replace(/\s+/g, '-')}>
@@ -176,7 +190,7 @@ const YearOnYearComparison = ({ timeRange }: YearOnYearComparisonProps) => {
           <select
             value={selectedArea}
             onChange={(e) => setSelectedArea(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
           >
             {areas.map((area, index) => (
               <option key={index} value={area.toLowerCase().replace(/\s+/g, '-')}>
@@ -193,7 +207,7 @@ const YearOnYearComparison = ({ timeRange }: YearOnYearComparisonProps) => {
 
       {/* Growth Insights */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-6 border-t border-gray-200">
-        <div className="bg-emerald-50 rounded-lg p-4 text-center">
+        <div className="bg-emerald-50 rounded-md p-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Icon icon="solar:chart-2-bold-duotone" className="text-emerald-600" width={20} />
             <span className="text-sm font-medium text-emerald-800">YoY Growth</span>
@@ -201,7 +215,7 @@ const YearOnYearComparison = ({ timeRange }: YearOnYearComparisonProps) => {
           <div className="text-2xl font-bold text-emerald-600">+{growthRate}%</div>
         </div>
 
-        <div className="bg-blue-50 rounded-lg p-4 text-center">
+        <div className="bg-blue-50 rounded-md p-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Icon icon="solar:star-bold-duotone" className="text-blue-600" width={20} />
             <span className="text-sm font-medium text-blue-800">Best Month</span>
@@ -209,7 +223,7 @@ const YearOnYearComparison = ({ timeRange }: YearOnYearComparisonProps) => {
           <div className="text-lg font-bold text-blue-600">{bestMonth}</div>
         </div>
 
-        <div className="bg-purple-50 rounded-lg p-4 text-center">
+        <div className="bg-purple-50 rounded-md p-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Icon
               icon="solar:danger-triangle-bold-duotone"
@@ -221,7 +235,7 @@ const YearOnYearComparison = ({ timeRange }: YearOnYearComparisonProps) => {
           <div className="text-lg font-bold text-purple-600">{worstMonth}</div>
         </div>
 
-        <div className="bg-orange-50 rounded-lg p-4 text-center">
+        <div className="bg-orange-50 rounded-md p-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Icon
               icon="solar:dollar-minimalistic-bold-duotone"
@@ -251,7 +265,7 @@ const YearOnYearComparison = ({ timeRange }: YearOnYearComparisonProps) => {
             ).toFixed(1);
 
             return (
-              <div key={quarter} className="bg-gray-50 rounded-lg p-4">
+              <div key={quarter} className="bg-gray-50 rounded-md p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-gray-600">{quarter} 2024</span>
                   <span

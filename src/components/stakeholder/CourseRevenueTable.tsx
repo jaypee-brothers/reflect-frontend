@@ -1,128 +1,53 @@
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
+import { MEDICAL_SUBJECTS } from '../../utils/constants';
 
 interface CourseRevenueTableProps {
   timeRange: string;
+  selectedSubject?: string;
+  selectedZone?: string;
 }
 
-const CourseRevenueTable = ({ timeRange }: CourseRevenueTableProps) => {
+const CourseRevenueTable = ({
+  timeRange,
+  selectedSubject = 'all',
+  selectedZone = 'all',
+}: CourseRevenueTableProps) => {
   const [sortBy, setSortBy] = useState('revenue');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Sample course data
-  const courseData = [
-    {
-      id: 1,
-      course: 'NEET Foundation',
-      category: 'Medical Entrance',
-      revenue: 28500000,
-      enrollments: 1250,
-      avgPrice: 22800,
-      growth: '+28.5%',
+  // Generate dynamic course data based on MBBS subjects
+  const courseData = MEDICAL_SUBJECTS.map((subject, index) => {
+    const baseRevenue = 3000000 + index * 500000;
+    const baseEnrollments = 100 + index * 20;
+    const timeMultiplier = timeRange === '1week' ? 0.25 : timeRange === '1month' ? 1 : timeRange === '3months' ? 3 : 12;
+    
+    // Apply filters
+    let subjectMultiplier = 1;
+    if (selectedSubject !== 'all' && selectedSubject !== subject) {
+      subjectMultiplier = 0; // Hide if not selected
+    }
+    
+    let zoneMultiplier = selectedZone !== 'all' ? 0.4 : 1;
+    
+    const revenue = Math.floor(baseRevenue * timeMultiplier * subjectMultiplier * zoneMultiplier);
+    const enrollments = Math.floor(baseEnrollments * timeMultiplier * subjectMultiplier * zoneMultiplier);
+    
+    if (subjectMultiplier === 0) return null; // Skip if filtered out
+    
+    return {
+      id: index + 1,
+      course: `${subject} - Complete Course`,
+      category: index < 5 ? 'Core Medical Subject' : index < 10 ? 'Clinical Subject' : 'Specialty Subject',
+      revenue,
+      enrollments,
+      avgPrice: revenue > 0 ? Math.floor(revenue / enrollments) : 0,
+      growth: `+${(12 + Math.random() * 20).toFixed(1)}%`,
       status: 'Active',
-      lastUpdated: '2024-01-08',
-    },
-    {
-      id: 2,
-      course: 'AIIMS Preparation',
-      category: 'Medical Entrance',
-      revenue: 35200000,
-      enrollments: 980,
-      avgPrice: 35918,
-      growth: '+22.1%',
-      status: 'Active',
-      lastUpdated: '2024-01-07',
-    },
-    {
-      id: 3,
-      course: 'MBBS Complete Course',
-      category: 'Medical Education',
-      revenue: 22800000,
-      enrollments: 750,
-      avgPrice: 30400,
-      growth: '+17.8%',
-      status: 'Active',
-      lastUpdated: '2024-01-08',
-    },
-    {
-      id: 4,
-      course: 'NEET Complete Package',
-      category: 'Medical Entrance',
-      revenue: 19200000,
-      enrollments: 650,
-      avgPrice: 29538,
-      growth: '+14.7%',
-      status: 'Active',
-      lastUpdated: '2024-01-06',
-    },
-    {
-      id: 5,
-      course: 'Medical Foundation Bundle',
-      category: 'Foundation',
-      revenue: 12600000,
-      enrollments: 420,
-      avgPrice: 30000,
-      growth: '+19.5%',
-      status: 'Active',
-      lastUpdated: '2024-01-05',
-    },
-    {
-      id: 6,
-      course: 'Anatomy Mastery',
-      category: 'Subject Specific',
-      revenue: 4320000,
-      enrollments: 180,
-      avgPrice: 24000,
-      growth: '+12.1%',
-      status: 'Active',
-      lastUpdated: '2024-01-04',
-    },
-    {
-      id: 7,
-      course: 'Physiology Deep Dive',
-      category: 'Subject Specific',
-      revenue: 2280000,
-      enrollments: 95,
-      avgPrice: 24000,
-      growth: '+8.5%',
-      status: 'Active',
-      lastUpdated: '2024-01-03',
-    },
-    {
-      id: 8,
-      course: 'Pathology Essentials',
-      category: 'Subject Specific',
-      revenue: 1800000,
-      enrollments: 75,
-      avgPrice: 24000,
-      growth: '+15.2%',
-      status: 'Active',
-      lastUpdated: '2024-01-02',
-    },
-    {
-      id: 9,
-      course: 'Pharmacology Pro',
-      category: 'Subject Specific',
-      revenue: 1440000,
-      enrollments: 60,
-      avgPrice: 24000,
-      growth: '+6.8%',
-      status: 'Active',
-      lastUpdated: '2024-01-01',
-    },
-    {
-      id: 10,
-      course: 'Biochemistry Basics',
-      category: 'Subject Specific',
-      revenue: 1080000,
-      enrollments: 45,
-      avgPrice: 24000,
-      growth: '+4.2%',
-      status: 'Limited',
-      lastUpdated: '2023-12-30',
-    },
-  ];
+      lastUpdated: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    };
+  }).filter(Boolean) as any[]; // Remove null entries
 
   // Filter and sort data
   const filteredData = courseData.filter(
@@ -207,12 +132,12 @@ const CourseRevenueTable = ({ timeRange }: CourseRevenueTableProps) => {
               placeholder="Search courses..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+              className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
             />
           </div>
 
           {/* Export Button */}
-          <button className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-2 text-sm">
+          <button className="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors flex items-center gap-2 text-sm">
             <Icon icon="solar:download-bold-duotone" width={16} />
             Export
           </button>
@@ -299,11 +224,11 @@ const CourseRevenueTable = ({ timeRange }: CourseRevenueTableProps) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {sortedData.map((course, index) => (
+            {sortedData.map((course) => (
               <tr key={course.id} className="hover:bg-gray-50 transition-colors">
                 <td className="py-4 px-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-md flex items-center justify-center text-white font-bold text-sm">
                       {course.course.substring(0, 2).toUpperCase()}
                     </div>
                     <div>
@@ -369,16 +294,16 @@ const CourseRevenueTable = ({ timeRange }: CourseRevenueTableProps) => {
           Showing {sortedData.length} of {courseData.length} courses
         </div>
         <div className="flex items-center gap-2">
-          <button className="px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+          <button className="px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50 transition-colors">
             Previous
           </button>
-          <button className="px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm hover:bg-emerald-700 transition-colors">
+          <button className="px-3 py-2 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 transition-colors">
             1
           </button>
-          <button className="px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+          <button className="px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50 transition-colors">
             2
           </button>
-          <button className="px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+          <button className="px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50 transition-colors">
             Next
           </button>
         </div>

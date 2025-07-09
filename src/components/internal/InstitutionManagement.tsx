@@ -119,7 +119,7 @@ const InstitutionManagement = ({
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white rounded-xl shadow-md p-6">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-xl mr-4">
+            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-md flex items-center justify-center text-xl mr-4">
               🏥
             </div>
             <div>
@@ -130,7 +130,7 @@ const InstitutionManagement = ({
         </div>
         <div className="bg-white rounded-xl shadow-md p-6">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center text-xl mr-4">
+            <div className="w-12 h-12 bg-green-100 text-green-600 rounded-md flex items-center justify-center text-xl mr-4">
               👨‍⚕️
             </div>
             <div>
@@ -141,7 +141,7 @@ const InstitutionManagement = ({
         </div>
         <div className="bg-white rounded-xl shadow-md p-6">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-xl mr-4">
+            <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-md flex items-center justify-center text-xl mr-4">
               💰
             </div>
             <div>
@@ -152,7 +152,7 @@ const InstitutionManagement = ({
         </div>
         <div className="bg-white rounded-xl shadow-md p-6">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center text-xl mr-4">
+            <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-md flex items-center justify-center text-xl mr-4">
               📊
             </div>
             <div>
@@ -168,10 +168,10 @@ const InstitutionManagement = ({
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-gray-900">Partner Medical Institutions</h3>
           <div className="flex items-center gap-2">
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
               Add Institution
             </button>
-            <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+            <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors">
               Export List
             </button>
           </div>
@@ -257,7 +257,7 @@ const InstitutionManagement = ({
             {tierStats.map((tier) => (
               <div
                 key={tier.tier}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                className="flex items-center justify-between p-4 bg-gray-50 rounded-md"
               >
                 <div>
                   <div className="font-medium text-gray-900">{tier.tier} Tier</div>
@@ -279,7 +279,7 @@ const InstitutionManagement = ({
             {regionStats.map((region) => (
               <div
                 key={region.region}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                className="flex items-center justify-between p-4 bg-gray-50 rounded-md"
               >
                 <div>
                   <div className="font-medium text-gray-900">{region.region}</div>

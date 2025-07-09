@@ -221,10 +221,10 @@ const RevenueMetrics = ({
             {monthlyRevenue.map((month) => (
               <div
                 key={month.month}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-md"
               >
                 <div className="flex items-center">
-                  <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-sm font-semibold mr-3">
+                  <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-md flex items-center justify-center text-sm font-semibold mr-3">
                     {month.month}
                   </div>
                   <div>
@@ -263,7 +263,7 @@ const RevenueMetrics = ({
             {revenueBySpecialty.map((specialty: any, index: number) => (
               <div
                 key={specialty.specialty}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-md"
               >
                 <div className="flex items-center">
                   <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-semibold mr-3">
@@ -290,7 +290,7 @@ const RevenueMetrics = ({
             {institutionRevenue.map((institution: any, index: number) => (
               <div
                 key={institution.name}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-md"
               >
                 <div className="flex items-center">
                   <div className="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm font-semibold mr-3">

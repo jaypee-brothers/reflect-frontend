@@ -171,10 +171,10 @@ const ReportsExports = () => {
             {quickExportOptions.map((option, index) => (
               <button
                 key={index}
-                className="w-full p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left"
+                className="w-full p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors text-left"
               >
                 <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg bg-${option.color}-100 text-${option.color}-600`}>
+                  <div className={`p-2 rounded-md bg-${option.color}-100 text-${option.color}-600`}>
                     <Icon icon={option.icon} width={20} />
                   </div>
                   <div className="flex-1">
@@ -190,7 +190,7 @@ const ReportsExports = () => {
           </div>
 
           {/* Schedule Reports */}
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+          <div className="mt-6 p-4 bg-blue-50 rounded-md">
             <div className="flex items-center gap-2 mb-3">
               <Icon icon="solar:calendar-bold" className="text-blue-600" width={20} />
               <span className="font-semibold text-blue-900">Schedule Reports</span>
@@ -200,7 +200,7 @@ const ReportsExports = () => {
             </p>
             <button
               onClick={() => alert('Schedule configuration coming soon!')}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium"
             >
               <Icon icon="solar:settings-bold" className="inline mr-2" width={16} />
               Configure Scheduling
@@ -230,7 +230,7 @@ const ReportsExports = () => {
             {reportTemplates.map((report) => (
               <div
                 key={report.id}
-                className={`p-4 border rounded-lg transition-all duration-200 cursor-pointer ${
+                className={`p-4 border rounded-md transition-all duration-200 cursor-pointer ${
                   selectedReports.includes(report.id)
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-200 hover:border-gray-300'
@@ -328,15 +328,15 @@ const ReportsExports = () => {
 
       {/* Action Buttons */}
       <div className="mt-6 pt-6 border-t border-gray-200 flex flex-wrap gap-3">
-        <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors text-sm font-medium">
           <Icon icon="solar:archive-bold" className="inline mr-2" width={16} />
           View Report Archive
         </button>
-        <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium">
           <Icon icon="solar:settings-bold" className="inline mr-2" width={16} />
           Manage Recipients
         </button>
-        <button className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm font-medium">
           <Icon icon="solar:question-circle-bold" className="inline mr-2" width={16} />
           Help & Documentation
         </button>

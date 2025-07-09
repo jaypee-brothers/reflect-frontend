@@ -253,7 +253,7 @@ const ContentProduction = ({ timeRange }: ContentProductionProps) => {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
           {productionPipeline.map((stage, index) => (
             <div key={stage.stage} className="relative">
-              <div className="bg-gray-50 rounded-lg p-4">
+              <div className="bg-gray-50 rounded-md p-4">
                 <div className="text-center mb-3">
                   <h4 className="font-semibold text-gray-900">{stage.stage}</h4>
                   <div className="text-2xl font-bold text-blue-600 mt-2">{stage.items}</div>
@@ -348,7 +348,7 @@ const ContentProduction = ({ timeRange }: ContentProductionProps) => {
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Content Releases</h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {upcomingReleases.map((release) => (
-            <div key={release.title} className="p-4 bg-gray-50 rounded-lg">
+            <div key={release.title} className="p-4 bg-gray-50 rounded-md">
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <h4 className="font-semibold text-gray-900">{release.title}</h4>

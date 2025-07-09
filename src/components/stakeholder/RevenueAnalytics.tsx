@@ -1,15 +1,20 @@
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import Chart from 'react-apexcharts';
+import { MEDICAL_SUBJECTS, GEOGRAPHIC_ZONES } from '../../utils/constants';
 
 interface RevenueAnalyticsProps {
   timeRange: string;
+  selectedSubject?: string;
+  selectedZone?: string;
   showGeographyFilter?: boolean;
   showSalesFilter?: boolean;
 }
 
 const RevenueAnalytics = ({
   timeRange,
+  selectedSubject = 'all',
+  selectedZone = 'all',
   showGeographyFilter = false,
   showSalesFilter = false,
 }: RevenueAnalyticsProps) => {
@@ -18,27 +23,9 @@ const RevenueAnalytics = ({
   const [selectedGeography, setSelectedGeography] = useState('all');
   const [selectedSalesAgent, setSelectedSalesAgent] = useState('all');
 
-  const courses = [
-    'All Courses',
-    'NEET Foundation',
-    'AIIMS Preparation',
-    'MBBS Complete Course',
-    'NEET Complete Package',
-    'Medical Foundation Bundle',
-    'Anatomy Mastery',
-    'Physiology Deep Dive',
-    'Pathology Essentials',
-    'Pharmacology Pro',
-  ];
+  const courses = ['All Courses', ...MEDICAL_SUBJECTS];
 
-  const geographyOptions = [
-    'All Regions',
-    'North Zone',
-    'South Zone',
-    'East Zone',
-    'West Zone',
-    'Central Zone',
-  ];
+  const geographyOptions = ['All Regions', ...GEOGRAPHIC_ZONES];
   const salesAgents = [
     'All Agents',
     'Rajesh Kumar',
@@ -49,6 +36,19 @@ const RevenueAnalytics = ({
   ];
 
   const generateRevenueData = () => {
+    let baseMultiplier = 1;
+
+    // Apply subject filter
+    if (selectedSubject !== 'all') {
+      const subjectIndex = MEDICAL_SUBJECTS.indexOf(selectedSubject);
+      baseMultiplier *= subjectIndex !== -1 ? (20 - subjectIndex) / 20 : 0.5;
+    }
+
+    // Apply zone filter
+    if (selectedZone !== 'all') {
+      baseMultiplier *= 0.4; // Zone-specific data
+    }
+
     const baseData =
       timeRange === '7days'
         ? [45000, 52000, 48000, 65000, 58000, 72000, 68000]
@@ -63,10 +63,25 @@ const RevenueAnalytics = ({
             10800000, 11600000, 11200000,
           ];
 
-    return baseData;
+    return baseData.map((value) =>
+      Math.floor(value * baseMultiplier * (0.9 + Math.random() * 0.2)),
+    );
   };
 
   const generateSalesData = () => {
+    let baseMultiplier = 1;
+
+    // Apply subject filter
+    if (selectedSubject !== 'all') {
+      const subjectIndex = MEDICAL_SUBJECTS.indexOf(selectedSubject);
+      baseMultiplier *= subjectIndex !== -1 ? (20 - subjectIndex) / 20 : 0.5;
+    }
+
+    // Apply zone filter
+    if (selectedZone !== 'all') {
+      baseMultiplier *= 0.4; // Zone-specific data
+    }
+
     const baseData =
       timeRange === '7days'
         ? [12, 15, 11, 18, 14, 20, 17]
@@ -77,7 +92,9 @@ const RevenueAnalytics = ({
           ]
         : [450, 520, 480, 580, 540, 620, 590, 680, 650, 720, 690, 750];
 
-    return baseData;
+    return baseData.map((value) =>
+      Math.floor(value * baseMultiplier * (0.9 + Math.random() * 0.2)),
+    );
   };
 
   const getChartLabels = () => {
@@ -176,7 +193,7 @@ const RevenueAnalytics = ({
 
         <div className="flex flex-wrap gap-3">
           {/* Metric Selection */}
-          <div className="flex bg-gray-100 rounded-lg p-1">
+          <div className="flex bg-gray-100 rounded-md p-1">
             {[
               { id: 'revenue', label: 'Revenue', icon: 'solar:dollar-minimalistic-bold' },
               { id: 'sales', label: 'Sales Count', icon: 'solar:chart-2-bold' },
@@ -200,7 +217,7 @@ const RevenueAnalytics = ({
           <select
             value={selectedCourse}
             onChange={(e) => setSelectedCourse(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
           >
             {courses.map((course, index) => (
               <option key={index} value={course.toLowerCase().replace(/\s+/g, '-')}>
@@ -214,7 +231,7 @@ const RevenueAnalytics = ({
             <select
               value={selectedGeography}
               onChange={(e) => setSelectedGeography(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
             >
               {geographyOptions.map((geo, index) => (
                 <option key={index} value={geo.toLowerCase().replace(/\s+/g, '-')}>
@@ -229,7 +246,7 @@ const RevenueAnalytics = ({
             <select
               value={selectedSalesAgent}
               onChange={(e) => setSelectedSalesAgent(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
             >
               {salesAgents.map((agent, index) => (
                 <option key={index} value={agent.toLowerCase().replace(/\s+/g, '-')}>

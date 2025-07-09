@@ -149,7 +149,7 @@ const ContentAnalytics = () => {
             {topVideos.map((video, index) => (
               <div
                 key={video.id}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
@@ -185,7 +185,7 @@ const ContentAnalytics = () => {
           </div>
 
           <div className="mt-4 pt-4 border-t border-gray-200">
-            <button className="w-full px-4 py-2 text-sm font-medium text-purple-600 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
+            <button className="w-full px-4 py-2 text-sm font-medium text-purple-600 bg-purple-50 rounded-md hover:bg-purple-100 transition-colors">
               <Icon icon="solar:eye-bold" className="inline mr-2" width={16} />
               View All Videos
             </button>
@@ -203,7 +203,7 @@ const ContentAnalytics = () => {
             {qbankModules.map((module, index) => (
               <div
                 key={module.id}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
@@ -239,7 +239,7 @@ const ContentAnalytics = () => {
           </div>
 
           <div className="mt-4 pt-4 border-t border-gray-200">
-            <button className="w-full px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+            <button className="w-full px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors">
               <Icon icon="solar:document-text-bold" className="inline mr-2" width={16} />
               View All QBank Modules
             </button>

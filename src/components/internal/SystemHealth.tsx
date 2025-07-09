@@ -232,7 +232,7 @@ const SystemHealth = () => {
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Security Metrics</h3>
           <div className="space-y-4">
             {securityMetrics.map((metric) => (
-              <div key={metric.metric} className="p-4 bg-gray-50 rounded-lg">
+              <div key={metric.metric} className="p-4 bg-gray-50 rounded-md">
                 <div className="flex items-center justify-between mb-2">
                   <div className="font-medium text-gray-900">{metric.metric}</div>
                   <div className="text-2xl font-bold text-blue-600">{metric.value}</div>
@@ -251,7 +251,7 @@ const SystemHealth = () => {
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Alerts</h3>
           <div className="space-y-3">
             {performanceAlerts.map((alert, index) => (
-              <div key={index} className={`p-4 border rounded-lg ${getAlertColor(alert.type)}`}>
+              <div key={index} className={`p-4 border rounded-md ${getAlertColor(alert.type)}`}>
                 <div className="flex items-start">
                   <div className="text-xl mr-3">{getAlertIcon(alert.type)}</div>
                   <div className="flex-1">

@@ -111,7 +111,7 @@ const RedZoneStudents = () => {
 
       {/* Tab Navigation */}
       <div className="mb-6">
-        <div className="flex bg-gray-100 rounded-lg p-1">
+        <div className="flex bg-gray-100 rounded-md p-1">
           <button
             onClick={() => setActiveTab('noLogin')}
             className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
@@ -156,7 +156,7 @@ const RedZoneStudents = () => {
               {noLoginStudents.map((student) => (
                 <div
                   key={student.id}
-                  className="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-100"
+                  className="flex items-center justify-between p-3 bg-red-50 rounded-md border border-red-100"
                 >
                   <div className="flex-1">
                     <div className="font-medium text-gray-900">{student.name}</div>
@@ -176,7 +176,7 @@ const RedZoneStudents = () => {
             </div>
 
             <div className="mt-4 pt-4 border-t border-gray-200">
-              <button className="w-full px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
+              <button className="w-full px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-md hover:bg-red-100 transition-colors">
                 <Icon icon="solar:bell-bold" className="inline mr-2" width={16} />
                 Send Reminder Emails
               </button>
@@ -197,7 +197,7 @@ const RedZoneStudents = () => {
               {lowScoreStudents.map((student) => (
                 <div
                   key={student.id}
-                  className="flex items-center justify-between p-3 bg-orange-50 rounded-lg border border-orange-100"
+                  className="flex items-center justify-between p-3 bg-orange-50 rounded-md border border-orange-100"
                 >
                   <div className="flex-1">
                     <div className="font-medium text-gray-900">{student.name}</div>
@@ -216,7 +216,7 @@ const RedZoneStudents = () => {
             </div>
 
             <div className="mt-4 pt-4 border-t border-gray-200">
-              <button className="w-full px-4 py-2 text-sm font-medium text-orange-600 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors">
+              <button className="w-full px-4 py-2 text-sm font-medium text-orange-600 bg-orange-50 rounded-md hover:bg-orange-100 transition-colors">
                 <Icon icon="solar:book-2-bold" className="inline mr-2" width={16} />
                 Assign Additional Study Materials
               </button>
@@ -228,11 +228,11 @@ const RedZoneStudents = () => {
       {/* Quick Actions */}
       <div className="mt-6 pt-4 border-t border-gray-200">
         <div className="grid grid-cols-2 gap-2">
-          <button className="px-3 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+          <button className="px-3 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
             <Icon icon="solar:download-linear" className="inline mr-1" width={14} />
             Export List
           </button>
-          <button className="px-3 py-2 text-xs font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+          <button className="px-3 py-2 text-xs font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors">
             <Icon icon="solar:graph-up-linear" className="inline mr-1" width={14} />
             View Details
           </button>

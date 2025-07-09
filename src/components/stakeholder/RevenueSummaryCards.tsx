@@ -32,20 +32,46 @@ const RevenueSummaryCards = ({
     const baseSubscriptions = 4200 * multiplier * baseMultiplier;
     const baseColleges = 150 * baseMultiplier;
 
+    // Generate current period data
+    const currentRevenue = baseRevenue * (0.9 + Math.random() * 0.2);
+    const currentSubscriptions = Math.floor(baseSubscriptions * (0.9 + Math.random() * 0.2));
+    const currentAvgRevenue = (baseRevenue / baseColleges) * (0.9 + Math.random() * 0.2);
+    const currentSubjectRevenue = baseRevenue * 0.3 * (0.8 + Math.random() * 0.4);
+
+    // Generate previous period data (typically 10-25% lower)
+    const revenueGrowth = 15 + Math.random() * 15;
+    const subscriptionGrowth = 12 + Math.random() * 12;
+    const avgGrowth = 8 + Math.random() * 16;
+    const subjectGrowth = 10 + Math.random() * 20;
+
+    const previousRevenue = currentRevenue / (1 + revenueGrowth / 100);
+    const previousSubscriptions = Math.floor(currentSubscriptions / (1 + subscriptionGrowth / 100));
+    const previousAvgRevenue = currentAvgRevenue / (1 + avgGrowth / 100);
+    const previousSubjectRevenue = currentSubjectRevenue / (1 + subjectGrowth / 100);
+
     return {
-      totalRevenue: formatCurrency(baseRevenue * (0.9 + Math.random() * 0.2)),
-      revenueChange: `+${(15 + Math.random() * 15).toFixed(1)}%`,
-      activeSubscriptions: Math.floor(baseSubscriptions * (0.9 + Math.random() * 0.2)),
-      subscriptionChange: `+${(12 + Math.random() * 12).toFixed(1)}%`,
-      avgRevenuePerCollege: formatCurrency(
-        (baseRevenue / baseColleges) * (0.9 + Math.random() * 0.2),
-      ),
-      avgChange: `+${(8 + Math.random() * 16).toFixed(1)}%`,
+      // Current period
+      totalRevenue: formatCurrency(currentRevenue),
+      activeSubscriptions: currentSubscriptions,
+      avgRevenuePerCollege: formatCurrency(currentAvgRevenue),
+      subjectRevenue: formatCurrency(currentSubjectRevenue),
+
+      // Previous period
+      previousRevenue: formatCurrency(previousRevenue),
+      previousSubscriptions: previousSubscriptions,
+      previousAvgRevenue: formatCurrency(previousAvgRevenue),
+      previousSubjectRevenue: formatCurrency(previousSubjectRevenue),
+
+      // Changes
+      revenueChange: `+${revenueGrowth.toFixed(1)}%`,
+      subscriptionChange: `+${subscriptionGrowth.toFixed(1)}%`,
+      avgChange: `+${avgGrowth.toFixed(1)}%`,
+      subjectChange: `+${subjectGrowth.toFixed(1)}%`,
+
       topPerformingSubject:
         selectedSubject !== 'all'
           ? selectedSubject
           : MEDICAL_SUBJECTS[Math.floor(Math.random() * 5)],
-      subjectRevenue: formatCurrency(baseRevenue * 0.3 * (0.8 + Math.random() * 0.4)),
     };
   };
 
@@ -55,6 +81,7 @@ const RevenueSummaryCards = ({
     {
       title: 'Total Revenue',
       value: data.totalRevenue,
+      previousValue: data.previousRevenue,
       change: data.revenueChange,
       icon: 'solar:dollar-minimalistic-bold-duotone',
       bgColor: 'bg-gradient-to-br from-emerald-50 to-emerald-100',
@@ -64,6 +91,7 @@ const RevenueSummaryCards = ({
     {
       title: 'Active Subscriptions',
       value: data.activeSubscriptions.toLocaleString(),
+      previousValue: data.previousSubscriptions.toLocaleString(),
       change: data.subscriptionChange,
       icon: 'solar:users-group-two-rounded-bold-duotone',
       bgColor: 'bg-gradient-to-br from-blue-50 to-blue-100',
@@ -73,6 +101,7 @@ const RevenueSummaryCards = ({
     {
       title: 'Avg. Revenue per College',
       value: data.avgRevenuePerCollege,
+      previousValue: data.previousAvgRevenue,
       change: data.avgChange,
       icon: 'solar:buildings-3-bold-duotone',
       bgColor: 'bg-gradient-to-br from-purple-50 to-purple-100',
@@ -82,7 +111,8 @@ const RevenueSummaryCards = ({
     {
       title: 'Top Performing Course',
       value: data.topPerformingSubject,
-      change: data.subjectRevenue,
+      previousValue: data.previousSubjectRevenue,
+      change: data.subjectChange,
       icon: 'solar:medal-star-bold-duotone',
       bgColor: 'bg-gradient-to-br from-orange-50 to-orange-100',
       iconColor: 'text-orange-600',
@@ -98,7 +128,7 @@ const RevenueSummaryCards = ({
             <div
               className={`w-12 h-12 ${card.bgColor
                 .replace('50', '200')
-                .replace('100', '300')} rounded-lg flex items-center justify-center`}
+                .replace('100', '300')} rounded-md flex items-center justify-center`}
             >
               <Icon icon={card.icon} className={card.iconColor} width={24} />
             </div>
@@ -117,10 +147,13 @@ const RevenueSummaryCards = ({
             <p className="text-2xl font-bold text-gray-900">{card.value}</p>
           </div>
 
-          {/* Mini trend indicator */}
+          {/* Previous period comparison */}
           <div className="mt-4 pt-4 border-t border-gray-200/30">
-            <div className="flex items-center justify-between text-xs text-gray-600">
-              <span>vs previous period</span>
+            <div className="flex items-center justify-between text-xs">
+              <div className="text-gray-500">
+                <span>Previous: </span>
+                <span className="font-medium text-gray-600">{card.previousValue}</span>
+              </div>
               <div className="flex items-center gap-1">
                 <div className="w-2 h-2 bg-current rounded-full opacity-60"></div>
                 <div className="w-2 h-2 bg-current rounded-full opacity-80"></div>

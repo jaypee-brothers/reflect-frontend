@@ -193,7 +193,7 @@ const QbanksTestInsights = () => {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+      <div className="flex flex-wrap gap-4 mb-6 p-4 bg-gray-50 rounded-md">
         <div className="flex items-center gap-2">
           <label className="text-sm font-medium text-gray-700">Time Range:</label>
           <select
@@ -230,7 +230,7 @@ const QbanksTestInsights = () => {
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Summary Statistics</h3>
 
           <div className="space-y-4">
-            <div className="bg-blue-50 rounded-lg p-4">
+            <div className="bg-blue-50 rounded-md p-4">
               <div className="flex items-center gap-3 mb-2">
                 <Icon icon="solar:target-bold" className="text-blue-500" width={24} />
                 <span className="text-sm font-medium text-blue-700">Average Accuracy</span>
@@ -239,7 +239,7 @@ const QbanksTestInsights = () => {
               <div className="text-sm text-blue-600 mt-1">Across all tests</div>
             </div>
 
-            <div className="bg-green-50 rounded-lg p-4">
+            <div className="bg-green-50 rounded-md p-4">
               <div className="flex items-center gap-3 mb-2">
                 <Icon icon="solar:graph-up-bold" className="text-green-500" width={24} />
                 <span className="text-sm font-medium text-green-700">Average Score</span>
@@ -248,7 +248,7 @@ const QbanksTestInsights = () => {
               <div className="text-sm text-green-600 mt-1">Overall performance</div>
             </div>
 
-            <div className="bg-purple-50 rounded-lg p-4">
+            <div className="bg-purple-50 rounded-md p-4">
               <div className="flex items-center gap-3 mb-2">
                 <Icon
                   icon="solar:users-group-two-rounded-bold"
@@ -264,7 +264,7 @@ const QbanksTestInsights = () => {
             </div>
 
             {/* Difficulty Distribution */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-gray-50 rounded-md p-4">
               <h4 className="text-sm font-semibold text-gray-900 mb-3">Difficulty Distribution</h4>
               <Chart
                 options={difficultyChartData.options}
@@ -281,7 +281,7 @@ const QbanksTestInsights = () => {
           {/* Performance Trends Chart */}
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Trends</h3>
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-gray-50 rounded-md p-4">
               <Chart
                 options={accuracyChartData.options}
                 series={accuracyChartData.series}
@@ -294,7 +294,7 @@ const QbanksTestInsights = () => {
           {/* Test Details Table */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Test Details</h3>
-            <div className="overflow-x-auto bg-gray-50 rounded-lg">
+            <div className="overflow-x-auto bg-gray-50 rounded-md">
               <table className="w-full text-sm">
                 <thead className="bg-gray-100">
                   <tr>
@@ -342,15 +342,15 @@ const QbanksTestInsights = () => {
 
       {/* Action Buttons */}
       <div className="mt-6 pt-6 border-t border-gray-200 flex flex-wrap gap-3">
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
           <Icon icon="solar:document-add-bold" className="inline mr-2" width={16} />
           Create New Test
         </button>
-        <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium">
           <Icon icon="solar:download-minimalistic-bold" className="inline mr-2" width={16} />
           Export Performance Data
         </button>
-        <button className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm font-medium">
           <Icon icon="solar:settings-bold" className="inline mr-2" width={16} />
           Configure Tests
         </button>

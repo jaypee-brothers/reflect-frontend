@@ -191,7 +191,7 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+      <div className="bg-indigo-600 rounded-xl shadow-lg p-6 text-white">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">Sales Agent Profile Dashboard</h1>
@@ -201,7 +201,7 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
             <select
               value={selectedTimeRange}
               onChange={(e) => setSelectedTimeRange(e.target.value)}
-              className="px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg text-white placeholder-white/70 focus:ring-2 focus:ring-white/50 focus:border-transparent"
+              className="px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-md text-white placeholder-white/70 focus:ring-2 focus:ring-white/50 focus:border-transparent"
             >
               <option value="7days" className="text-gray-900">
                 Last 7 Days
@@ -216,7 +216,7 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
                 Last Year
               </option>
             </select>
-            <button className="px-4 py-2 bg-white text-blue-600 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+            <button className="px-4 py-2 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition-colors font-medium">
               Export Report
             </button>
           </div>
@@ -244,7 +244,7 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
                 })}
               </p>
 
-              <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+              <div className="mt-4 p-3 bg-gray-50 rounded-md">
                 <div className="text-xs text-gray-600 mb-1">Contact</div>
                 <div className="text-sm text-gray-900">{agentData.email}</div>
                 <div className="text-sm text-gray-900">{agentData.phone}</div>
@@ -256,8 +256,8 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
           <div className="lg:col-span-3">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Total Revenue */}
-              <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg p-6 text-center">
-                <div className="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-3">
+              <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-md p-6 text-center">
+                <div className="w-12 h-12 bg-emerald-500 rounded-md flex items-center justify-center mx-auto mb-3">
                   <Icon
                     icon="solar:dollar-minimalistic-bold-duotone"
                     className="text-white"
@@ -272,8 +272,8 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
               </div>
 
               {/* Total Sales */}
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 text-center">
-                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-3">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-md p-6 text-center">
+                <div className="w-12 h-12 bg-blue-500 rounded-md flex items-center justify-center mx-auto mb-3">
                   <Icon icon="solar:chart-2-bold-duotone" className="text-white" width={24} />
                 </div>
                 <div className="text-2xl font-bold text-blue-700 mb-1">
@@ -284,8 +284,8 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
               </div>
 
               {/* Colleges Allocated */}
-              <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 text-center">
-                <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-3">
+              <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-md p-6 text-center">
+                <div className="w-12 h-12 bg-purple-500 rounded-md flex items-center justify-center mx-auto mb-3">
                   <Icon icon="solar:buildings-3-bold-duotone" className="text-white" width={24} />
                 </div>
                 <div className="text-2xl font-bold text-purple-700 mb-1">
@@ -300,17 +300,17 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
 
             {/* Additional Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div className="bg-gray-50 rounded-lg p-4 text-center">
+              <div className="bg-gray-50 rounded-md p-4 text-center">
                 <div className="text-lg font-bold text-gray-900">
                   {agentData.targetAchievement}%
                 </div>
                 <div className="text-sm text-gray-600">Target Achievement</div>
               </div>
-              <div className="bg-gray-50 rounded-lg p-4 text-center">
+              <div className="bg-gray-50 rounded-md p-4 text-center">
                 <div className="text-lg font-bold text-gray-900">+{calculateGrowthRate()}%</div>
                 <div className="text-sm text-gray-600">YoY Growth</div>
               </div>
-              <div className="bg-gray-50 rounded-lg p-4 text-center">
+              <div className="bg-gray-50 rounded-md p-4 text-center">
                 <div className="text-lg font-bold text-gray-900">
                   {Math.round((agentData.totalSalesDone / agentData.totalCollegesAllocated) * 100)}%
                 </div>
@@ -346,7 +346,7 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
           <div className="mt-4 pt-4 border-t border-gray-200">
             <div className="grid grid-cols-3 gap-4 text-center">
               {yearlyRevenueData.map((year, index) => (
-                <div key={year.year} className="bg-gray-50 rounded-lg p-3">
+                <div key={year.year} className="bg-gray-50 rounded-md p-3">
                   <div className="text-lg font-bold text-gray-900">{year.year}</div>
                   <div className="text-sm text-gray-600">{formatCurrency(year.revenue)}</div>
                   {index > 0 && (
@@ -378,7 +378,7 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
               <select
                 value={selectedGeography}
                 onChange={(e) => setSelectedGeography(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               >
                 <option value="all">All Regions</option>
                 <option value="north">North Zone</option>
@@ -404,7 +404,7 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
               {courseDistribution.map((course, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-md"
                 >
                   <div className="flex items-center gap-3">
                     <div
@@ -436,7 +436,7 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
         <h2 className="text-xl font-semibold text-gray-900 mb-6">Monthly Performance Tracking</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-          <div className="bg-emerald-50 rounded-lg p-4 text-center">
+          <div className="bg-emerald-50 rounded-md p-4 text-center">
             <div className="text-2xl font-bold text-emerald-600">
               ₹
               {(monthlyPerformance.reduce((sum, month) => sum + month.revenue, 0) / 100000).toFixed(
@@ -446,13 +446,13 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
             </div>
             <div className="text-sm text-emerald-800">Total Revenue (YTD)</div>
           </div>
-          <div className="bg-blue-50 rounded-lg p-4 text-center">
+          <div className="bg-blue-50 rounded-md p-4 text-center">
             <div className="text-2xl font-bold text-blue-600">
               {monthlyPerformance.reduce((sum, month) => sum + month.sales, 0)}
             </div>
             <div className="text-sm text-blue-800">Total Sales (YTD)</div>
           </div>
-          <div className="bg-purple-50 rounded-lg p-4 text-center">
+          <div className="bg-purple-50 rounded-md p-4 text-center">
             <div className="text-2xl font-bold text-purple-600">
               ₹
               {(
@@ -464,7 +464,7 @@ const SalesAgentProfile = ({ agentId = '1' }: SalesAgentProfileProps) => {
             </div>
             <div className="text-sm text-purple-800">Avg. Monthly Revenue</div>
           </div>
-          <div className="bg-orange-50 rounded-lg p-4 text-center">
+          <div className="bg-orange-50 rounded-md p-4 text-center">
             <div className="text-2xl font-bold text-orange-600">
               {Math.round(
                 monthlyPerformance.reduce((sum, month) => sum + month.sales, 0) /

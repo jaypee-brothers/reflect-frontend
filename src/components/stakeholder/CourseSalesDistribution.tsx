@@ -1,41 +1,62 @@
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import Chart from 'react-apexcharts';
+import { MEDICAL_SUBJECTS, GEOGRAPHIC_ZONES } from '../../utils/constants';
 
 interface CourseSalesDistributionProps {
   timeRange: string;
+  selectedSubject?: string;
+  selectedZone?: string;
   showGeographyFilter?: boolean;
 }
 
 const CourseSalesDistribution = ({
   timeRange,
+  selectedSubject = 'all',
+  selectedZone = 'all',
   showGeographyFilter = false,
 }: CourseSalesDistributionProps) => {
   const [selectedDateRange, setSelectedDateRange] = useState(timeRange);
   const [selectedGeography, setSelectedGeography] = useState('all');
   const [selectedMetric, setSelectedMetric] = useState('sales');
 
-  const geographyOptions = [
-    'All Regions',
-    'North Zone',
-    'South Zone',
-    'East Zone',
-    'West Zone',
-    'Central Zone',
-  ];
+  const geographyOptions = ['All Regions', ...GEOGRAPHIC_ZONES];
 
   // Sample course data based on filters
   const getCourseData = () => {
-    const baseData = [
-      { course: 'NEET Foundation', sales: 1250, revenue: 28500000, percentage: 28.5 },
-      { course: 'AIIMS Preparation', sales: 980, revenue: 35200000, percentage: 22.1 },
-      { course: 'MBBS Complete Course', sales: 750, revenue: 22800000, percentage: 17.8 },
-      { course: 'NEET Complete Package', sales: 650, revenue: 19200000, percentage: 14.7 },
-      { course: 'Medical Foundation Bundle', sales: 420, revenue: 12600000, percentage: 9.5 },
-      { course: 'Anatomy Mastery', sales: 180, revenue: 4320000, percentage: 4.1 },
-      { course: 'Physiology Deep Dive', sales: 95, revenue: 2280000, percentage: 2.1 },
-      { course: 'Others', sales: 45, revenue: 1080000, percentage: 1.2 },
-    ];
+    let baseMultiplier = 1;
+
+    // Apply subject filter
+    if (selectedSubject !== 'all') {
+      baseMultiplier *= 0.3; // Single subject data
+    }
+
+    // Apply zone filter
+    if (selectedZone !== 'all') {
+      baseMultiplier *= 0.4; // Zone-specific data
+    }
+
+    const subjectsToShow =
+      selectedSubject !== 'all' ? [selectedSubject] : MEDICAL_SUBJECTS.slice(0, 7); // Top 7 subjects
+
+    const baseData = subjectsToShow.map((subject, index) => ({
+      course: subject,
+      sales: Math.floor((1250 - index * 150) * baseMultiplier * (0.9 + Math.random() * 0.2)),
+      revenue: Math.floor(
+        (28500000 - index * 3000000) * baseMultiplier * (0.9 + Math.random() * 0.2),
+      ),
+      percentage: 28.5 - index * 3.5,
+    }));
+
+    // Add "Others" category if showing all subjects
+    if (selectedSubject === 'all') {
+      baseData.push({
+        course: 'Others',
+        sales: Math.floor(45 * baseMultiplier * (0.9 + Math.random() * 0.2)),
+        revenue: Math.floor(1080000 * baseMultiplier * (0.9 + Math.random() * 0.2)),
+        percentage: 1.2,
+      });
+    }
 
     return baseData;
   };
@@ -158,7 +179,7 @@ const CourseSalesDistribution = ({
 
         <div className="flex flex-wrap gap-3">
           {/* Metric Selection */}
-          <div className="flex bg-gray-100 rounded-lg p-1">
+          <div className="flex bg-gray-100 rounded-md p-1">
             {[
               { id: 'sales', label: 'Sales Count', icon: 'solar:chart-2-bold' },
               { id: 'revenue', label: 'Revenue', icon: 'solar:dollar-minimalistic-bold' },
@@ -182,7 +203,7 @@ const CourseSalesDistribution = ({
           <select
             value={selectedDateRange}
             onChange={(e) => setSelectedDateRange(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
           >
             <option value="7days">Last 7 Days</option>
             <option value="3months">Last 3 Months</option>
@@ -195,7 +216,7 @@ const CourseSalesDistribution = ({
             <select
               value={selectedGeography}
               onChange={(e) => setSelectedGeography(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
             >
               {geographyOptions.map((geo, index) => (
                 <option key={index} value={geo.toLowerCase().replace(/\s+/g, '-')}>
@@ -220,7 +241,7 @@ const CourseSalesDistribution = ({
             {courseData.map((course, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div

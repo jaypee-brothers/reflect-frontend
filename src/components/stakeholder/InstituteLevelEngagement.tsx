@@ -1,27 +1,47 @@
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import Chart from 'react-apexcharts';
+import { MEDICAL_SUBJECTS, generateInstituteData } from '../../utils/constants';
 
 interface InstituteLevelEngagementProps {
   timeRange: string;
+  selectedSubject?: string;
+  selectedZone?: string;
 }
 
-const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) => {
+const InstituteLevelEngagement = ({
+  timeRange,
+  selectedSubject = 'all',
+  selectedZone = 'all',
+}: InstituteLevelEngagementProps) => {
   const [selectedMetric, setSelectedMetric] = useState('usage');
 
-  // Sample institute data
-  const instituteData = [
-    { name: 'AIIMS Delhi', usage: 95, revenue: 850000, students: 1200, growth: '+28.5%' },
-    { name: 'JIPMER Puducherry', usage: 92, revenue: 720000, students: 980, growth: '+24.2%' },
-    { name: 'CMC Vellore', usage: 89, revenue: 680000, students: 850, growth: '+22.8%' },
-    { name: 'AFMC Pune', usage: 87, revenue: 620000, students: 750, growth: '+26.1%' },
-    { name: 'KGMU Lucknow', usage: 85, revenue: 580000, students: 720, growth: '+20.5%' },
-    { name: 'PGIMER Chandigarh', usage: 82, revenue: 550000, students: 680, growth: '+23.7%' },
-    { name: 'SGPGI Lucknow', usage: 80, revenue: 520000, students: 620, growth: '+19.8%' },
-    { name: 'NIMHANS Bangalore', usage: 78, revenue: 480000, students: 580, growth: '+21.4%' },
-    { name: 'BHU Varanasi', usage: 75, revenue: 450000, students: 550, growth: '+18.2%' },
-    { name: 'JNU Delhi', usage: 72, revenue: 420000, students: 520, growth: '+16.5%' },
-  ];
+  // Generate institute data based on filters
+  const getInstituteData = () => {
+    let institutes = generateInstituteData(timeRange);
+
+    // Filter by zone
+    if (selectedZone !== 'all') {
+      institutes = institutes.filter((institute) => institute.zone === selectedZone);
+    }
+
+    // Apply subject filter multiplier
+    let baseMultiplier = 1;
+    if (selectedSubject !== 'all') {
+      const subjectIndex = MEDICAL_SUBJECTS.indexOf(selectedSubject);
+      baseMultiplier *= subjectIndex !== -1 ? (20 - subjectIndex) / 20 : 0.5;
+    }
+
+    return institutes.slice(0, 10).map((institute) => ({
+      name: institute.name,
+      usage: Math.floor(institute.usage * baseMultiplier),
+      revenue: Math.floor(institute.revenue * baseMultiplier),
+      students: Math.floor(institute.students * baseMultiplier),
+      growth: institute.growth,
+    }));
+  };
+
+  const instituteData = getInstituteData();
 
   const lowEngagementData = [
     {
@@ -204,7 +224,7 @@ const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) 
           </p>
         </div>
 
-        <div className="flex bg-gray-100 rounded-lg p-1">
+        <div className="flex bg-gray-100 rounded-md p-1">
           {[
             { id: 'usage', label: 'Usage %', icon: 'solar:chart-2-bold' },
             { id: 'revenue', label: 'Revenue', icon: 'solar:dollar-minimalistic-bold' },
@@ -247,7 +267,7 @@ const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) 
             {instituteData.slice(0, 10).map((institute, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-3 bg-green-50 rounded-lg"
+                className="flex items-center justify-between p-3 bg-green-50 rounded-md"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-sm font-bold text-green-600">#{index + 1}</div>
@@ -288,7 +308,7 @@ const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) 
             {lowEngagementData.map((institute, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-3 bg-red-50 rounded-lg"
+                className="flex items-center justify-between p-3 bg-red-50 rounded-md"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-sm font-bold text-red-600">⚠</div>
@@ -315,7 +335,7 @@ const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) 
       <div className="mt-6 pt-6 border-t border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Engagement Categories</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-green-50 rounded-lg p-4 text-center">
+          <div className="bg-green-50 rounded-md p-4 text-center">
             <div className="text-2xl font-bold text-green-600">
               {instituteData.filter((item) => item.usage >= 80).length}
             </div>
@@ -323,7 +343,7 @@ const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) 
             <div className="text-xs text-green-600">80%+ usage</div>
           </div>
 
-          <div className="bg-blue-50 rounded-lg p-4 text-center">
+          <div className="bg-blue-50 rounded-md p-4 text-center">
             <div className="text-2xl font-bold text-blue-600">
               {instituteData.filter((item) => item.usage >= 60 && item.usage < 80).length}
             </div>
@@ -331,7 +351,7 @@ const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) 
             <div className="text-xs text-blue-600">60-79% usage</div>
           </div>
 
-          <div className="bg-yellow-50 rounded-lg p-4 text-center">
+          <div className="bg-yellow-50 rounded-md p-4 text-center">
             <div className="text-2xl font-bold text-yellow-600">
               {
                 [...instituteData, ...lowEngagementData].filter(
@@ -343,7 +363,7 @@ const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) 
             <div className="text-xs text-yellow-600">40-59% usage</div>
           </div>
 
-          <div className="bg-red-50 rounded-lg p-4 text-center">
+          <div className="bg-red-50 rounded-md p-4 text-center">
             <div className="text-2xl font-bold text-red-600">
               {lowEngagementData.filter((item) => item.usage < 40).length}
             </div>
@@ -357,7 +377,7 @@ const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) 
       <div className="mt-6 pt-6 border-t border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Insights & Recommendations</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-emerald-50 rounded-lg p-4">
+          <div className="bg-emerald-50 rounded-md p-4">
             <div className="flex items-center gap-3 mb-2">
               <Icon icon="solar:star-bold-duotone" className="text-emerald-600" width={20} />
               <span className="text-sm font-semibold text-emerald-800">Success Pattern</span>
@@ -367,7 +387,7 @@ const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) 
             </div>
           </div>
 
-          <div className="bg-blue-50 rounded-lg p-4">
+          <div className="bg-blue-50 rounded-md p-4">
             <div className="flex items-center gap-3 mb-2">
               <Icon icon="solar:target-bold-duotone" className="text-blue-600" width={20} />
               <span className="text-sm font-semibold text-blue-800">Growth Opportunity</span>
@@ -377,7 +397,7 @@ const InstituteLevelEngagement = ({ timeRange }: InstituteLevelEngagementProps) 
             </div>
           </div>
 
-          <div className="bg-orange-50 rounded-lg p-4">
+          <div className="bg-orange-50 rounded-md p-4">
             <div className="flex items-center gap-3 mb-2">
               <Icon
                 icon="solar:danger-triangle-bold-duotone"

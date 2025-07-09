@@ -170,7 +170,7 @@ const CompetencyOverview = () => {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Radar Chart */}
         <div className="xl:col-span-2">
-          <div className="bg-gray-50 rounded-lg p-4">
+          <div className="bg-gray-50 rounded-md p-4">
             <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
               Subject Competency Radar
             </h3>
@@ -189,7 +189,7 @@ const CompetencyOverview = () => {
 
           <div className="space-y-3 max-h-80 overflow-y-auto">
             {competencyData.map((subject, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg p-3">
+              <div key={index} className="bg-gray-50 rounded-md p-3">
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-medium text-gray-900 text-sm">{subject.subject}</span>
                   <span
@@ -230,7 +230,7 @@ const CompetencyOverview = () => {
           </div>
 
           {/* Weakest Subject Highlight */}
-          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-md">
             <div className="flex items-center gap-2 mb-2">
               <Icon icon="solar:danger-circle-bold" className="text-red-500" width={20} />
               <span className="text-sm font-semibold text-red-800">Needs Attention</span>
@@ -239,7 +239,7 @@ const CompetencyOverview = () => {
               <strong>{weakestSubject.subject}</strong> has the lowest competency score of{' '}
               {weakestSubject.score}%
             </div>
-            <button className="mt-2 px-3 py-1 bg-red-600 text-white text-xs rounded-lg hover:bg-red-700 transition-colors">
+            <button className="mt-2 px-3 py-1 bg-red-600 text-white text-xs rounded-md hover:bg-red-700 transition-colors">
               Create Improvement Plan
             </button>
           </div>
@@ -249,7 +249,7 @@ const CompetencyOverview = () => {
       {/* Improvement Trends */}
       <div className="mt-6 pt-6 border-t border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Improvement Trends</h3>
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className="bg-gray-50 rounded-md p-4">
           <Chart
             options={improvementChartData.options}
             series={improvementChartData.series}
@@ -301,15 +301,15 @@ const CompetencyOverview = () => {
 
       {/* Action Buttons */}
       <div className="mt-6 pt-6 border-t border-gray-200 flex flex-wrap gap-3">
-        <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors text-sm font-medium">
           <Icon icon="solar:document-text-bold" className="inline mr-2" width={16} />
           Detailed Competency Report
         </button>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
           <Icon icon="solar:settings-bold" className="inline mr-2" width={16} />
           Configure Competencies
         </button>
-        <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium">
+        <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium">
           <Icon icon="solar:download-minimalistic-bold" className="inline mr-2" width={16} />
           Export Analysis
         </button>

@@ -239,7 +239,7 @@ const UserEngagement = ({
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Engagement Trends</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {engagementTrends.map((trend) => (
-            <div key={trend.metric} className="p-4 bg-gray-50 rounded-lg">
+            <div key={trend.metric} className="p-4 bg-gray-50 rounded-md">
               <div className="flex items-center justify-between mb-2">
                 <div className="font-medium text-gray-900">{trend.metric}</div>
                 <div className={`text-sm font-medium ${getTrendColor(trend.trend)}`}>
@@ -260,7 +260,7 @@ const UserEngagement = ({
             {userActivityHeatmap.map((hour) => (
               <div key={hour.hour} className="text-center">
                 <div
-                  className={`w-12 h-12 rounded-lg flex items-center justify-center text-white text-sm font-medium ${getActivityIntensity(
+                  className={`w-12 h-12 rounded-md flex items-center justify-center text-white text-sm font-medium ${getActivityIntensity(
                     hour.activity,
                   )}`}
                 >
@@ -293,7 +293,7 @@ const UserEngagement = ({
             {usersBySpecialty.map((specialty: any, index: number) => (
               <div
                 key={specialty.specialty}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-md"
               >
                 <div className="flex items-center">
                   <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-semibold mr-3">
@@ -322,7 +322,7 @@ const UserEngagement = ({
             {topInstitutions.map((institution: any, index: number) => (
               <div
                 key={institution.name}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-md"
               >
                 <div className="flex items-center">
                   <div className="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm font-semibold mr-3">
@@ -352,7 +352,7 @@ const UserEngagement = ({
         </h3>
         <div className="space-y-4">
           {engagementIssues.map((issue, index) => (
-            <div key={index} className="p-4 border border-gray-200 rounded-lg">
+            <div key={index} className="p-4 border border-gray-200 rounded-md">
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <h4 className="font-semibold text-gray-900">{issue.issue}</h4>
@@ -368,7 +368,7 @@ const UserEngagement = ({
                   {issue.severity.charAt(0).toUpperCase() + issue.severity.slice(1)} Priority
                 </span>
               </div>
-              <div className="text-sm text-gray-700 bg-blue-50 p-3 rounded-lg">
+              <div className="text-sm text-gray-700 bg-blue-50 p-3 rounded-md">
                 <strong>Recommendation:</strong> {issue.recommendation}
               </div>
             </div>

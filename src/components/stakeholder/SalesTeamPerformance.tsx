@@ -3,9 +3,15 @@ import { Icon } from '@iconify/react';
 
 interface SalesTeamPerformanceProps {
   timeRange: string;
+  selectedSubject?: string;
+  selectedZone?: string;
 }
 
-const SalesTeamPerformance = ({ timeRange }: SalesTeamPerformanceProps) => {
+const SalesTeamPerformance = ({
+  timeRange,
+  selectedSubject = 'all',
+  selectedZone = 'all',
+}: SalesTeamPerformanceProps) => {
   const [selectedView, setSelectedView] = useState('overview');
   const [sortBy, setSortBy] = useState('revenue');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
@@ -208,7 +214,7 @@ const SalesTeamPerformance = ({ timeRange }: SalesTeamPerformanceProps) => {
           </p>
         </div>
 
-        <div className="flex bg-gray-100 rounded-lg p-1">
+        <div className="flex bg-gray-100 rounded-md p-1">
           {[
             { id: 'overview', label: 'Overview', icon: 'solar:chart-2-bold-duotone' },
             { id: 'leaderboard', label: 'Leaderboard', icon: 'solar:cup-star-bold-duotone' },
@@ -237,7 +243,7 @@ const SalesTeamPerformance = ({ timeRange }: SalesTeamPerformanceProps) => {
             {sortedData.slice(0, 4).map((agent, index) => (
               <div
                 key={agent.id}
-                className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-lg p-4 border border-gray-200/50"
+                className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-md p-4 border border-gray-200/50"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
@@ -430,7 +436,7 @@ const SalesTeamPerformance = ({ timeRange }: SalesTeamPerformanceProps) => {
 
           {/* Achievement Badges */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-green-50 rounded-lg p-4 text-center">
+            <div className="bg-green-50 rounded-md p-4 text-center">
               <Icon
                 icon="solar:cup-star-bold-duotone"
                 className="text-green-600 mx-auto mb-2"
@@ -440,7 +446,7 @@ const SalesTeamPerformance = ({ timeRange }: SalesTeamPerformanceProps) => {
               <div className="text-sm text-green-600">{sortedData[0]?.name}</div>
             </div>
 
-            <div className="bg-blue-50 rounded-lg p-4 text-center">
+            <div className="bg-blue-50 rounded-md p-4 text-center">
               <Icon
                 icon="solar:target-bold-duotone"
                 className="text-blue-600 mx-auto mb-2"
@@ -452,7 +458,7 @@ const SalesTeamPerformance = ({ timeRange }: SalesTeamPerformanceProps) => {
               </div>
             </div>
 
-            <div className="bg-purple-50 rounded-lg p-4 text-center">
+            <div className="bg-purple-50 rounded-md p-4 text-center">
               <Icon
                 icon="solar:buildings-3-bold-duotone"
                 className="text-purple-600 mx-auto mb-2"
@@ -474,7 +480,7 @@ const SalesTeamPerformance = ({ timeRange }: SalesTeamPerformanceProps) => {
             {Object.entries(zonePerformance).map(([zone, data]) => (
               <div
                 key={zone}
-                className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-lg p-4 border border-gray-200/50"
+                className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-md p-4 border border-gray-200/50"
               >
                 <div className="text-center">
                   <div className="font-semibold text-gray-900 mb-2">{zone}</div>
@@ -496,7 +502,7 @@ const SalesTeamPerformance = ({ timeRange }: SalesTeamPerformanceProps) => {
               const zoneAgents = salesTeamData.filter((agent) => agent.zone === zone);
 
               return (
-                <div key={zone} className="bg-gray-50 rounded-lg p-4">
+                <div key={zone} className="bg-gray-50 rounded-md p-4">
                   <h3 className="font-semibold text-gray-900 mb-3">{zone}</h3>
                   <div className="space-y-2">
                     {zoneAgents.map((agent) => (

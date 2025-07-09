@@ -56,7 +56,7 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
             <button
               key={period}
               onClick={() => setHeatmapPeriod(period)}
-              className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+              className={`px-3 py-1 text-sm rounded-md transition-colors ${
                 heatmapPeriod === period
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -73,9 +73,9 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
         <div className="lg:col-span-2">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Activated Licenses */}
-            <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4">
+            <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-md p-4">
               <div className="flex items-center gap-3 mb-2">
-                <div className="bg-blue-500 text-white p-2 rounded-lg">
+                <div className="bg-blue-500 text-white p-2 rounded-md">
                   <Icon icon="solar:user-check-rounded-bold" width={20} />
                 </div>
               </div>
@@ -86,9 +86,9 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
             </div>
 
             {/* Login Rate */}
-            <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-4">
+            <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-md p-4">
               <div className="flex items-center gap-3 mb-2">
-                <div className="bg-green-500 text-white p-2 rounded-lg">
+                <div className="bg-green-500 text-white p-2 rounded-md">
                   <Icon icon="solar:login-3-bold" width={20} />
                 </div>
               </div>
@@ -97,9 +97,9 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
             </div>
 
             {/* Avg Time Spent */}
-            <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg p-4">
+            <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-md p-4">
               <div className="flex items-center gap-3 mb-2">
-                <div className="bg-purple-500 text-white p-2 rounded-lg">
+                <div className="bg-purple-500 text-white p-2 rounded-md">
                   <Icon icon="solar:clock-circle-bold" width={20} />
                 </div>
               </div>
@@ -108,9 +108,9 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
             </div>
 
             {/* Most Accessed Content */}
-            <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg p-4">
+            <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-md p-4">
               <div className="flex items-center gap-3 mb-2">
-                <div className="bg-orange-500 text-white p-2 rounded-lg">
+                <div className="bg-orange-500 text-white p-2 rounded-md">
                   <Icon icon="solar:video-library-bold" width={20} />
                 </div>
               </div>
@@ -124,7 +124,7 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
 
         {/* Login Heatmap */}
         <div className="lg:col-span-1">
-          <div className="bg-gray-50 rounded-lg p-4 h-full">
+          <div className="bg-gray-50 rounded-md p-4 h-full">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Study Activity Heatmap</h3>
             <div className="space-y-2">
               {heatmapPeriod === '7days' ? (

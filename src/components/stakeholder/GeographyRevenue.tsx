@@ -1,12 +1,43 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Icon } from '@iconify/react';
+import { MEDICAL_SUBJECTS, generateInstituteData, formatCurrency } from '../../utils/constants';
 
 interface GeographyRevenueProps {
   timeRange: string;
+  selectedSubject?: string;
+  selectedZone?: string;
 }
 
-const GeographyRevenue = ({ timeRange }: GeographyRevenueProps) => {
+const GeographyRevenue = ({
+  timeRange,
+  selectedSubject = 'all',
+  selectedZone = 'all',
+}: GeographyRevenueProps) => {
   const [selectedView, setSelectedView] = useState('states');
+
+  // Generate dynamic data based on filters
+  const allInstituteData = generateInstituteData(timeRange);
+  
+  const filteredData = useMemo(() => {
+    let data = allInstituteData;
+    
+    // Apply zone filter
+    if (selectedZone !== 'all') {
+      data = data.filter(institute => institute.zone === selectedZone);
+    }
+    
+    // Apply subject filter by adjusting revenue
+    let subjectMultiplier = 1;
+    if (selectedSubject !== 'all') {
+      const subjectIndex = MEDICAL_SUBJECTS.indexOf(selectedSubject);
+      subjectMultiplier = subjectIndex !== -1 ? (20 - subjectIndex) / 20 : 0.5;
+    }
+    
+    return data.map(institute => ({
+      ...institute,
+      revenue: Math.floor(institute.revenue * subjectMultiplier)
+    }));
+  }, [allInstituteData, selectedZone, selectedSubject]);
 
   // Sample geography data
   const stateData = [
@@ -20,7 +51,34 @@ const GeographyRevenue = ({ timeRange }: GeographyRevenueProps) => {
     { name: 'Rajasthan', revenue: 8500000, colleges: 68, growth: '+11.8%', intensity: 48 },
     { name: 'Andhra Pradesh', revenue: 7800000, colleges: 62, growth: '+13.2%', intensity: 44 },
     { name: 'Telangana', revenue: 7200000, colleges: 55, growth: '+19.5%', intensity: 40 },
-  ];
+  ].map(state => {
+    // Apply filters to state data
+    let multiplier = 1;
+    if (selectedSubject !== 'all') {
+      const subjectIndex = MEDICAL_SUBJECTS.indexOf(selectedSubject);
+      multiplier *= subjectIndex !== -1 ? (20 - subjectIndex) / 20 : 0.5;
+    }
+    if (selectedZone !== 'all') {
+      // Filter states based on zone (simplified mapping)
+      const zoneStates = {
+        'North Zone': ['Delhi', 'Uttar Pradesh', 'Rajasthan'],
+        'South Zone': ['Karnataka', 'Tamil Nadu', 'Andhra Pradesh', 'Telangana'],
+        'West Zone': ['Maharashtra', 'Gujarat'],
+        'East Zone': ['West Bengal'],
+        'Central Zone': []
+      };
+      const zoneStatesList = zoneStates[selectedZone as keyof typeof zoneStates] || [];
+      if (!zoneStatesList.includes(state.name)) {
+        multiplier = 0;
+      }
+    }
+    
+    return {
+      ...state,
+      revenue: Math.floor(state.revenue * multiplier),
+      colleges: Math.floor(state.colleges * multiplier)
+    };
+  }).filter(state => state.revenue > 0);
 
   const cityData = [
     { name: 'Mumbai', revenue: 8200000, colleges: 45, growth: '+25.2%' },
@@ -33,16 +91,12 @@ const GeographyRevenue = ({ timeRange }: GeographyRevenueProps) => {
     { name: 'Ahmedabad', revenue: 4200000, colleges: 22, growth: '+18.9%' },
   ];
 
-  const collegeData = [
-    { name: 'AIIMS Delhi', revenue: 850000, students: 1200, growth: '+28.5%' },
-    { name: 'JIPMER Puducherry', revenue: 720000, students: 980, growth: '+24.2%' },
-    { name: 'CMC Vellore', revenue: 680000, students: 850, growth: '+22.8%' },
-    { name: 'AFMC Pune', revenue: 620000, students: 750, growth: '+26.1%' },
-    { name: 'KGMU Lucknow', revenue: 580000, students: 720, growth: '+20.5%' },
-    { name: 'PGIMER Chandigarh', revenue: 550000, students: 680, growth: '+23.7%' },
-    { name: 'SGPGI Lucknow', revenue: 520000, students: 620, growth: '+19.8%' },
-    { name: 'NIMHANS Bangalore', revenue: 480000, students: 580, growth: '+21.4%' },
-  ];
+  const collegeData = filteredData.slice(0, 8).map((institute) => ({
+    name: institute.name,
+    revenue: institute.revenue,
+    students: institute.students,
+    growth: `+${(15 + Math.random() * 15).toFixed(1)}%`
+  }));
 
   const getIntensityColor = (intensity: number) => {
     if (intensity >= 80) return 'bg-emerald-600';
@@ -73,7 +127,7 @@ const GeographyRevenue = ({ timeRange }: GeographyRevenueProps) => {
           </p>
         </div>
 
-        <div className="flex bg-gray-100 rounded-lg p-1">
+        <div className="flex bg-gray-100 rounded-md p-1">
           {[
             { id: 'states', label: 'States', icon: 'solar:map-bold-duotone' },
             { id: 'cities', label: 'Cities', icon: 'solar:city-bold-duotone' },
@@ -98,7 +152,7 @@ const GeographyRevenue = ({ timeRange }: GeographyRevenueProps) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* India Map Visualization */}
         <div className="lg:col-span-1">
-          <div className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-lg p-6 h-96 flex items-center justify-center">
+          <div className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-md p-6 h-96 flex items-center justify-center">
             <div className="text-center">
               <Icon icon="solar:map-bold-duotone" className="text-emerald-600 mb-4" width={80} />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">India Revenue Map</h3>
@@ -138,7 +192,7 @@ const GeographyRevenue = ({ timeRange }: GeographyRevenueProps) => {
             {currentData.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                className="flex items-center justify-between p-4 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
@@ -161,7 +215,7 @@ const GeographyRevenue = ({ timeRange }: GeographyRevenueProps) => {
 
                 <div className="text-right">
                   <div className="font-bold text-gray-900">
-                    ₹{(item.revenue / 100000).toFixed(1)}L
+                    {formatCurrency(item.revenue)}
                   </div>
                   <div className={`text-sm font-medium ${getGrowthColor(item.growth)}`}>
                     {item.growth}
@@ -219,7 +273,7 @@ const GeographyRevenue = ({ timeRange }: GeographyRevenueProps) => {
       <div className="mt-6 pt-6 border-t border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Regional Insights</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-emerald-50 rounded-lg p-4">
+          <div className="bg-emerald-50 rounded-md p-4">
             <div className="flex items-center gap-3 mb-2">
               <Icon icon="solar:cup-star-bold-duotone" className="text-emerald-600" width={20} />
               <span className="text-sm font-semibold text-emerald-800">Highest Growth</span>
@@ -231,7 +285,7 @@ const GeographyRevenue = ({ timeRange }: GeographyRevenueProps) => {
             </div>
           </div>
 
-          <div className="bg-blue-50 rounded-lg p-4">
+          <div className="bg-blue-50 rounded-md p-4">
             <div className="flex items-center gap-3 mb-2">
               <Icon icon="solar:target-bold-duotone" className="text-blue-600" width={20} />
               <span className="text-sm font-semibold text-blue-800">Opportunity</span>
@@ -243,7 +297,7 @@ const GeographyRevenue = ({ timeRange }: GeographyRevenueProps) => {
             </div>
           </div>
 
-          <div className="bg-purple-50 rounded-lg p-4">
+          <div className="bg-purple-50 rounded-md p-4">
             <div className="flex items-center gap-3 mb-2">
               <Icon icon="solar:chart-2-bold-duotone" className="text-purple-600" width={20} />
               <span className="text-sm font-semibold text-purple-800">Market Share</span>

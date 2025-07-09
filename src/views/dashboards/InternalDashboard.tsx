@@ -29,7 +29,7 @@ const InternalDashboard = () => {
             <select
               value={selectedTimeRange}
               onChange={(e) => setSelectedTimeRange(e.target.value)}
-              className="px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg text-white placeholder-white/70 focus:ring-2 focus:ring-white/50 focus:border-transparent"
+              className="px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-md text-white placeholder-white/70 focus:ring-2 focus:ring-white/50 focus:border-transparent"
             >
               {TIME_RANGES.map((range) => (
                 <option key={range.value} value={range.value} className="text-gray-900">
@@ -41,7 +41,7 @@ const InternalDashboard = () => {
             <select
               value={selectedSubject}
               onChange={(e) => setSelectedSubject(e.target.value)}
-              className="px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg text-white placeholder-white/70 focus:ring-2 focus:ring-white/50 focus:border-transparent"
+              className="px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-md text-white placeholder-white/70 focus:ring-2 focus:ring-white/50 focus:border-transparent"
             >
               <option value="all" className="text-gray-900">
                 All Subjects
@@ -56,7 +56,7 @@ const InternalDashboard = () => {
             <select
               value={selectedZone}
               onChange={(e) => setSelectedZone(e.target.value)}
-              className="px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg text-white placeholder-white/70 focus:ring-2 focus:ring-white/50 focus:border-transparent"
+              className="px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-md text-white placeholder-white/70 focus:ring-2 focus:ring-white/50 focus:border-transparent"
             >
               <option value="all" className="text-gray-900">
                 All Zones
@@ -68,7 +68,7 @@ const InternalDashboard = () => {
               ))}
             </select>
 
-            <div className="flex bg-white/20 backdrop-blur-sm rounded-lg p-1">
+            <div className="flex bg-white/20 backdrop-blur-sm rounded-md p-1">
               {[
                 { id: 'overview', label: 'Overview' },
                 { id: 'courses', label: 'Courses' },
@@ -89,7 +89,7 @@ const InternalDashboard = () => {
               ))}
             </div>
 
-            <button className="px-4 py-2 bg-white text-indigo-600 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+            <button className="px-4 py-2 bg-white text-indigo-600 rounded-md hover:bg-gray-100 transition-colors font-medium">
               Export Report
             </button>
           </div>
@@ -186,9 +186,9 @@ const InternalDashboard = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           <Link
             to="/courses/new"
-            className="flex flex-col items-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+            className="flex flex-col items-center p-4 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors"
           >
-            <div className="w-12 h-12 bg-blue-500 text-white rounded-lg flex items-center justify-center mb-2">
+            <div className="w-12 h-12 bg-blue-500 text-white rounded-md flex items-center justify-center mb-2">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -203,9 +203,9 @@ const InternalDashboard = () => {
 
           <Link
             to="/institutions/new"
-            className="flex flex-col items-center p-4 bg-green-50 hover:bg-green-100 rounded-lg transition-colors"
+            className="flex flex-col items-center p-4 bg-green-50 hover:bg-green-100 rounded-md transition-colors"
           >
-            <div className="w-12 h-12 bg-green-500 text-white rounded-lg flex items-center justify-center mb-2">
+            <div className="w-12 h-12 bg-green-500 text-white rounded-md flex items-center justify-center mb-2">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -220,9 +220,9 @@ const InternalDashboard = () => {
 
           <Link
             to="/content/upload"
-            className="flex flex-col items-center p-4 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors"
+            className="flex flex-col items-center p-4 bg-purple-50 hover:bg-purple-100 rounded-md transition-colors"
           >
-            <div className="w-12 h-12 bg-purple-500 text-white rounded-lg flex items-center justify-center mb-2">
+            <div className="w-12 h-12 bg-purple-500 text-white rounded-md flex items-center justify-center mb-2">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -237,9 +237,9 @@ const InternalDashboard = () => {
 
           <Link
             to="/analytics/reports"
-            className="flex flex-col items-center p-4 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors"
+            className="flex flex-col items-center p-4 bg-orange-50 hover:bg-orange-100 rounded-md transition-colors"
           >
-            <div className="w-12 h-12 bg-orange-500 text-white rounded-lg flex items-center justify-center mb-2">
+            <div className="w-12 h-12 bg-orange-500 text-white rounded-md flex items-center justify-center mb-2">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -254,9 +254,9 @@ const InternalDashboard = () => {
 
           <Link
             to="/users/manage"
-            className="flex flex-col items-center p-4 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
+            className="flex flex-col items-center p-4 bg-red-50 hover:bg-red-100 rounded-md transition-colors"
           >
-            <div className="w-12 h-12 bg-red-500 text-white rounded-lg flex items-center justify-center mb-2">
+            <div className="w-12 h-12 bg-red-500 text-white rounded-md flex items-center justify-center mb-2">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -271,9 +271,9 @@ const InternalDashboard = () => {
 
           <Link
             to="/settings"
-            className="flex flex-col items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+            className="flex flex-col items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
           >
-            <div className="w-12 h-12 bg-gray-500 text-white rounded-lg flex items-center justify-center mb-2">
+            <div className="w-12 h-12 bg-gray-500 text-white rounded-md flex items-center justify-center mb-2">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"

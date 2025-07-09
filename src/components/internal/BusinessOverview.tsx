@@ -157,7 +157,7 @@ const BusinessOverview = ({
             {topSpecialties.map((specialty: any, index: number) => (
               <div
                 key={specialty.name}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-md"
               >
                 <div className="flex items-center">
                   <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-semibold mr-3">
