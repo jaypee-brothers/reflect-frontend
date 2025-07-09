@@ -27,7 +27,6 @@ import indiaGeoData from '../../topojson/india.geojson?url';
 
 const IndiaMap = ({
   geographicData,
-  dataLevel = 'state',
   onGeographyClick,
   showCities = false,
   showDistricts = false,
