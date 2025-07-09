@@ -35,9 +35,9 @@ const Router = [
     path: '/',
     element: <FullLayout />,
     children: [
-      { path: '/', exact: true, element: <Dashboard /> },
+      { path: '/dashboard', exact: true, element: <Dashboard /> },
       { path: '/internal-dashboard', exact: true, element: <InternalDashboard /> },
-      { path: '/stakeholder-dashboard', exact: true, element: <StakeholderDashboard /> },
+      { path: '/', exact: true, element: <StakeholderDashboard /> },
       { path: '/profile/student', exact: true, element: <StudentProfile /> },
       { path: '/profile/sales-agent', exact: true, element: <SalesAgentProfile /> },
       { path: '/ui/typography', exact: true, element: <Typography /> },

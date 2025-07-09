@@ -28,10 +28,17 @@ const SidebarContent: MenuItem[] = [
     heading: 'HOME',
     children: [
       {
+        name: 'Stakeholder Dashboard',
+        icon: 'solar:chart-2-bold-duotone',
+        id: uniqueId(),
+        url: '/',
+        isPro: false,
+      },
+      {
         name: 'Institution Dashboard',
         icon: 'solar:widget-add-line-duotone',
         id: uniqueId(),
-        url: '/',
+        url: '/dashboard',
         isPro: false,
       },
       {
@@ -39,13 +46,6 @@ const SidebarContent: MenuItem[] = [
         icon: 'solar:settings-bold-duotone',
         id: uniqueId(),
         url: '/internal-dashboard',
-        isPro: false,
-      },
-      {
-        name: 'Stakeholder Dashboard',
-        icon: 'solar:chart-2-bold-duotone',
-        id: uniqueId(),
-        url: '/stakeholder-dashboard',
         isPro: false,
       },
     ],
