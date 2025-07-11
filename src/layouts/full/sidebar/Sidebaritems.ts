@@ -41,13 +41,6 @@ const SidebarContent: MenuItem[] = [
         url: '/dashboard',
         isPro: false,
       },
-      {
-        name: 'Internal Dashboard',
-        icon: 'solar:settings-bold-duotone',
-        id: uniqueId(),
-        url: '/internal-dashboard',
-        isPro: false,
-      },
     ],
   },
   {
