@@ -69,39 +69,39 @@ const SidebarContent: MenuItem[] = [
       },
     ],
   },
-  {
-    heading: 'UTILITIES',
-    children: [
-      {
-        name: 'Typography',
-        icon: 'solar:text-circle-outline',
-        id: uniqueId(),
-        url: '/ui/typography',
-        isPro: false,
-      },
-      {
-        name: 'Table',
-        icon: 'solar:bedside-table-3-linear',
-        id: uniqueId(),
-        url: '/ui/table',
-        isPro: false,
-      },
-      {
-        name: 'Form',
-        icon: 'solar:password-minimalistic-outline',
-        id: uniqueId(),
-        url: '/ui/form',
-        isPro: false,
-      },
-      {
-        name: 'Alert',
-        icon: 'solar:airbuds-case-charge-outline',
-        id: uniqueId(),
-        url: '/ui/alert',
-        isPro: false,
-      },
-    ],
-  },
+  //   {
+  //     heading: 'UTILITIES',
+  //     children: [
+  //       {
+  //         name: 'Typography',
+  //         icon: 'solar:text-circle-outline',
+  //         id: uniqueId(),
+  //         url: '/ui/typography',
+  //         isPro: false,
+  //       },
+  //       {
+  //         name: 'Table',
+  //         icon: 'solar:bedside-table-3-linear',
+  //         id: uniqueId(),
+  //         url: '/ui/table',
+  //         isPro: false,
+  //       },
+  //       {
+  //         name: 'Form',
+  //         icon: 'solar:password-minimalistic-outline',
+  //         id: uniqueId(),
+  //         url: '/ui/form',
+  //         isPro: false,
+  //       },
+  //       {
+  //         name: 'Alert',
+  //         icon: 'solar:airbuds-case-charge-outline',
+  //         id: uniqueId(),
+  //         url: '/ui/alert',
+  //         isPro: false,
+  //       },
+  //     ],
+  //   },
 
   {
     heading: 'Auth',
@@ -113,13 +113,13 @@ const SidebarContent: MenuItem[] = [
         url: '/auth/login',
         isPro: false,
       },
-      {
-        name: 'Register',
-        icon: 'solar:shield-user-outline',
-        id: uniqueId(),
-        url: '/auth/register',
-        isPro: false,
-      },
+      //   {
+      //     name: 'Register',
+      //     icon: 'solar:shield-user-outline',
+      //     id: uniqueId(),
+      //     url: '/auth/register',
+      //     isPro: false,
+      //   },
     ],
   },
 ];
