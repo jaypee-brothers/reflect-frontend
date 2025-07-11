@@ -69,6 +69,39 @@ const SidebarContent: MenuItem[] = [
       },
     ],
   },
+  {
+    heading: 'DATA MANAGEMENT',
+    children: [
+      {
+        name: 'Q-Bank Analytics',
+        icon: 'solar:chart-square-outline',
+        id: uniqueId(),
+        url: '/tables/qbank-analytics',
+        isPro: false,
+      },
+      {
+        name: 'Test Series',
+        icon: 'solar:test-tube-outline',
+        id: uniqueId(),
+        url: '/tables/test-series',
+        isPro: false,
+      },
+      {
+        name: 'User Management',
+        icon: 'solar:users-group-two-rounded-outline',
+        id: uniqueId(),
+        url: '/tables/users',
+        isPro: false,
+      },
+      {
+        name: 'Video Content',
+        icon: 'solar:video-frame-play-vertical-outline',
+        id: uniqueId(),
+        url: '/tables/videos',
+        isPro: false,
+      },
+    ],
+  },
   //   {
   //     heading: 'UTILITIES',
   //     children: [

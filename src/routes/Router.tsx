@@ -21,6 +21,12 @@ const Form = lazy(() => import('../views/forms/Form'));
 const Shadow = lazy(() => import('../views/shadows/Shadow'));
 const Alert = lazy(() => import('../views/alerts/Alerts'));
 
+// Table Management
+const QBankAnalytics = lazy(() => import('../views/tables/QBankAnalytics'));
+const TestSeriesManagement = lazy(() => import('../views/tables/TestSeriesManagement'));
+const UserManagement = lazy(() => import('../views/tables/UserManagement'));
+const VideoContentManagement = lazy(() => import('../views/tables/VideoContentManagement'));
+
 // icons
 const Solar = lazy(() => import('../views/icons/Solar'));
 
@@ -45,6 +51,10 @@ const Router = [
       { path: '/ui/form', exact: true, element: <Form /> },
       { path: '/ui/alert', exact: true, element: <Alert /> },
       { path: '/ui/shadow', exact: true, element: <Shadow /> },
+      { path: '/tables/qbank-analytics', exact: true, element: <QBankAnalytics /> },
+      { path: '/tables/test-series', exact: true, element: <TestSeriesManagement /> },
+      { path: '/tables/users', exact: true, element: <UserManagement /> },
+      { path: '/tables/videos', exact: true, element: <VideoContentManagement /> },
       { path: '/icons/solar', exact: true, element: <Solar /> },
       { path: '/sample-page', exact: true, element: <SamplePage /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
