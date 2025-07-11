@@ -13,7 +13,6 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
     activatedLicenses: timeRange === '7days' ? 250 : timeRange === '1month' ? 245 : 240,
     loginRate: timeRange === '7days' ? 82 : timeRange === '1month' ? 78 : 75,
     avgTimeSpent: timeRange === '7days' ? '15h' : timeRange === '1month' ? '14h' : '13h',
-    mostAccessedContent: 'Medical Videos',
   };
 
   // Generate heatmap data for the selected period
@@ -71,7 +70,7 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Summary Cards */}
         <div className="lg:col-span-2">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Activated Licenses */}
             <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-md p-4">
               <div className="flex items-center gap-3 mb-2">
@@ -105,19 +104,6 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
               </div>
               <div className="text-2xl font-bold text-purple-700">{summaryStats.avgTimeSpent}</div>
               <div className="text-sm text-purple-600 font-medium">Study Time/Student</div>
-            </div>
-
-            {/* Most Accessed Content */}
-            <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-md p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="bg-orange-500 text-white p-2 rounded-md">
-                  <Icon icon="solar:video-library-bold" width={20} />
-                </div>
-              </div>
-              <div className="text-2xl font-bold text-orange-700">
-                {summaryStats.mostAccessedContent}
-              </div>
-              <div className="text-sm text-orange-600 font-medium">Most Accessed</div>
             </div>
           </div>
         </div>

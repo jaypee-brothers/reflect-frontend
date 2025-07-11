@@ -163,11 +163,11 @@ const CompetencyOverview = () => {
         </div>
         <div className="flex items-center gap-2">
           <Icon icon="solar:chart-square-bold" className="text-purple-500" width={20} />
-          <span className="text-sm text-purple-600 font-medium">Course Analytics</span>
+          <span className="text-sm text-purple-600 font-medium">Course/Subject Analytics</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
         {/* Radar Chart */}
         <div className="xl:col-span-2">
           <div className="bg-gray-50 rounded-md p-4">
@@ -184,9 +184,7 @@ const CompetencyOverview = () => {
         </div>
 
         {/* Subject Details */}
-        <div className="xl:col-span-1">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Subject Performance</h3>
-
+        <div className="xl:col-span-2">
           <div className="space-y-3 max-h-80 overflow-y-auto">
             {competencyData.map((subject, index) => (
               <div key={index} className="bg-gray-50 rounded-md p-3">
@@ -239,9 +237,6 @@ const CompetencyOverview = () => {
               <strong>{weakestSubject.subject}</strong> has the lowest competency score of{' '}
               {weakestSubject.score}%
             </div>
-            <button className="mt-2 px-3 py-1 bg-red-600 text-white text-xs rounded-md hover:bg-red-700 transition-colors">
-              Create Improvement Plan
-            </button>
           </div>
         </div>
       </div>
@@ -297,22 +292,6 @@ const CompetencyOverview = () => {
             <div className="text-sm text-gray-600">Avg Improvement</div>
           </div>
         </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="mt-6 pt-6 border-t border-gray-200 flex flex-wrap gap-3">
-        <button className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors text-sm font-medium">
-          <Icon icon="solar:document-text-bold" className="inline mr-2" width={16} />
-          Detailed Competency Report
-        </button>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
-          <Icon icon="solar:settings-bold" className="inline mr-2" width={16} />
-          Configure Competencies
-        </button>
-        <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium">
-          <Icon icon="solar:download-minimalistic-bold" className="inline mr-2" width={16} />
-          Export Analysis
-        </button>
       </div>
     </div>
   );

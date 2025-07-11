@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react';
-import { Badge } from 'flowbite-react';
 
 interface VideoContent {
   id: number;
@@ -48,18 +47,18 @@ const ContentAnalytics = () => {
     },
     {
       id: 4,
-      title: 'Electromagnetic Waves',
+      title: 'Pharmacology: Drug Mechanisms',
       views: 987,
       duration: '41:20',
-      category: 'Physics',
-      engagementRate: 85,
+      category: 'Pharmacology',
+      engagementRate: 39,
     },
     {
       id: 5,
-      title: 'Thermodynamics Principles',
+      title: 'Biochemistry of Metabolism',
       views: 876,
       duration: '49:10',
-      category: 'Physics',
+      category: 'Biochemistry',
       engagementRate: 91,
     },
   ];
@@ -110,6 +109,8 @@ const ContentAnalytics = () => {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
+      case 'Video':
+        return 'text-purple-600 bg-purple-100';
       case 'Easy':
         return 'text-green-600 bg-green-100';
       case 'Medium':
@@ -166,9 +167,13 @@ const ContentAnalytics = () => {
                         <Icon icon="solar:clock-circle-bold" width={12} />
                         {video.duration}
                       </span>
-                      <Badge color="info" size="sm">
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(
+                          'Video',
+                        )}`}
+                      >
                         {video.category}
-                      </Badge>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -187,7 +192,7 @@ const ContentAnalytics = () => {
           <div className="mt-4 pt-4 border-t border-gray-200">
             <button className="w-full px-4 py-2 text-sm font-medium text-purple-600 bg-purple-50 rounded-md hover:bg-purple-100 transition-colors">
               <Icon icon="solar:eye-bold" className="inline mr-2" width={16} />
-              View All Videos
+              All Video Analytics
             </button>
           </div>
         </div>
@@ -241,7 +246,7 @@ const ContentAnalytics = () => {
           <div className="mt-4 pt-4 border-t border-gray-200">
             <button className="w-full px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors">
               <Icon icon="solar:document-text-bold" className="inline mr-2" width={16} />
-              View All QBank Modules
+              All Q-bank analytics
             </button>
           </div>
         </div>

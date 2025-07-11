@@ -7,10 +7,10 @@ import StudentsToWatch from '../../components/analytics/StudentsToWatch';
 import ContentAnalytics from '../../components/analytics/ContentAnalytics';
 import QbanksTestInsights from '../../components/analytics/QbanksTestInsights';
 import CompetencyOverview from '../../components/analytics/CompetencyOverview';
-import ReportsExports from '../../components/analytics/ReportsExports';
 
 const Dashboard = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState('7days');
+  const [selectedCollege, setSelectedCollege] = useState('7days');
 
   return (
     <div className="space-y-6">
@@ -33,9 +33,15 @@ const Dashboard = () => {
               <option value="1month">Last Month</option>
               <option value="3months">Last 3 Months</option>
             </select>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              Refresh Data
-            </button>
+            <select
+              value={selectedCollege}
+              onChange={(e) => setSelectedCollege(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="jaypee">Jaypee Medical College</option>
+              <option value="manipal">Manipal Medical College</option>
+              <option value="dy-patil">DY Patil Medical College</option>
+            </select>
           </div>
         </div>
       </div>
@@ -66,7 +72,7 @@ const Dashboard = () => {
       <CompetencyOverview />
 
       {/* Reports & Exports */}
-      <ReportsExports />
+      {/* <ReportsExports /> */}
 
       {/* Footer */}
       <div className="bg-white rounded-xl shadow-md p-6 text-center">

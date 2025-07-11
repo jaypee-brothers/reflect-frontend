@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
-import { Table, Checkbox, TextInput, Button } from 'flowbite-react';
+import { Table, TextInput, Button } from 'flowbite-react';
 
 interface Student {
   id: number;
@@ -182,7 +182,6 @@ const StudentEngagement = () => {
               <Table.Row key={student.id} className="bg-white">
                 <Table.Cell>
                   <div className="flex items-center">
-                    <Checkbox checked={student.isActive} readOnly />
                     <span
                       className={`ml-2 w-2 h-2 rounded-full ${
                         student.isActive ? 'bg-green-500' : 'bg-red-500'

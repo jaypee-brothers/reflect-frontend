@@ -12,7 +12,7 @@ interface RedZoneStudent {
 }
 
 const RedZoneStudents = () => {
-  const [activeTab, setActiveTab] = useState('noLogin');
+  const [activeTab, setActiveTab] = useState('lowScores');
 
   // Sample data for students with no login in last 14 days
   const noLoginStudents: RedZoneStudent[] = [
@@ -113,19 +113,6 @@ const RedZoneStudents = () => {
       <div className="mb-6">
         <div className="flex bg-gray-100 rounded-md p-1">
           <button
-            onClick={() => setActiveTab('noLogin')}
-            className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-              activeTab === 'noLogin'
-                ? 'bg-white text-red-600 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <Icon icon="solar:login-3-linear" width={16} />
-              No Login (14d)
-            </div>
-          </button>
-          <button
             onClick={() => setActiveTab('lowScores')}
             className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
               activeTab === 'lowScores'
@@ -136,6 +123,19 @@ const RedZoneStudents = () => {
             <div className="flex items-center justify-center gap-2">
               <Icon icon="solar:graph-down-linear" width={16} />
               Low Scores
+            </div>
+          </button>
+          <button
+            onClick={() => setActiveTab('noLogin')}
+            className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+              activeTab === 'noLogin'
+                ? 'bg-white text-red-600 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <div className="flex items-center justify-center gap-2">
+              <Icon icon="solar:login-3-linear" width={16} />
+              No Login (14d)
             </div>
           </button>
         </div>
@@ -174,13 +174,6 @@ const RedZoneStudents = () => {
                 </div>
               ))}
             </div>
-
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <button className="w-full px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-md hover:bg-red-100 transition-colors">
-                <Icon icon="solar:bell-bold" className="inline mr-2" width={16} />
-                Send Reminder Emails
-              </button>
-            </div>
           </div>
         )}
 
@@ -213,13 +206,6 @@ const RedZoneStudents = () => {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <button className="w-full px-4 py-2 text-sm font-medium text-orange-600 bg-orange-50 rounded-md hover:bg-orange-100 transition-colors">
-                <Icon icon="solar:book-2-bold" className="inline mr-2" width={16} />
-                Assign Additional Study Materials
-              </button>
             </div>
           </div>
         )}

@@ -206,29 +206,13 @@ const StudentsToWatch = () => {
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">14.6</div>
-            <div className="text-sm text-gray-600">Avg Tests</div>
+            <div className="text-sm text-gray-600">Avg Tests Per Student</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">60%</div>
-            <div className="text-sm text-gray-600">Improving</div>
+            <div className="text-sm text-gray-600">Students Improving</div>
           </div>
         </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="mt-6 flex flex-wrap gap-3">
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
-          <Icon icon="solar:crown-bold" className="inline mr-2" width={16} />
-          Recognize Achievement
-        </button>
-        <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium">
-          <Icon icon="solar:medal-star-bold" className="inline mr-2" width={16} />
-          Advanced Challenges
-        </button>
-        <button className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm font-medium">
-          <Icon icon="solar:document-text-bold" className="inline mr-2" width={16} />
-          Detailed Report
-        </button>
       </div>
     </div>
   );

@@ -21,53 +21,63 @@ const QbanksTestInsights = () => {
   const testData: TestData[] = [
     {
       id: 1,
-      name: 'Organic Chemistry Final',
-      subject: 'Chemistry',
-      avgAccuracy: 76,
-      avgScore: 82,
-      attempts: 245,
-      difficulty: 'Hard',
+      name: 'Anatomy Basics Test',
+      subject: 'Anatomy',
+      avgAccuracy: 85,
+      avgScore: 88,
+      attempts: 210,
+      difficulty: 'Medium',
       dateCreated: '2024-01-01',
     },
     {
       id: 2,
-      name: 'Calculus Integration Test',
-      subject: 'Mathematics',
-      avgAccuracy: 84,
-      avgScore: 88,
-      attempts: 198,
-      difficulty: 'Medium',
+      name: 'Physiology Midterm',
+      subject: 'Physiology',
+      avgAccuracy: 78,
+      avgScore: 81,
+      attempts: 175,
+      difficulty: 'Hard',
       dateCreated: '2024-01-05',
     },
     {
       id: 3,
-      name: 'Cell Biology Quiz',
-      subject: 'Biology',
-      avgAccuracy: 89,
-      avgScore: 91,
-      attempts: 267,
+      name: 'Pathology Quiz',
+      subject: 'Pathology',
+      avgAccuracy: 90,
+      avgScore: 93,
+      attempts: 230,
       difficulty: 'Easy',
       dateCreated: '2024-01-03',
     },
     {
       id: 4,
-      name: 'Physics Mechanics',
-      subject: 'Physics',
-      avgAccuracy: 71,
-      avgScore: 75,
-      attempts: 189,
-      difficulty: 'Hard',
+      name: 'Pharmacology Assessment',
+      subject: 'Pharmacology',
+      avgAccuracy: 74,
+      avgScore: 77,
+      attempts: 160,
+      difficulty: 'Medium',
       dateCreated: '2024-01-07',
     },
     {
       id: 5,
-      name: 'Algebra Fundamentals',
-      subject: 'Mathematics',
-      avgAccuracy: 92,
-      avgScore: 94,
-      attempts: 312,
+      name: 'Biochemistry Final',
+      subject: 'Biochemistry',
+      avgAccuracy: 88,
+      avgScore: 91,
+      attempts: 195,
       difficulty: 'Easy',
       dateCreated: '2024-01-02',
+    },
+    {
+      id: 6,
+      name: 'Microbiology Challenge',
+      subject: 'Microbiology',
+      avgAccuracy: 80,
+      avgScore: 83,
+      attempts: 140,
+      difficulty: 'Hard',
+      dateCreated: '2024-01-04',
     },
   ];
 
@@ -225,59 +235,8 @@ const QbanksTestInsights = () => {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Summary Stats */}
-        <div className="xl:col-span-1">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Summary Statistics</h3>
-
-          <div className="space-y-4">
-            <div className="bg-blue-50 rounded-md p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <Icon icon="solar:target-bold" className="text-blue-500" width={24} />
-                <span className="text-sm font-medium text-blue-700">Average Accuracy</span>
-              </div>
-              <div className="text-2xl font-bold text-blue-800">{avgAccuracy}%</div>
-              <div className="text-sm text-blue-600 mt-1">Across all tests</div>
-            </div>
-
-            <div className="bg-green-50 rounded-md p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <Icon icon="solar:graph-up-bold" className="text-green-500" width={24} />
-                <span className="text-sm font-medium text-green-700">Average Score</span>
-              </div>
-              <div className="text-2xl font-bold text-green-800">{avgScore}%</div>
-              <div className="text-sm text-green-600 mt-1">Overall performance</div>
-            </div>
-
-            <div className="bg-purple-50 rounded-md p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <Icon
-                  icon="solar:users-group-two-rounded-bold"
-                  className="text-purple-500"
-                  width={24}
-                />
-                <span className="text-sm font-medium text-purple-700">Total Attempts</span>
-              </div>
-              <div className="text-2xl font-bold text-purple-800">
-                {totalAttempts.toLocaleString()}
-              </div>
-              <div className="text-sm text-purple-600 mt-1">Student attempts</div>
-            </div>
-
-            {/* Difficulty Distribution */}
-            <div className="bg-gray-50 rounded-md p-4">
-              <h4 className="text-sm font-semibold text-gray-900 mb-3">Difficulty Distribution</h4>
-              <Chart
-                options={difficultyChartData.options}
-                series={difficultyChartData.series}
-                type="donut"
-                height={200}
-              />
-            </div>
-          </div>
-        </div>
-
         {/* Performance Trends & Test Details */}
-        <div className="xl:col-span-2">
+        <div className="col-span-3">
           {/* Performance Trends Chart */}
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Trends</h3>
@@ -292,6 +251,59 @@ const QbanksTestInsights = () => {
           </div>
 
           {/* Test Details Table */}
+          {/* Summary Stats */}
+          <div className="grid grid-cols-4 bg-gray-50  rounded-md p-4">
+            <div className="col-span-3">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Summary Statistics</h3>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div className="bg-blue-50 rounded-md p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Icon icon="solar:target-bold" className="text-blue-500" width={24} />
+                    <span className="text-sm font-medium text-blue-700">Average Accuracy</span>
+                  </div>
+                  <div className="text-2xl font-bold text-blue-800">{avgAccuracy}%</div>
+                  <div className="text-sm text-blue-600 mt-1">Across all tests</div>
+                </div>
+
+                <div className="bg-green-50 rounded-md p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Icon icon="solar:graph-up-bold" className="text-green-500" width={24} />
+                    <span className="text-sm font-medium text-green-700">Average Score</span>
+                  </div>
+                  <div className="text-2xl font-bold text-green-800">{avgScore}%</div>
+                  <div className="text-sm text-green-600 mt-1">Overall performance</div>
+                </div>
+
+                <div className="bg-purple-50 rounded-md p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Icon
+                      icon="solar:users-group-two-rounded-bold"
+                      className="text-purple-500"
+                      width={24}
+                    />
+                    <span className="text-sm font-medium text-purple-700">Total Attempts</span>
+                  </div>
+                  <div className="text-2xl font-bold text-purple-800">
+                    {totalAttempts.toLocaleString()}
+                  </div>
+                  <div className="text-sm text-purple-600 mt-1">Student attempts</div>
+                </div>
+              </div>
+            </div>
+            {/* Difficulty Distribution */}
+            <div>
+              <h4 className="text-sm text-center font-semibold text-gray-900 mb-3">
+                Difficulty Distribution
+              </h4>
+              <Chart
+                options={difficultyChartData.options}
+                series={difficultyChartData.series}
+                type="donut"
+                height={200}
+              />
+            </div>
+          </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Test Details</h3>
             <div className="overflow-x-auto bg-gray-50 rounded-md">
@@ -338,22 +350,6 @@ const QbanksTestInsights = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="mt-6 pt-6 border-t border-gray-200 flex flex-wrap gap-3">
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
-          <Icon icon="solar:document-add-bold" className="inline mr-2" width={16} />
-          Create New Test
-        </button>
-        <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium">
-          <Icon icon="solar:download-minimalistic-bold" className="inline mr-2" width={16} />
-          Export Performance Data
-        </button>
-        <button className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm font-medium">
-          <Icon icon="solar:settings-bold" className="inline mr-2" width={16} />
-          Configure Tests
-        </button>
       </div>
     </div>
   );
