@@ -13,8 +13,7 @@ interface OutletContext {
 }
 
 const Dashboard = () => {
-  const { selectedTimeRange, selectedCollege, selectedProfessors } =
-    useOutletContext<OutletContext>();
+  const { selectedTimeRange, selectedProfessors } = useOutletContext<OutletContext>();
   return (
     <div className="space-y-6">
       {/* Display current filters */}
