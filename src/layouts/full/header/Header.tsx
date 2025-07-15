@@ -93,9 +93,15 @@ const Header = ({
                   onChange={(e) => setSelectedTimeRange(e.target.value)}
                   className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
+                  <option value="today">Today</option>
+                  <option value="yesterday">Yesterday</option>
                   <option value="7days">Last 7 Days</option>
+                  <option value="15days">Last 15 Days</option>
                   <option value="1month">Last Month</option>
                   <option value="3months">Last 3 Months</option>
+                  <option value="6months">Last 6 Months</option>
+                  <option value="1year">Last Year</option>
+                  <option value="custom">Custom Range</option>
                 </select>
                 <select
                   value={selectedCollege}

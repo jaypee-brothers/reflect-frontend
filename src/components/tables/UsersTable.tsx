@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Badge, Dropdown, Select, TextInput } from 'flowbite-react';
-import { HiOutlineDotsVertical, HiSearch } from 'react-icons/hi';
+import { Badge, Select, TextInput } from 'flowbite-react';
+import { HiSearch } from 'react-icons/hi';
 import { Icon } from '@iconify/react';
 import { Table } from 'flowbite-react';
 
@@ -224,11 +224,11 @@ const UsersTable = () => {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'Admin':
-        return 'failure';
+        return 'red';
       case 'Faculty':
-        return 'warning';
+        return 'yellow';
       case 'Student':
-        return 'info';
+        return 'blue';
       default:
         return 'gray';
     }
@@ -237,11 +237,11 @@ const UsersTable = () => {
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
       case 'Active':
-        return 'success';
+        return 'green';
       case 'Inactive':
-        return 'warning';
+        return 'yellow';
       case 'Suspended':
-        return 'failure';
+        return 'red';
       default:
         return 'gray';
     }
@@ -249,18 +249,10 @@ const UsersTable = () => {
 
   const getScoreBadgeColor = (score: string) => {
     const numScore = parseFloat(score.replace('%', ''));
-    if (numScore >= 80) return 'success';
-    if (numScore >= 60) return 'warning';
-    return 'failure';
+    if (numScore >= 80) return 'green';
+    if (numScore >= 60) return 'yellow';
+    return 'red';
   };
-
-  const tableActionData = [
-    { icon: 'solar:eye-outline', listtitle: 'View Profile' },
-    { icon: 'solar:pen-new-square-broken', listtitle: 'Edit User' },
-    { icon: 'solar:key-outline', listtitle: 'Reset Password' },
-    { icon: 'solar:shield-user-outline', listtitle: 'Permissions' },
-    { icon: 'solar:trash-bin-minimalistic-outline', listtitle: 'Delete' },
-  ];
 
   return (
     <div className="rounded-xl dark:shadow-dark-md shadow-md bg-white dark:bg-darkgray p-6 relative w-full break-words">
@@ -401,7 +393,6 @@ const UsersTable = () => {
               </div>
             </Table.HeadCell>
             <Table.HeadCell>Status</Table.HeadCell>
-            <Table.HeadCell></Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y divide-border dark:divide-darkborder">
             {paginatedData.map((item) => (
@@ -432,24 +423,6 @@ const UsersTable = () => {
                 <Table.Cell className="text-sm">{item.lastLogin}</Table.Cell>
                 <Table.Cell>
                   <Badge color={getStatusBadgeColor(item.status)}>{item.status}</Badge>
-                </Table.Cell>
-                <Table.Cell>
-                  <Dropdown
-                    label=""
-                    dismissOnClick={false}
-                    renderTrigger={() => (
-                      <span className="h-9 w-9 flex justify-center items-center rounded-full hover:bg-lightprimary hover:text-primary cursor-pointer">
-                        <HiOutlineDotsVertical size={22} />
-                      </span>
-                    )}
-                  >
-                    {tableActionData.map((actionItem, idx) => (
-                      <Dropdown.Item key={idx} className="flex gap-3">
-                        <Icon icon={actionItem.icon} height={18} />
-                        <span>{actionItem.listtitle}</span>
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown>
                 </Table.Cell>
               </Table.Row>
             ))}

@@ -147,20 +147,46 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
               </div>
             </div>
 
-            {/* Legend */}
-            <div className="flex items-center justify-between mt-4 text-xs text-gray-600">
-              <span>Less</span>
-              <div className="flex gap-1">
-                {[0, 1, 2, 3, 4].map((intensity) => (
-                  <div
-                    key={intensity}
-                    className={`w-3 h-3 rounded ${getIntensityColor(
-                      intensity,
-                    )} border border-gray-200`}
-                  />
-                ))}
+            {/* Enhanced Legend with Login Counts */}
+            <div className="mt-4 space-y-2">
+              <div className="flex items-center justify-between text-xs text-gray-600">
+                <span>Less</span>
+                <div className="flex gap-1">
+                  {[0, 1, 2, 3, 4].map((intensity) => (
+                    <div
+                      key={intensity}
+                      className={`w-3 h-3 rounded ${getIntensityColor(
+                        intensity,
+                      )} border border-gray-200`}
+                    />
+                  ))}
+                </div>
+                <span>More</span>
               </div>
-              <span>More</span>
+
+              {/* Detailed Legend */}
+              <div className="text-xs text-gray-500 space-y-1">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-gray-100 border border-gray-200"></div>
+                  <span>0 logins</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-blue-200 border border-gray-200"></div>
+                  <span>1-5 logins</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-blue-400 border border-gray-200"></div>
+                  <span>6-15 logins</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-blue-600 border border-gray-200"></div>
+                  <span>16-30 logins</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-blue-800 border border-gray-200"></div>
+                  <span>30+ logins</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

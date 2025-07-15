@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Badge, Dropdown, Select, TextInput } from 'flowbite-react';
-import { HiOutlineDotsVertical, HiSearch } from 'react-icons/hi';
+import { Badge, Select, TextInput } from 'flowbite-react';
+import { HiSearch } from 'react-icons/hi';
 import { Icon } from '@iconify/react';
 import { Table } from 'flowbite-react';
 
@@ -238,11 +238,11 @@ const VideosTable = () => {
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
       case 'Published':
-        return 'success';
+        return 'green';
       case 'Draft':
-        return 'warning';
+        return 'yellow';
       case 'Under Review':
-        return 'info';
+        return 'blue';
       case 'Archived':
         return 'gray';
       default:
@@ -253,11 +253,11 @@ const VideosTable = () => {
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
       case 'Lecture':
-        return 'info';
+        return 'blue';
       case 'Tutorial':
-        return 'success';
+        return 'green';
       case 'Case Study':
-        return 'warning';
+        return 'yellow';
       case 'Demonstration':
         return 'purple';
       case 'Educational':
@@ -276,15 +276,6 @@ const VideosTable = () => {
   const formatDuration = (duration: string) => {
     return duration;
   };
-
-  const tableActionData = [
-    { icon: 'solar:play-circle-outline', listtitle: 'Play Video' },
-    { icon: 'solar:eye-outline', listtitle: 'View Details' },
-    { icon: 'solar:pen-new-square-broken', listtitle: 'Edit' },
-    { icon: 'solar:download-outline', listtitle: 'Download' },
-    { icon: 'solar:share-outline', listtitle: 'Share' },
-    { icon: 'solar:trash-bin-minimalistic-outline', listtitle: 'Delete' },
-  ];
 
   return (
     <div className="rounded-xl dark:shadow-dark-md shadow-md bg-white dark:bg-darkgray p-6 relative w-full break-words">
@@ -428,7 +419,6 @@ const VideosTable = () => {
             </Table.HeadCell>
             <Table.HeadCell>Category</Table.HeadCell>
             <Table.HeadCell>Status</Table.HeadCell>
-            <Table.HeadCell></Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y divide-border dark:divide-darkborder">
             {paginatedData.map((item) => (
@@ -477,24 +467,6 @@ const VideosTable = () => {
                 </Table.Cell>
                 <Table.Cell>
                   <Badge color={getStatusBadgeColor(item.status)}>{item.status}</Badge>
-                </Table.Cell>
-                <Table.Cell>
-                  <Dropdown
-                    label=""
-                    dismissOnClick={false}
-                    renderTrigger={() => (
-                      <span className="h-9 w-9 flex justify-center items-center rounded-full hover:bg-lightprimary hover:text-primary cursor-pointer">
-                        <HiOutlineDotsVertical size={22} />
-                      </span>
-                    )}
-                  >
-                    {tableActionData.map((actionItem, idx) => (
-                      <Dropdown.Item key={idx} className="flex gap-3">
-                        <Icon icon={actionItem.icon} height={18} />
-                        <span>{actionItem.listtitle}</span>
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown>
                 </Table.Cell>
               </Table.Row>
             ))}

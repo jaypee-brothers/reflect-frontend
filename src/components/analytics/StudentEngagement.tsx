@@ -175,12 +175,36 @@ const StudentEngagement = ({ selectedProfessors = [] }: StudentEngagementProps) 
     const date = new Date(dateString);
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffMinutes = Math.floor(diffTime / (1000 * 60));
+    const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
+    // Within an hour - show minutes
+    if (diffMinutes < 60) {
+      if (diffMinutes < 1) return 'Just now';
+      return `${diffMinutes} min ago`;
+    }
+
+    // Within a day - show hours and minutes
+    if (diffHours < 24) {
+      const remainingMinutes = diffMinutes % 60;
+      if (remainingMinutes === 0) {
+        return `${diffHours}h ago`;
+      }
+      return `${diffHours}h ${remainingMinutes}m ago`;
+    }
+
+    // Beyond a day - show days with better formatting
     if (diffDays === 1) return 'Today';
     if (diffDays === 2) return 'Yesterday';
     if (diffDays <= 7) return `${diffDays - 1} days ago`;
-    return date.toLocaleDateString();
+
+    // Show date with time for older entries
+    return `${date.toLocaleDateString()} at ${date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    })}`;
   };
 
   return (

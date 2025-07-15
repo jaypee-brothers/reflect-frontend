@@ -332,11 +332,11 @@ const QBankAnalyticsTable = () => {
   const getDifficultyBadgeColor = (difficulty: string) => {
     switch (difficulty) {
       case 'Easy':
-        return 'success';
+        return 'green';
       case 'Medium':
-        return 'warning';
+        return 'yellow';
       case 'Hard':
-        return 'failure';
+        return 'red';
       default:
         return 'info';
     }
@@ -344,9 +344,9 @@ const QBankAnalyticsTable = () => {
 
   const getScoreBadgeColor = (score: string) => {
     const numScore = parseFloat(score.replace('%', ''));
-    if (numScore >= 80) return 'success';
-    if (numScore >= 60) return 'warning';
-    return 'failure';
+    if (numScore >= 80) return 'green';
+    if (numScore >= 60) return 'yellow';
+    return 'red';
   };
 
   return (

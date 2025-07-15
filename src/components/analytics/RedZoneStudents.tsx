@@ -13,6 +13,7 @@ interface RedZoneStudent {
 
 const RedZoneStudents = () => {
   const [activeTab, setActiveTab] = useState('lowScores');
+  const [sortBy, setSortBy] = useState('asc'); // 'asc' for ascending, 'desc' for descending
 
   // Sample data for students with no login in last 14 days
   const noLoginStudents: RedZoneStudent[] = [
@@ -99,6 +100,31 @@ const RedZoneStudents = () => {
     return 'bg-yellow-100 text-yellow-800';
   };
 
+  // Sort students based on current tab and sort order
+  const getSortedStudents = (students: RedZoneStudent[], tab: string) => {
+    const sortedStudents = [...students];
+
+    if (tab === 'lowScores') {
+      sortedStudents.sort((a, b) => {
+        const scoreA = a.avgScore || 0;
+        const scoreB = b.avgScore || 0;
+        return sortBy === 'asc' ? scoreA - scoreB : scoreB - scoreA;
+      });
+    } else if (tab === 'noLogin') {
+      sortedStudents.sort((a, b) => {
+        const daysA = a.daysSinceLogin || 0;
+        const daysB = b.daysSinceLogin || 0;
+        return sortBy === 'asc' ? daysA - daysB : daysB - daysA;
+      });
+    }
+
+    return sortedStudents;
+  };
+
+  const toggleSort = () => {
+    setSortBy(sortBy === 'asc' ? 'desc' : 'asc');
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-md p-6 h-full">
       <div className="flex flex-col items-center justify-between mb-6">
@@ -147,13 +173,27 @@ const RedZoneStudents = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-medium text-gray-900">Inactive in last 7 days</h3>
-              <Badge color="failure" size="sm">
-                {noLoginStudents.length} Students
-              </Badge>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={toggleSort}
+                  className="flex items-center gap-1 px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+                >
+                  <Icon
+                    icon={
+                      sortBy === 'asc' ? 'solar:sort-vertical-bold' : 'solar:sort-vertical-bold'
+                    }
+                    width={14}
+                  />
+                  {sortBy === 'asc' ? 'Least' : 'Most'} Days
+                </button>
+                <Badge color="failure" size="sm">
+                  {noLoginStudents.length} Students
+                </Badge>
+              </div>
             </div>
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
-              {noLoginStudents.map((student) => (
+              {getSortedStudents(noLoginStudents, 'noLogin').map((student) => (
                 <div
                   key={student.id}
                   className="flex items-center justify-between p-3 bg-red-50 rounded-md border border-red-100"
@@ -181,10 +221,20 @@ const RedZoneStudents = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-medium text-gray-900">Low Scores in Last 5 Tests</h3>
+              <button
+                onClick={toggleSort}
+                className="flex items-center gap-1 px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+              >
+                <Icon
+                  icon={sortBy === 'asc' ? 'solar:sort-vertical-bold' : 'solar:sort-vertical-bold'}
+                  width={14}
+                />
+                {sortBy === 'asc' ? 'Lowest' : 'Highest'} Score
+              </button>
             </div>
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
-              {lowScoreStudents.map((student) => (
+              {getSortedStudents(lowScoreStudents, 'lowScores').map((student) => (
                 <div
                   key={student.id}
                   className="flex items-center justify-between p-3 bg-orange-50 rounded-md border border-orange-100"
