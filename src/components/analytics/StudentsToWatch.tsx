@@ -106,12 +106,9 @@ const StudentsToWatch = () => {
     <div className="bg-white rounded-xl shadow-md p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-xl font-semibold text-gray-900">Students to Watch Out For</h2>
-          <p className="text-sm text-gray-600 mt-1">Top 5 performers in the last 5 tests</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Icon icon="solar:star-bold" className="text-yellow-500" width={20} />
-          <span className="text-sm text-yellow-600 font-medium">High Achievers</span>
+          <h2 className="text-xl font-semibold text-gray-900">
+            Top 5 performers in the last 5 tests
+          </h2>
         </div>
       </div>
 
@@ -171,48 +168,10 @@ const StudentsToWatch = () => {
                     </span>
                   </div>
                 </div>
-
-                {/* Performance Trend */}
-                <div className="pt-2 border-t border-blue-200">
-                  <div className="flex items-center justify-center gap-1">
-                    {getTrendIcon(student.improvementTrend)}
-                    <span
-                      className={`text-xs font-medium ${getTrendColor(student.improvementTrend)}`}
-                    >
-                      {student.improvementTrend === 'up'
-                        ? 'Improving'
-                        : student.improvementTrend === 'down'
-                        ? 'Declining'
-                        : 'Consistent'}
-                    </span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Summary Stats */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">94%</div>
-            <div className="text-sm text-gray-600">Highest Score</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">90.4%</div>
-            <div className="text-sm text-gray-600">Group Average</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-purple-600">14.6</div>
-            <div className="text-sm text-gray-600">Avg Tests Per Student</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-orange-600">60%</div>
-            <div className="text-sm text-gray-600">Students Improving</div>
-          </div>
-        </div>
       </div>
     </div>
   );

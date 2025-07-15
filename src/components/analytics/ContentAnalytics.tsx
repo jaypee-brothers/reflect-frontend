@@ -131,11 +131,7 @@ const ContentAnalytics = () => {
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">Content-Wise Analytics</h2>
-        <div className="flex items-center gap-2">
-          <Icon icon="solar:chart-2-bold" className="text-blue-500" width={20} />
-          <span className="text-sm text-blue-600 font-medium">Content Performance</span>
-        </div>
+        <h2 className="text-xl font-semibold text-gray-900">Content-Wise Performance Analytics</h2>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
@@ -256,20 +252,20 @@ const ContentAnalytics = () => {
       <div className="mt-6 pt-6 border-t border-gray-200">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-purple-600">6.8k</div>
-            <div className="text-sm text-gray-600">Total Video Views</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">10.3k</div>
-            <div className="text-sm text-gray-600">QBank Attempts</div>
+            <div className="text-2xl font-bold text-purple-600">6hr</div>
+            <div className="text-sm text-gray-600">Avg Video Watch Time</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">89%</div>
-            <div className="text-sm text-gray-600">Avg Engagement</div>
+            <div className="text-sm text-gray-600">Avg Video Completion</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">78%</div>
-            <div className="text-sm text-gray-600">Completion Rate</div>
+            <div className="text-sm text-gray-600">Avg Qbank Score </div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-blue-600">10.3k</div>
+            <div className="text-sm text-gray-600">Avg QBank Attempts</div>
           </div>
         </div>
       </div>

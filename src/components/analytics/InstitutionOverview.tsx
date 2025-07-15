@@ -50,21 +50,6 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
     <div className="bg-white rounded-xl shadow-md p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold text-gray-900">Medical Institution Overview</h2>
-        <div className="flex gap-2">
-          {['7days', '1month', '3months'].map((period) => (
-            <button
-              key={period}
-              onClick={() => setHeatmapPeriod(period)}
-              className={`px-3 py-1 text-sm rounded-md transition-colors ${
-                heatmapPeriod === period
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {period === '7days' ? '7 Days' : period === '1month' ? '1 Month' : '3 Months'}
-            </button>
-          ))}
-        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -77,11 +62,11 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
                 <div className="bg-blue-500 text-white p-2 rounded-md">
                   <Icon icon="solar:user-check-rounded-bold" width={20} />
                 </div>
+                <div className="text-2xl font-bold text-blue-700">
+                  {summaryStats.activatedLicenses}
+                </div>
               </div>
-              <div className="text-2xl font-bold text-blue-700">
-                {summaryStats.activatedLicenses}
-              </div>
-              <div className="text-sm text-blue-600 font-medium">Medical Students</div>
+              <div className="text-sm text-blue-600 font-medium">Enrolled Students</div>
             </div>
 
             {/* Login Rate */}
@@ -90,9 +75,9 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
                 <div className="bg-green-500 text-white p-2 rounded-md">
                   <Icon icon="solar:login-3-bold" width={20} />
                 </div>
+                <div className="text-2xl font-bold text-green-700">{summaryStats.loginRate}%</div>
               </div>
-              <div className="text-2xl font-bold text-green-700">{summaryStats.loginRate}%</div>
-              <div className="text-sm text-green-600 font-medium">Login Rate</div>
+              <div className="text-sm text-green-600 font-medium">Active Students</div>
             </div>
 
             {/* Avg Time Spent */}
@@ -101,54 +86,65 @@ const InstitutionOverview = ({ timeRange }: OverviewProps) => {
                 <div className="bg-purple-500 text-white p-2 rounded-md">
                   <Icon icon="solar:clock-circle-bold" width={20} />
                 </div>
+                <div className="text-2xl font-bold text-purple-700">
+                  {summaryStats.avgTimeSpent}
+                </div>
               </div>
-              <div className="text-2xl font-bold text-purple-700">{summaryStats.avgTimeSpent}</div>
-              <div className="text-sm text-purple-600 font-medium">Study Time/Student</div>
+              <div className="text-sm text-purple-600 font-medium">Average Watch Time</div>
             </div>
+
+            <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-md p-4 border">
+              <div className="flex items-center gap-3 mb-2">
+                <Icon
+                  icon="solar:users-group-rounded-bold"
+                  className="text-yellow-500"
+                  width={24}
+                />
+                <div className="text-2xl font-bold text-yellow-800">90.4%</div>
+              </div>
+              <span className="text-sm font-medium text-yellow-700">Average Test Score</span>
+            </div>
+
+            <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-md p-4 border">
+              <div className="flex items-center gap-3 mb-2">
+                <Icon icon="solar:clipboard-list-bold" className="text-purple-500" width={24} />
+                <div className="text-2xl font-bold text-purple-800">14.6</div>
+              </div>
+              <span className="text-sm font-medium text-purple-700">Avg Test Attempts</span>
+            </div>
+
+            {/* <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-md p-4 border">
+              <div className="flex items-center gap-3 mb-2">
+                <Icon icon="solar:graph-up-bold" className="text-orange-500" width={24} />
+                <div className="text-2xl font-bold text-orange-800">60%</div>
+              </div>
+              <span className="text-sm font-medium text-orange-700">Test Results Improvement</span>
+            </div> */}
           </div>
         </div>
 
         {/* Login Heatmap */}
         <div className="lg:col-span-1">
           <div className="bg-gray-50 rounded-md p-4 h-full">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Study Activity Heatmap</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Student Activity Heatmap</h3>
             <div className="space-y-2">
-              {heatmapPeriod === '7days' ? (
-                // Weekly view - show days of week
-                <div className="grid grid-cols-7 gap-1">
-                  {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-                    <div key={index} className="text-xs text-center text-gray-600 font-medium">
-                      {day}
-                    </div>
-                  ))}
-                  {heatmapData.slice(0, 7).map((day, index) => (
-                    <div
-                      key={index}
-                      className={`w-8 h-8 rounded ${getIntensityColor(
-                        day.intensity,
-                      )} border border-gray-200`}
-                      title={`${day.date}: ${day.intensity} logins`}
-                    />
-                  ))}
-                </div>
-              ) : (
-                // Monthly/Quarterly view - show grid
-                <div
-                  className={`grid gap-1 ${
-                    heatmapPeriod === '1month' ? 'grid-cols-10' : 'grid-cols-12'
-                  }`}
-                >
-                  {heatmapData.map((day, index) => (
-                    <div
-                      key={index}
-                      className={`w-4 h-4 rounded ${getIntensityColor(
-                        day.intensity,
-                      )} border border-gray-200`}
-                      title={`${day.date}: ${day.intensity} logins`}
-                    />
-                  ))}
-                </div>
-              )}
+              {/* // Weekly view - show days of week */}
+              <div className="grid grid-cols-7 gap-1">
+                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+                  <div key={index} className="text-xs text-center text-gray-600 font-medium">
+                    {day}
+                  </div>
+                ))}
+                {heatmapData.slice(0, 7).map((day, index) => (
+                  <div
+                    key={index}
+                    className={`w-8 h-8 rounded ${getIntensityColor(
+                      day.intensity,
+                    )} border border-gray-200`}
+                    title={`${day.date}: ${day.intensity} logins`}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Legend */}

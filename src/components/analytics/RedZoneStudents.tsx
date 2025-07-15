@@ -101,8 +101,8 @@ const RedZoneStudents = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 h-full">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">Red Zone Students</h2>
+      <div className="flex flex-col items-center justify-between mb-6">
+        <h2 className="text-xl font-semibold text-gray-900">Non-Performing Students</h2>
         <div className="flex items-center gap-2">
           <Icon icon="solar:danger-circle-bold" className="text-red-500" width={20} />
           <span className="text-sm text-red-600 font-medium">Needs Attention</span>
@@ -135,7 +135,7 @@ const RedZoneStudents = () => {
           >
             <div className="flex items-center justify-center gap-2">
               <Icon icon="solar:login-3-linear" width={16} />
-              No Login (14d)
+              Inactive
             </div>
           </button>
         </div>
@@ -146,7 +146,7 @@ const RedZoneStudents = () => {
         {activeTab === 'noLogin' && (
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium text-gray-900">No Login in Last 14 Days</h3>
+              <h3 className="text-lg font-medium text-gray-900">Inactive in last 7 days</h3>
               <Badge color="failure" size="sm">
                 {noLoginStudents.length} Students
               </Badge>
@@ -181,9 +181,6 @@ const RedZoneStudents = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-medium text-gray-900">Low Scores in Last 5 Tests</h3>
-              <Badge color="warning" size="sm">
-                {lowScoreStudents.length} Students
-              </Badge>
             </div>
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
@@ -217,10 +214,6 @@ const RedZoneStudents = () => {
           <button className="px-3 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
             <Icon icon="solar:download-linear" className="inline mr-1" width={14} />
             Export List
-          </button>
-          <button className="px-3 py-2 text-xs font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors">
-            <Icon icon="solar:graph-up-linear" className="inline mr-1" width={14} />
-            View Details
           </button>
         </div>
       </div>
