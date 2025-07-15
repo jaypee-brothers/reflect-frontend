@@ -6,7 +6,7 @@ interface OverviewProps {
 }
 
 const InstitutionOverview = ({ timeRange }: OverviewProps) => {
-  const [heatmapPeriod, setHeatmapPeriod] = useState('7days');
+  const [heatmapPeriod] = useState('7days');
 
   // Sample data - replace with real API data based on timeRange
   const summaryStats = {
