@@ -58,7 +58,7 @@ const Login = () => {
               </div>
               <Icon icon="solar" className="text-white" width={32} />
               <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-              <p className="text-gray-600">Sign in to your Diginerve dashboard</p>
+              <p className="text-gray-600">Sign in to your DigiNerve dashboard</p>
             </div>
 
             {/* Error Alert */}
@@ -152,37 +152,12 @@ const Login = () => {
               </Button>
             </form>
 
-            {/* Demo Credentials */}
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg border">
-              <h3 className="text-sm font-medium text-gray-700 mb-2">Demo Credentials:</h3>
-              <div className="text-xs text-gray-600 space-y-1">
-                <div>
-                  <strong>Email:</strong> test@gmail.com
-                </div>
-                <div>
-                  <strong>Password:</strong> Test@12354
-                </div>
-              </div>
-              <Button
-                size="sm"
-                color="gray"
-                className="mt-2 w-full"
-                onClick={() => {
-                  setFormData({
-                    email: 'test@gmail.com',
-                    password: 'Test@12354',
-                  });
-                }}
-                disabled={loading}
-              >
-                Use Demo Credentials
-              </Button>
-            </div>
-
             {/* Footer */}
             <div className="text-center text-sm text-gray-500">
-              <p>Institutional Dashboard System</p>
-              <p className="mt-1">© 2025 All rights reserved</p>
+              <p>Institution Dashboard System</p>
+              <p className="mt-1">
+                © 2025 Jaypee Brothers Medical Publishers Pvt. Ltd. All rights reserved.
+              </p>
             </div>
           </div>
         </Card>
