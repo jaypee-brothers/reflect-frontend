@@ -8,7 +8,7 @@ import svgr from '@svgr/rollup';
 export default defineConfig({
   base: '/dashboard/',
   build: {
-    outDir: 'dist/dashboard',
+    outDir: 'dist',
   },
   resolve: {
     alias: {

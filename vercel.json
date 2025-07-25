@@ -1,3 +1,5 @@
 {
-  "rewrites": [{ "source": "/dashboard/(.*)", "destination": "/dashboard/index.html" }]
+  "rewrites": [{ "source": "/dashboard/(.*)", "destination": "/dashboard/index.html" }],
+  "cleanUrls": false,
+  "trailingSlash": false
 }
