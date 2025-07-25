@@ -8,7 +8,7 @@ import { useUiStore } from '../../stores/uiStore';
 
 const Dashboard = () => {
   // Get UI state from store
-  const { selectedProf: selectedProfs } = useUiStore();
+  const { } = useUiStore();
   return (
     <div className="space-y-6">
       {/* Display current filters */}
