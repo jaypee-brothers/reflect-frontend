@@ -78,6 +78,6 @@ const Router = [
   },
 ];
 
-const router = createBrowserRouter(Router);
+const router = createBrowserRouter(Router, { basename: '/dashboard' });
 
 export default router;
