@@ -4,20 +4,17 @@ import { useState, useEffect } from 'react';
 import { useInstitutionalStore } from '../../data/institutional/institutionalStore';
 
 const QbanksTestInsights = () => {
-  const { qbankInsights, fetchQbankInsights, testSeriesInsights, fetchTestSeriesInsights } =
-    useInstitutionalStore();
+  const { qbankInsights, fetchQbankInsights } = useInstitutionalStore();
 
   const [selectedCategory] = useState('all');
 
   useEffect(() => {
     fetchQbankInsights({ type: 'qbank' });
-    fetchTestSeriesInsights({ type: 'test-series' });
   }, [fetchQbankInsights]);
 
   // QBank data
   const { data: qbankData, loading, error } = qbankInsights;
   const testData = qbankData?.qbanks || [];
-  console.log('QBank Insights Data:', qbankInsights);
   // QBank summary
   const qbankSummary = qbankData?.qbank_summary;
 
@@ -167,7 +164,6 @@ const QbanksTestInsights = () => {
   const avgAccuracy = Math.round(qbankSummary?.average_score || 0);
 
   // Test Series summary (horizontal cards below QBank insights)
-  const testSeriesSummary = testSeriesInsights?.data?.summary;
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
@@ -260,7 +256,7 @@ const QbanksTestInsights = () => {
       </div>
 
       {/* Test Series Summary Cards (horizontal, below insights) */}
-      {testSeriesInsights?.error && (
+      {/* {testSeriesInsights?.error && (
         <div className="mt-8">
           <div className="text-red-500">{testSeriesInsights.error}</div>
         </div>
@@ -312,7 +308,7 @@ const QbanksTestInsights = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

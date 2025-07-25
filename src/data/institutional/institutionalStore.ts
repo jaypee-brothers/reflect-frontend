@@ -426,19 +426,12 @@ export const useInstitutionalStore = create<InstitutionalState>((set, get) => ({
     const state = get().activityHeatmap;
     // Allow forced refresh for heatmap navigation by checking forceRefresh parameter
     const forceRefresh = (params as any).forceRefresh;
-    console.log(
-      '📊 fetchActivityHeatmap called with params:',
-      params,
-      'forceRefresh:',
-      forceRefresh,
-    );
 
     if (state.loading || (!forceRefresh && isCacheFresh(state.lastFetched) && state.data)) {
       console.log('⏭️ Skipping API call - already loading or cache is fresh');
       return;
     }
 
-    console.log('🌐 Making API call to fetch activity heatmap...');
     set((state) => ({
       activityHeatmap: { ...state.activityHeatmap, loading: true, error: null },
     }));
@@ -548,7 +541,6 @@ export const useInstitutionalStore = create<InstitutionalState>((set, get) => ({
 
     try {
       const response = await institutionalAPI.getLowScoreUsers(params);
-      console.log('low score users response: ', response.data);
       if (response.success) {
         // Map the API response to our interface format
         const lowScoreUsers =
@@ -869,10 +861,7 @@ export const useInstitutionalStore = create<InstitutionalState>((set, get) => ({
     }));
 
     try {
-      console.log('Fetching user management table with params:', params);
       const response = await institutionalAPI.getUserManagementTable(params);
-      console.log('User management API response:', response);
-      console.log('Response data structure:', JSON.stringify(response.data, null, 2));
 
       if (response.success && response.data) {
         // Type assertion for the actual API response structure
@@ -904,9 +893,6 @@ export const useInstitutionalStore = create<InstitutionalState>((set, get) => ({
           has_next: apiData.hasNext || false,
           has_previous: apiData.hasPrevious || false,
         };
-
-        console.log('Mapped users:', users);
-        console.log('Pagination info:', pagination);
 
         set(() => ({
           userManagementTable: {
@@ -1250,7 +1236,7 @@ export const useInstitutionalStore = create<InstitutionalState>((set, get) => ({
         store.fetchInactiveUsers(),
         store.fetchLowScoreUsers(),
         store.fetchTopStudents(),
-        store.fetchTestSeriesInsights(),
+        // store.fetchTestSeriesInsights(),
         store.fetchQbankInsights(),
         store.fetchQBankModules(),
         store.fetchVideoContent(),

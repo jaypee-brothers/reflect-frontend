@@ -46,7 +46,6 @@ const InstitutionOverview = () => {
   // Function to fetch heatmap data for specific week
   const fetchWeekData = (weekOffset: number) => {
     const { startDate, endDate } = getWeekDateRange(weekOffset);
-    console.log(`🔄 Fetching heatmap data for week offset ${weekOffset}:`, { startDate, endDate });
     fetchActivityHeatmap({
       timeRange: 'custom',
       start_date: startDate,
@@ -59,7 +58,6 @@ const InstitutionOverview = () => {
   // Navigation functions
   const goToPreviousWeek = () => {
     const newOffset = currentWeekOffset - 1;
-    console.log(`⬅️ Going to previous week, new offset: ${newOffset}`);
     setCurrentWeekOffset(newOffset);
     fetchWeekData(newOffset);
   };
@@ -68,7 +66,6 @@ const InstitutionOverview = () => {
     const newOffset = currentWeekOffset + 1;
     // Don't go beyond current week
     if (newOffset <= 0) {
-      console.log(`➡️ Going to next week, new offset: ${newOffset}`);
       setCurrentWeekOffset(newOffset);
       fetchWeekData(newOffset);
     } else {
