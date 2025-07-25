@@ -3,8 +3,6 @@ import { ApiResponse, PaginationParams, FilterParams } from './api-types';
 import { apiInterceptor } from '../../utils/apiInterceptor';
 
 class InstitutionalAPIService {
-  private baseURL = process.env.BASE_URL;
-
   // Get college ID from auth store or UI store
   private getCollegeId(): string | null {
     try {
@@ -46,21 +44,6 @@ class InstitutionalAPIService {
     }
     // Fallback to default college ID
     return '6853b31b09db62797f220f7c';
-  }
-
-  // Get auth token from store
-  private getAuthToken(): string | null {
-    // Try to get token from localStorage (Zustand persist)
-    try {
-      const authStorage = localStorage.getItem('auth-storage');
-      if (authStorage) {
-        const parsed = JSON.parse(authStorage);
-        return parsed.state?.accessToken || null;
-      }
-    } catch (error) {
-      console.error('Error getting auth token:', error);
-    }
-    return null;
   }
 
   // Build standard query parameters with college_id and date range
@@ -110,45 +93,7 @@ class InstitutionalAPIService {
     };
   }
 
-  // Handle API authentication errors and token refresh
-  private async handleAuthError(response: Response): Promise<boolean> {
-    if (response.status === 401) {
-      // Token might be expired, try to refresh or redirect to login
-      const authStorage = localStorage.getItem('auth-storage');
-      if (authStorage) {
-        try {
-          const parsed = JSON.parse(authStorage);
-          const refreshToken = parsed.state?.refreshToken;
-
-          if (refreshToken) {
-            // Attempt token refresh
-            const refreshResponse = await fetch(`${this.baseURL}/token/refresh/`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ refresh: refreshToken }),
-            });
-
-            if (refreshResponse.ok) {
-              const refreshData = await refreshResponse.json();
-              // Update the stored token
-              parsed.state.accessToken = refreshData.access;
-              localStorage.setItem('auth-storage', JSON.stringify(parsed));
-              return true; // Indicate retry is possible
-            }
-          }
-        } catch (error) {
-          console.error('Token refresh failed:', error);
-        }
-      }
-
-      // Clear auth state and redirect to login
-      localStorage.removeItem('auth-storage');
-      window.location.href = '/auth/login';
-    }
-    return false;
-  }
-
-  // API call method using the interceptor for automatic token refresh
+  // Real API call method to Django backend using interceptor
   private async apiCall<T>(
     endpoint: string,
     params?: Record<string, any>,
@@ -156,99 +101,39 @@ class InstitutionalAPIService {
     body?: any,
   ): Promise<ApiResponse<T>> {
     try {
-      // Clean the endpoint
+      // Clean endpoint
       const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-      
-      // For GET requests, add params as query parameters
-      let url = cleanEndpoint;
-      if (method === 'GET' && params) {
-        const searchParams = new URLSearchParams();
-        Object.keys(params).forEach((key) => {
-          if (params[key] !== undefined && params[key] !== null) {
-            if (Array.isArray(params[key])) {
-              params[key].forEach((value: string) => searchParams.append(key, value));
-            } else {
-              searchParams.append(key, params[key].toString());
-            }
-          }
-        });
-        url += `?${searchParams.toString()}`;
-      }
 
-      // For non-GET requests, merge params with body
-      let requestBody = body;
-      if (method !== 'GET' && params) {
-        requestBody = { ...params, ...body };
+      let response;
+      if (method === 'GET') {
+        // For GET requests, add params as query string
+        const queryString = params ? new URLSearchParams(params).toString() : '';
+        const url = queryString ? `${cleanEndpoint}?${queryString}` : cleanEndpoint;
+        response = await apiInterceptor.get(url);
+      } else if (method === 'POST') {
+        response = await apiInterceptor.post(cleanEndpoint, body || params);
+      } else if (method === 'PUT') {
+        response = await apiInterceptor.put(cleanEndpoint, body || params);
+      } else if (method === 'DELETE') {
+        response = await apiInterceptor.delete(cleanEndpoint);
       }
-
-      // Use the interceptor which handles token refresh automatically
-      const response = await apiInterceptor.request<T>({
-        url,
-        method,
-        body: requestBody,
-      });
 
       return {
         success: true,
-        data: response.data,
-        message: 'Success',
+        data: response?.data?.data || response?.data,
+        message: 'Data fetched successfully',
+        count:
+          response?.data?.count ||
+          (Array.isArray(response?.data) ? response.data.length : undefined),
       };
     } catch (error) {
-      console.error(`API Error [${method} ${endpoint}]:`, error);
+      console.error(`API call failed for ${endpoint}:`, error);
       return {
         success: false,
-        data: null as T,
+        data: {} as T,
         message: error instanceof Error ? error.message : 'Unknown error occurred',
       };
     }
-  }
-
-        const response = await fetch(url.toString(), requestConfig);
-
-        if (!response.ok) {
-          // Handle auth errors and retry if token was refreshed
-          if (attempts === 0 && (await this.handleAuthError(response))) {
-            attempts++;
-            continue;
-          }
-
-          let errorMessage = 'API request failed';
-          try {
-            const errorData = await response.json();
-            errorMessage = errorData.message || errorData.detail || errorMessage;
-          } catch {
-            errorMessage = `HTTP ${response.status}: ${response.statusText}`;
-          }
-          throw new Error(errorMessage);
-        }
-
-        const data = await response.json();
-
-        return {
-          success: true,
-          data: data.data,
-          message: 'Data fetched successfully',
-          count: data.count || (Array.isArray(data) ? data.length : undefined),
-        };
-      } catch (error) {
-        console.error(`API call failed for ${endpoint} (attempt ${attempts + 1}):`, error);
-
-        if (attempts === maxAttempts - 1) {
-          return {
-            success: false,
-            data: {} as T,
-            message: error instanceof Error ? error.message : 'Unknown error occurred',
-          };
-        }
-      }
-      attempts++;
-    }
-
-    return {
-      success: false,
-      data: {} as T,
-      message: 'Max retry attempts reached',
-    };
   }
 
   // Institution Overview APIs

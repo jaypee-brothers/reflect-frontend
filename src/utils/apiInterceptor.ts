@@ -16,7 +16,7 @@ interface ApiResponse<T = any> {
 }
 
 class ApiInterceptor {
-  private baseURL = 'http://localhost/college/api';
+  private baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/college/api';
   private maxRetries = 1;
 
   async request<T = any>(config: ApiRequestConfig): Promise<ApiResponse<T>> {
@@ -47,8 +47,11 @@ class ApiInterceptor {
       fetchOptions.body = typeof body === 'string' ? body : JSON.stringify(body);
     }
 
+    // Construct full URL
+    const fullUrl = url.startsWith('http') ? url : `${this.baseURL}${url}`;
+
     try {
-      const response = await fetch(`${this.baseURL}${url}`, fetchOptions);
+      const response = await fetch(fullUrl, fetchOptions);
 
       // If unauthorized, try to refresh token and retry once
       if (response.status === 401 && this.maxRetries > 0) {
@@ -62,7 +65,7 @@ class ApiInterceptor {
           requestHeaders['Authorization'] = `Bearer ${newToken}`;
           fetchOptions.headers = requestHeaders;
 
-          const retryResponse = await fetch(`${this.baseURL}${url}`, fetchOptions);
+          const retryResponse = await fetch(fullUrl, fetchOptions);
 
           return {
             data: await this.parseResponse(retryResponse),
@@ -71,8 +74,14 @@ class ApiInterceptor {
             headers: retryResponse.headers,
           };
         } else {
-          // Refresh failed, logout user
+          // Refresh failed, logout user and redirect to login
           useAuthStore.getState().logout();
+
+          // Redirect to login page
+          if (typeof window !== 'undefined') {
+            window.location.href = '/auth/login';
+          }
+
           throw new Error('Authentication failed. Please login again.');
         }
       }
