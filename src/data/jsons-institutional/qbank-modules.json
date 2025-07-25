@@ -1,0 +1,49 @@
+{
+  "modules": [
+    {
+      "id": 1,
+      "name": "Anatomy - Head & Neck",
+      "attempts": 2847,
+      "avgScore": 78.5,
+      "difficulty": "Medium",
+      "completionRate": 85.2,
+      "category": "Pre-Clinical"
+    },
+    {
+      "id": 2,
+      "name": "Physiology - Cardiovascular System",
+      "attempts": 3156,
+      "avgScore": 82.1,
+      "difficulty": "Hard",
+      "completionRate": 79.8,
+      "category": "Pre-Clinical"
+    },
+    {
+      "id": 3,
+      "name": "Pathology - Inflammation & Healing",
+      "attempts": 2634,
+      "avgScore": 75.3,
+      "difficulty": "Medium",
+      "completionRate": 88.4,
+      "category": "Para-Clinical"
+    },
+    {
+      "id": 4,
+      "name": "Pharmacology - Autonomic Nervous System",
+      "attempts": 2198,
+      "avgScore": 71.8,
+      "difficulty": "Hard",
+      "completionRate": 72.6,
+      "category": "Para-Clinical"
+    },
+    {
+      "id": 5,
+      "name": "Medicine - Infectious Diseases",
+      "attempts": 1892,
+      "avgScore": 68.9,
+      "difficulty": "Hard",
+      "completionRate": 65.3,
+      "category": "Clinical"
+    }
+  ]
+}

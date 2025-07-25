@@ -27,41 +27,41 @@ const SidebarContent: MenuItem[] = [
   {
     heading: 'HOME',
     children: [
-      {
-        name: 'Stakeholder Dashboard',
-        icon: 'solar:chart-2-bold-duotone',
-        id: uniqueId(),
-        url: '/',
-        isPro: false,
-      },
+      //   {
+      //     name: 'Stakeholder Dashboard',
+      //     icon: 'solar:chart-2-bold-duotone',
+      //     id: uniqueId(),
+      //     url: '/',
+      //     isPro: false,
+      //   },
       {
         name: 'Institution Dashboard',
         icon: 'solar:widget-add-line-duotone',
         id: uniqueId(),
-        url: '/dashboard',
+        url: '/',
         isPro: false,
       },
     ],
   },
-  {
-    heading: 'PROFILES',
-    children: [
-      {
-        name: 'Student Profile',
-        icon: 'solar:user-id-bold-duotone',
-        id: uniqueId(),
-        url: '/profile/student',
-        isPro: false,
-      },
-      {
-        name: 'Sales Agent Profile',
-        icon: 'solar:user-speak-bold-duotone',
-        id: uniqueId(),
-        url: '/profile/sales-agent',
-        isPro: false,
-      },
-    ],
-  },
+  //   {
+  //     heading: 'PROFILES',
+  //     children: [
+  //       {
+  //         name: 'Student Profile',
+  //         icon: 'solar:user-id-bold-duotone',
+  //         id: uniqueId(),
+  //         url: '/profile/student',
+  //         isPro: false,
+  //       },
+  //       {
+  //         name: 'Sales Agent Profile',
+  //         icon: 'solar:user-speak-bold-duotone',
+  //         id: uniqueId(),
+  //         url: '/profile/sales-agent',
+  //         isPro: false,
+  //       },
+  //     ],
+  //   },
   {
     heading: 'DATA MANAGEMENT',
     children: [
@@ -129,25 +129,25 @@ const SidebarContent: MenuItem[] = [
   //     ],
   //   },
 
-  {
-    heading: 'Auth',
-    children: [
-      {
-        name: 'Login',
-        icon: 'solar:login-2-linear',
-        id: uniqueId(),
-        url: '/auth/login',
-        isPro: false,
-      },
-      //   {
-      //     name: 'Register',
-      //     icon: 'solar:shield-user-outline',
-      //     id: uniqueId(),
-      //     url: '/auth/register',
-      //     isPro: false,
-      //   },
-    ],
-  },
+  //   {
+  //     heading: 'Auth',
+  //     children: [
+  //       {
+  //         name: 'Login',
+  //         icon: 'solar:login-2-linear',
+  //         id: uniqueId(),
+  //         url: '/auth/login',
+  //         isPro: false,
+  //       },
+  //       {
+  //         name: 'Register',
+  //         icon: 'solar:shield-user-outline',
+  //         id: uniqueId(),
+  //         url: '/auth/register',
+  //         isPro: false,
+  //       },
+  //     ],
+  //   },
 ];
 
 export default SidebarContent;

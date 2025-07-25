@@ -1,0 +1,40 @@
+{
+  "tests": [
+    {
+      "id": 1,
+      "name": "Anatomy Basics",
+      "subject": "Anatomy",
+      "avgScore": 78,
+      "attempts": 245,
+      "difficulty": "Easy",
+      "category": "Pre-Clinical"
+    },
+    {
+      "id": 2,
+      "name": "Cardiovascular System",
+      "subject": "Physiology",
+      "avgScore": 72,
+      "attempts": 189,
+      "difficulty": "Medium",
+      "category": "Pre-Clinical"
+    },
+    {
+      "id": 3,
+      "name": "Pathology Fundamentals",
+      "subject": "Pathology",
+      "avgScore": 65,
+      "attempts": 167,
+      "difficulty": "Hard",
+      "category": "Para-Clinical"
+    }
+  ],
+  "summary": {
+    "totalAttempts": 601,
+    "avgScore": 71.7,
+    "difficultyDistribution": {
+      "easy": 1,
+      "medium": 1,
+      "hard": 1
+    }
+  }
+}

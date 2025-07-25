@@ -1,0 +1,44 @@
+{
+  "videos": [
+    {
+      "id": 1,
+      "title": "Introduction to Human Anatomy",
+      "views": 1284,
+      "duration": "45:30",
+      "category": "Anatomy",
+      "engagementRate": 89
+    },
+    {
+      "id": 2,
+      "title": "Cardiovascular System Overview",
+      "views": 1156,
+      "duration": "52:15",
+      "category": "Physiology",
+      "engagementRate": 92
+    },
+    {
+      "id": 3,
+      "title": "Introduction to Human Anatomy",
+      "views": 1284,
+      "duration": "45:30",
+      "category": "Anatomy",
+      "engagementRate": 89
+    },
+    {
+      "id": 4,
+      "title": "Cardiovascular System Overview",
+      "views": 1156,
+      "duration": "52:15",
+      "category": "Physiology",
+      "engagementRate": 92
+    },
+    {
+      "id": 5,
+      "title": "Pathophysiology Basics",
+      "views": 998,
+      "duration": "38:45",
+      "category": "Pathology",
+      "engagementRate": 87
+    }
+  ]
+}

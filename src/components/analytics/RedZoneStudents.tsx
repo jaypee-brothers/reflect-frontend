@@ -1,128 +1,63 @@
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Badge } from 'flowbite-react';
-
-interface RedZoneStudent {
-  id: number;
-  name: string;
-  email: string;
-  daysSinceLogin?: number;
-  avgScore?: number;
-  testsAttempted?: number;
-}
+import { useInstitutionalStore } from '../../data/institutional/institutionalStore';
 
 const RedZoneStudents = () => {
-  const [activeTab, setActiveTab] = useState('lowScores');
-  const [sortBy, setSortBy] = useState('asc'); // 'asc' for ascending, 'desc' for descending
+  // Use separate API endpoints for inactive users and low score users
+  const { inactiveUsers, lowScoreUsers, fetchInactiveUsers, fetchLowScoreUsers } =
+    useInstitutionalStore();
+  const [activeTab, setActiveTab] = useState('inactivity'); // Default to inactivity tab
 
-  // Sample data for students with no login in last 14 days
-  const noLoginStudents: RedZoneStudent[] = [
-    {
-      id: 1,
-      name: 'Amit Gupta',
-      email: 'amit.gupta@email.com',
-      daysSinceLogin: 16,
-    },
-    {
-      id: 2,
-      name: 'Pooja Mehta',
-      email: 'pooja.mehta@email.com',
-      daysSinceLogin: 21,
-    },
-    {
-      id: 3,
-      name: 'Rajesh Kumar',
-      email: 'rajesh.kumar@email.com',
-      daysSinceLogin: 18,
-    },
-    {
-      id: 4,
-      name: 'Sunita Sharma',
-      email: 'sunita.sharma@email.com',
-      daysSinceLogin: 25,
-    },
-    {
-      id: 5,
-      name: 'Deepak Singh',
-      email: 'deepak.singh@email.com',
-      daysSinceLogin: 14,
-    },
-  ];
+  useEffect(() => {
+    // Fetch both datasets when component mounts
+    fetchInactiveUsers();
+    fetchLowScoreUsers();
+  }, [fetchInactiveUsers, fetchLowScoreUsers]);
 
-  // Sample data for students with low scores in last 5 tests
-  const lowScoreStudents: RedZoneStudent[] = [
-    {
-      id: 6,
-      name: 'Neha Patel',
-      email: 'neha.patel@email.com',
-      avgScore: 42,
-      testsAttempted: 5,
-    },
-    {
-      id: 7,
-      name: 'Suresh Reddy',
-      email: 'suresh.reddy@email.com',
-      avgScore: 38,
-      testsAttempted: 4,
-    },
-    {
-      id: 8,
-      name: 'Priti Jain',
-      email: 'priti.jain@email.com',
-      avgScore: 45,
-      testsAttempted: 5,
-    },
-    {
-      id: 9,
-      name: 'Manoj Yadav',
-      email: 'manoj.yadav@email.com',
-      avgScore: 35,
-      testsAttempted: 3,
-    },
-    {
-      id: 10,
-      name: 'Kavitha Iyer',
-      email: 'kavitha.iyer@email.com',
-      avgScore: 41,
-      testsAttempted: 5,
-    },
-  ];
+  // Get current tab data with safe array fallback
+  const currentTabData = activeTab === 'inactivity' ? inactiveUsers : lowScoreUsers;
+  // Handle loading state
+  if (currentTabData.loading) {
+    return (
+      <div className="bg-white rounded-xl shadow-md p-6">
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-4"></div>
+          <div className="space-y-3">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="h-12 bg-gray-300 rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-  const getScoreColor = (score: number) => {
-    if (score < 40) return 'bg-red-100 text-red-800';
-    if (score < 50) return 'bg-orange-100 text-orange-800';
-    return 'bg-yellow-100 text-yellow-800';
-  };
+  // Handle error state
+  if (currentTabData.error) {
+    return (
+      <div className="bg-white rounded-xl shadow-md p-6">
+        <div className="flex flex-col items-center justify-center py-8">
+          <Icon icon="solar:danger-circle-bold" className="text-red-500 mb-2" width={48} />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Error Loading Data</h3>
+          <p className="text-red-500 text-center mb-4">{currentTabData.error}</p>
+          <button
+            onClick={() =>
+              activeTab === 'inactivity' ? fetchInactiveUsers() : fetchLowScoreUsers()
+            }
+            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const getDaysColor = (days: number) => {
     if (days > 21) return 'bg-red-100 text-red-800';
     if (days > 14) return 'bg-orange-100 text-orange-800';
     return 'bg-yellow-100 text-yellow-800';
-  };
-
-  // Sort students based on current tab and sort order
-  const getSortedStudents = (students: RedZoneStudent[], tab: string) => {
-    const sortedStudents = [...students];
-
-    if (tab === 'lowScores') {
-      sortedStudents.sort((a, b) => {
-        const scoreA = a.avgScore || 0;
-        const scoreB = b.avgScore || 0;
-        return sortBy === 'asc' ? scoreA - scoreB : scoreB - scoreA;
-      });
-    } else if (tab === 'noLogin') {
-      sortedStudents.sort((a, b) => {
-        const daysA = a.daysSinceLogin || 0;
-        const daysB = b.daysSinceLogin || 0;
-        return sortBy === 'asc' ? daysA - daysB : daysB - daysA;
-      });
-    }
-
-    return sortedStudents;
-  };
-
-  const toggleSort = () => {
-    setSortBy(sortBy === 'asc' ? 'desc' : 'asc');
   };
 
   return (
@@ -139,6 +74,19 @@ const RedZoneStudents = () => {
       <div className="mb-6">
         <div className="flex bg-gray-100 rounded-md p-1">
           <button
+            onClick={() => setActiveTab('inactivity')}
+            className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+              activeTab === 'inactivity'
+                ? 'bg-white text-red-600 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <div className="flex items-center justify-center gap-2">
+              <Icon icon="solar:login-3-linear" width={16} />
+              Inactive
+            </div>
+          </button>
+          <button
             onClick={() => setActiveTab('lowScores')}
             className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
               activeTab === 'lowScores'
@@ -151,68 +99,48 @@ const RedZoneStudents = () => {
               Low Scores
             </div>
           </button>
-          <button
-            onClick={() => setActiveTab('noLogin')}
-            className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-              activeTab === 'noLogin'
-                ? 'bg-white text-red-600 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <Icon icon="solar:login-3-linear" width={16} />
-              Inactive
-            </div>
-          </button>
         </div>
       </div>
 
       {/* Tab Content */}
       <div className="space-y-4">
-        {activeTab === 'noLogin' && (
+        {activeTab === 'inactivity' && (
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium text-gray-900">Inactive in last 7 days</h3>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={toggleSort}
-                  className="flex items-center gap-1 px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
-                >
-                  <Icon
-                    icon={
-                      sortBy === 'asc' ? 'solar:sort-vertical-bold' : 'solar:sort-vertical-bold'
-                    }
-                    width={14}
-                  />
-                  {sortBy === 'asc' ? 'Least' : 'Most'} Days
-                </button>
-                <Badge color="failure" size="sm">
-                  {noLoginStudents.length} Students
-                </Badge>
-              </div>
+              <h3 className="text-lg font-medium text-gray-900">Inactive Users</h3>
+              <Badge color="failure" size="sm">
+                {Array.isArray(inactiveUsers.data) ? inactiveUsers.data.length : 0} Users
+              </Badge>
             </div>
 
-            <div className="space-y-3 max-h-96 overflow-y-auto">
-              {getSortedStudents(noLoginStudents, 'noLogin').map((student) => (
-                <div
-                  key={student.id}
-                  className="flex items-center justify-between p-3 bg-red-50 rounded-md border border-red-100"
-                >
-                  <div className="flex-1">
-                    <div className="font-medium text-gray-900">{student.name}</div>
-                    <div className="text-sm text-gray-600">{student.email}</div>
+            <div className="space-y-3 max-h-96 md:max-h-[800px] overflow-y-auto">
+              {Array.isArray(inactiveUsers.data) && inactiveUsers.data.length > 0 ? (
+                inactiveUsers.data.map((user, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 bg-red-50 rounded-md border border-red-100"
+                  >
+                    <div className="flex-1">
+                      <div className="font-medium text-gray-900">{user.name}</div>
+                      <div className="text-sm text-gray-600">
+                        Last login:{' '}
+                        {user.last_login ? new Date(user.last_login).toLocaleDateString() : 'Never'}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Badge
+                        color="failure"
+                        size="sm"
+                        className={getDaysColor(user.days_since_login)}
+                      >
+                        {user.days_since_login} days
+                      </Badge>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <Badge
-                      color="failure"
-                      size="sm"
-                      className={getDaysColor(student.daysSinceLogin!)}
-                    >
-                      {student.daysSinceLogin} days
-                    </Badge>
-                  </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div className="text-gray-500 text-center py-4">No inactive users found</div>
+              )}
             </div>
           </div>
         )}
@@ -220,39 +148,37 @@ const RedZoneStudents = () => {
         {activeTab === 'lowScores' && (
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium text-gray-900">Low Scores in Last 5 Tests</h3>
-              <button
-                onClick={toggleSort}
-                className="flex items-center gap-1 px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
-              >
-                <Icon
-                  icon={sortBy === 'asc' ? 'solar:sort-vertical-bold' : 'solar:sort-vertical-bold'}
-                  width={14}
-                />
-                {sortBy === 'asc' ? 'Lowest' : 'Highest'} Score
-              </button>
+              <h3 className="text-lg font-medium text-gray-900">Low Score Users</h3>
+              <Badge color="yellow" size="sm">
+                {Array.isArray(lowScoreUsers.data) ? lowScoreUsers.data.length : 0} Users
+              </Badge>
             </div>
 
-            <div className="space-y-3 max-h-96 overflow-y-auto">
-              {getSortedStudents(lowScoreStudents, 'lowScores').map((student) => (
-                <div
-                  key={student.id}
-                  className="flex items-center justify-between p-3 bg-orange-50 rounded-md border border-orange-100"
-                >
-                  <div className="flex-1">
-                    <div className="font-medium text-gray-900">{student.name}</div>
-                    <div className="text-sm text-gray-600">{student.email}</div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      {student.testsAttempted} tests attempted
+            <div className="space-y-3 max-h-96 md:max-h-[800px] overflow-y-auto">
+              {Array.isArray(lowScoreUsers.data) && lowScoreUsers.data.length > 0 ? (
+                lowScoreUsers.data.map((user, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 bg-orange-50 rounded-md border border-orange-100"
+                  >
+                    <div className="flex-1">
+                      <div className="font-medium text-gray-900">{user.name}</div>
+                      <div className="text-sm text-gray-600">
+                        {user.totalAssessments
+                          ? `${user.totalAssessments} assessments taken`
+                          : 'No assessments taken'}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Badge color="yellow" size="sm">
+                        {user.avgScore}
+                      </Badge>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <Badge color="warning" size="sm" className={getScoreColor(student.avgScore!)}>
-                      {student.avgScore}% avg
-                    </Badge>
-                  </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div className="text-gray-500 text-center py-4">No low score users found</div>
+              )}
             </div>
           </div>
         )}

@@ -1,0 +1,45 @@
+{
+  "lowScoreStudents": [
+    {
+      "id": 25,
+      "name": "Raj Singh",
+      "email": "raj.singh@example.com",
+      "avgScore": 35,
+      "testsAttempted": 12
+    },
+    {
+      "id": 45,
+      "name": "Maya Sharma",
+      "email": "maya.sharma@example.com",
+      "avgScore": 42,
+      "testsAttempted": 8
+    },
+    {
+      "id": 67,
+      "name": "Amit Gupta",
+      "email": "amit.gupta@example.com",
+      "avgScore": 38,
+      "testsAttempted": 15
+    }
+  ],
+  "inactiveStudents": [
+    {
+      "id": 89,
+      "name": "Neha Verma",
+      "email": "neha.verma@example.com",
+      "daysSinceLogin": 25
+    },
+    {
+      "id": 102,
+      "name": "Vikram Singh",
+      "email": "vikram.singh@example.com",
+      "daysSinceLogin": 18
+    },
+    {
+      "id": 134,
+      "name": "Pooja Agarwal",
+      "email": "pooja.agarwal@example.com",
+      "daysSinceLogin": 31
+    }
+  ]
+}

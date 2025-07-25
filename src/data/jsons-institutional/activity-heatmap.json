@@ -1,0 +1,14 @@
+{
+  "heatmapData": [
+    { "date": "2025-07-13", "day": "Sun", "intensity": 1 },
+    { "date": "2025-07-14", "day": "Mon", "intensity": 4 },
+    { "date": "2025-07-15", "day": "Tue", "intensity": 3 },
+    { "date": "2025-07-16", "day": "Wed", "intensity": 4 },
+    { "date": "2025-07-17", "day": "Thu", "intensity": 3 },
+    { "date": "2025-07-18", "day": "Fri", "intensity": 4 },
+    { "date": "2025-07-19", "day": "Sat", "intensity": 2 },
+    { "date": "2025-07-20", "day": "Sun", "intensity": 1 },
+    { "date": "2025-07-21", "day": "Mon", "intensity": 4 },
+    { "date": "2025-07-22", "day": "Tue", "intensity": 3 }
+  ]
+}

@@ -1,38 +1,53 @@
 import { Icon } from '@iconify/react';
 import Chart from 'react-apexcharts';
-import { useState } from 'react';
-import { MEDICAL_TEST_DATA, TEST_SERIES_DATA } from '../../utils/constants';
+import { useState, useEffect } from 'react';
+import { useInstitutionalStore } from '../../data/institutional/institutionalStore';
 
 const QbanksTestInsights = () => {
-  const [selectedCategory] = useState('all');
-  const [dataType, setDataType] = useState<'qbank' | 'testseries'>('qbank');
+  const { qbankInsights, fetchQbankInsights, testSeriesInsights, fetchTestSeriesInsights } =
+    useInstitutionalStore();
 
-  // Filter data based on selected category and data type
-  const currentDataset = dataType === 'qbank' ? MEDICAL_TEST_DATA : TEST_SERIES_DATA;
+  const [selectedCategory] = useState('all');
+
+  useEffect(() => {
+    fetchQbankInsights({ type: 'qbank' });
+    fetchTestSeriesInsights({ type: 'test-series' });
+  }, [fetchQbankInsights]);
+
+  // QBank data
+  const { data: qbankData, loading, error } = qbankInsights;
+  const testData = qbankData?.qbanks || [];
+  console.log('QBank Insights Data:', qbankInsights);
+  // QBank summary
+  const qbankSummary = qbankData?.qbank_summary;
+
+  // Filter data based on selected category
   const filteredData =
     selectedCategory === 'all'
-      ? currentDataset
-      : currentDataset.filter((test) => test.category === selectedCategory);
+      ? testData
+      : testData.filter((test: any) => test.subject_name === selectedCategory);
 
-  // Prepare data for horizontal bar chart - sorted by average score
-  const sortedData = [...filteredData].sort((a, b) => b.avgScore - a.avgScore);
+  // Prepare data for horizontal bar chart - sorted by average accuracy
+  const sortedData = [...filteredData].sort(
+    (a: any, b: any) => b.average_accuracy_score - a.average_accuracy_score,
+  );
 
-  // Function to get color based on score
-  const getScoreColor = (score: number) => {
-    if (score < 50) return '#EF4444'; // Red
-    if (score >= 50 && score <= 70) return '#F59E0B'; // Yellow/Orange
+  // Function to get color based on accuracy
+  const getAccuracyColor = (accuracy: number) => {
+    if (accuracy < 50) return '#EF4444'; // Red
+    if (accuracy >= 50 && accuracy <= 70) return '#F59E0B'; // Yellow/Orange
     return '#10B981'; // Green
   };
 
-  // Chart data for horizontal bar chart showing only average scores with color coding
-  const scoreChartData = {
+  // Chart data for horizontal bar chart showing only average accuracy with color coding
+  const accuracyChartData = {
     series: [
       {
-        name: 'Average Score',
-        data: sortedData.map((test) => ({
-          x: test.subject,
-          y: test.avgScore,
-          fillColor: getScoreColor(test.avgScore),
+        name: 'Average Accuracy',
+        data: sortedData.map((test: any) => ({
+          x: test.subject_name,
+          y: test.average_accuracy_score,
+          fillColor: getAccuracyColor(test.average_accuracy_score),
         })),
       },
     ],
@@ -59,10 +74,10 @@ const QbanksTestInsights = () => {
           dataLabels: {
             position: 'center',
           },
-          distributed: true, // This allows individual colors for each bar
+          distributed: true,
         },
       },
-      colors: sortedData.map((test) => getScoreColor(test.avgScore)),
+      colors: sortedData.map((test: any) => getAccuracyColor(test.average_accuracy_score)),
       dataLabels: {
         enabled: true,
         formatter: function (val: number) {
@@ -75,9 +90,9 @@ const QbanksTestInsights = () => {
         },
       },
       xaxis: {
-        categories: sortedData.map((test) => test.subject),
+        categories: sortedData.map((test: any) => test.subject_name),
         title: {
-          text: 'Average Score (%)',
+          text: 'Average Accuracy (%)',
           style: {
             fontSize: '14px',
             fontWeight: '600',
@@ -108,7 +123,7 @@ const QbanksTestInsights = () => {
         },
       },
       legend: {
-        show: false, // Hide legend since we're using distributed colors
+        show: false,
       },
       tooltip: {
         y: {
@@ -124,9 +139,9 @@ const QbanksTestInsights = () => {
   // Donut chart for test difficulty distribution
   const difficultyChartData = {
     series: [
-      filteredData.filter((test) => test.difficulty === 'Easy').length,
-      filteredData.filter((test) => test.difficulty === 'Medium').length,
-      filteredData.filter((test) => test.difficulty === 'Hard').length,
+      qbankSummary?.difficulty_distribution?.easy || 0,
+      qbankSummary?.difficulty_distribution?.medium || 0,
+      qbankSummary?.difficulty_distribution?.hard || 0,
     ],
     options: {
       chart: {
@@ -147,45 +162,18 @@ const QbanksTestInsights = () => {
     },
   };
 
-  // Calculate summary statistics
-  const totalAttempts = filteredData.reduce((sum, test) => sum + test.attempts, 0);
-  const avgScore = Math.round(
-    filteredData.reduce((sum, test) => sum + test.avgScore, 0) / filteredData.length,
-  );
+  // Calculate summary statistics for QBank
+  const totalAttempts = qbankSummary?.total_attempts || 0;
+  const avgAccuracy = Math.round(qbankSummary?.average_score || 0);
+
+  // Test Series summary (horizontal cards below QBank insights)
+  const testSeriesSummary = testSeriesInsights?.data?.summary;
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">Medical Test Analytics</h2>
-        <div className="flex items-center gap-4">
-          {/* QBank vs Test Series Toggle */}
-          <div className="flex bg-gray-100 rounded-lg p-1">
-            <button
-              onClick={() => setDataType('qbank')}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                dataType === 'qbank'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              <Icon icon="solar:book-bookmark-bold" className="inline mr-2" width={16} />
-              QBank
-            </button>
-            <button
-              onClick={() => setDataType('testseries')}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                dataType === 'testseries'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              <Icon icon="solar:clipboard-list-bold" className="inline mr-2" width={16} />
-              Test Series
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <div className="rounded-xl shadow-md">
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Chart Section */}
@@ -194,8 +182,7 @@ const QbanksTestInsights = () => {
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900">
-                  Average Scores by Medical Subject (
-                  {dataType === 'qbank' ? 'QBank' : 'Test Series'})
+                  Average Accuracy by Medical Subject
                 </h3>
                 {/* Color Legend */}
                 <div className="flex items-center gap-4 text-sm">
@@ -217,8 +204,8 @@ const QbanksTestInsights = () => {
 
             <div className="p-6">
               <Chart
-                options={scoreChartData.options}
-                series={scoreChartData.series}
+                options={accuracyChartData.options}
+                series={accuracyChartData.series}
                 type="bar"
                 height={500}
               />
@@ -228,16 +215,16 @@ const QbanksTestInsights = () => {
 
         {/* Right Sidebar */}
         <div className="lg:col-span-1 space-y-6">
-          {/* Summary Statistics */}
+          {/* QBank Summary Statistics */}
           <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Summary</h4>
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">QBank Summary</h4>
             <div className="space-y-4">
               <div className="bg-green-50 rounded-lg p-4 border border-green-200">
                 <div className="flex items-center gap-3 mb-2">
                   <Icon icon="solar:graph-up-bold" className="text-green-500" width={20} />
-                  <span className="text-sm font-medium text-green-700">Average Score</span>
+                  <span className="text-sm font-medium text-green-700">Average Accuracy</span>
                 </div>
-                <div className="text-2xl font-bold text-green-800">{avgScore}%</div>
+                <div className="text-2xl font-bold text-green-800">{avgAccuracy}%</div>
                 <div className="text-xs text-green-600 mt-1">Overall performance</div>
               </div>
 
@@ -271,6 +258,61 @@ const QbanksTestInsights = () => {
           </div>
         </div>
       </div>
+
+      {/* Test Series Summary Cards (horizontal, below insights) */}
+      {testSeriesInsights?.error && (
+        <div className="mt-8">
+          <div className="text-red-500">{testSeriesInsights.error}</div>
+        </div>
+      )}
+      {testSeriesSummary && !testSeriesInsights?.error && (
+        <div className="mt-8">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Test Series Summary</h3>
+          <div className="flex flex-row gap-6">
+            <div className="bg-yellow-50 rounded-lg p-6 border border-yellow-200 flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                <Icon icon="solar:graph-up-bold" className="text-yellow-500" width={20} />
+                <span className="text-sm font-medium text-yellow-700">Average Score</span>
+              </div>
+              <div className="text-2xl font-bold text-yellow-800">
+                {testSeriesSummary.avgScore}%
+              </div>
+              <div className="text-xs text-yellow-600 mt-1">Overall performance</div>
+            </div>
+            <div className="bg-blue-50 rounded-lg p-6 border border-blue-200 flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                <Icon
+                  icon="solar:users-group-two-rounded-bold"
+                  className="text-blue-500"
+                  width={20}
+                />
+                <span className="text-sm font-medium text-blue-700">Total Attempts</span>
+              </div>
+              <div className="text-2xl font-bold text-blue-800">
+                {testSeriesSummary.totalAttempts.toLocaleString()}
+              </div>
+              <div className="text-xs text-blue-600 mt-1">Student attempts</div>
+            </div>
+            <div className="bg-purple-50 rounded-lg p-6 border border-purple-200 flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                <Icon icon="solar:clipboard-list-bold" className="text-purple-500" width={20} />
+                <span className="text-sm font-medium text-purple-700">Difficulty Distribution</span>
+              </div>
+              <div className="flex gap-2 mt-2">
+                <span className="text-xs text-purple-700">
+                  Easy: {testSeriesSummary.difficultyDistribution.easy}
+                </span>
+                <span className="text-xs text-purple-700">
+                  Medium: {testSeriesSummary.difficultyDistribution.medium}
+                </span>
+                <span className="text-xs text-purple-700">
+                  Hard: {testSeriesSummary.difficultyDistribution.hard}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

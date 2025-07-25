@@ -1,175 +1,59 @@
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
-import { Table, TextInput, Button } from 'flowbite-react';
-
-interface Student {
-  id: number;
-  name: string;
-  email: string;
-  professor: string;
-  totalLogins: number;
-  lastLogin: string;
-  videosWatched: number;
-  qbankAttempted: number;
-  testsTaken: number;
-  isActive: boolean;
-}
+import { useState, useEffect } from 'react';
+import { Table, Button } from 'flowbite-react';
+import { useInstitutionalStore } from '../../data/institutional/institutionalStore';
+import { Link } from 'react-router';
 
 interface StudentEngagementProps {
-  selectedProfessors?: string[];
+  selectedProfs?: string[];
 }
 
-const StudentEngagement = ({ selectedProfessors = [] }: StudentEngagementProps) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const StudentEngagement = ({}: StudentEngagementProps) => {
+  const { students: studentsState, fetchStudents } = useInstitutionalStore();
+  //   const [searchTerm, setSearchTerm] = useState('');
+  //   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [studentsPerPage] = useState(10);
 
-  // Sample student data - replace with real API data
-  const [students] = useState<Student[]>([
-    {
-      id: 1,
-      name: 'Dr. Arjun Sharma',
-      email: 'arjun.sharma@medcollege.edu',
-      professor: 'prof 1',
-      totalLogins: 45,
-      lastLogin: '2024-01-08',
-      videosWatched: 128,
-      qbankAttempted: 67,
-      testsTaken: 12,
-      isActive: true,
-    },
-    {
-      id: 2,
-      name: 'Dr. Priya Patel',
-      email: 'priya.patel@medcollege.edu',
-      professor: 'prof 2',
-      totalLogins: 38,
-      lastLogin: '2024-01-07',
-      videosWatched: 95,
-      qbankAttempted: 52,
-      testsTaken: 8,
-      isActive: true,
-    },
-    {
-      id: 3,
-      name: 'Dr. Rahul Kumar',
-      email: 'rahul.kumar@medcollege.edu',
-      professor: 'prof 3',
-      totalLogins: 52,
-      lastLogin: '2024-01-08',
-      videosWatched: 156,
-      qbankAttempted: 89,
-      testsTaken: 15,
-      isActive: true,
-    },
-    {
-      id: 4,
-      name: 'Sneha Gupta',
-      email: 'sneha.gupta@email.com',
-      professor: 'prof 1',
-      totalLogins: 29,
-      lastLogin: '2024-01-06',
-      videosWatched: 73,
-      qbankAttempted: 41,
-      testsTaken: 6,
-      isActive: false,
-    },
-    {
-      id: 5,
-      name: 'Vikram Singh',
-      email: 'vikram.singh@email.com',
-      professor: 'prof 4',
-      totalLogins: 61,
-      lastLogin: '2024-01-08',
-      videosWatched: 187,
-      qbankAttempted: 103,
-      testsTaken: 18,
-      isActive: true,
-    },
-    {
-      id: 6,
-      name: 'Anita Desai',
-      email: 'anita.desai@email.com',
-      professor: 'prof 2',
-      totalLogins: 34,
-      lastLogin: '2024-01-05',
-      videosWatched: 82,
-      qbankAttempted: 45,
-      testsTaken: 9,
-      isActive: true,
-    },
-    {
-      id: 7,
-      name: 'Ravi Verma',
-      email: 'ravi.verma@email.com',
-      professor: 'prof 5',
-      totalLogins: 47,
-      lastLogin: '2024-01-07',
-      videosWatched: 134,
-      qbankAttempted: 71,
-      testsTaken: 13,
-      isActive: true,
-    },
-    {
-      id: 8,
-      name: 'Kavya Nair',
-      email: 'kavya.nair@email.com',
-      professor: 'prof 3',
-      totalLogins: 25,
-      lastLogin: '2024-01-04',
-      videosWatched: 58,
-      qbankAttempted: 32,
-      testsTaken: 5,
-      isActive: false,
-    },
-    {
-      id: 9,
-      name: 'Rohit Mehta',
-      email: 'rohit.mehta@email.com',
-      professor: 'prof 5',
-      totalLogins: 89,
-      lastLogin: '2024-01-08',
-      videosWatched: 245,
-      qbankAttempted: 156,
-      testsTaken: 28,
-      isActive: true,
-    },
-    {
-      id: 10,
-      name: 'Priya Singh',
-      email: 'priya.singh@email.com',
-      professor: 'prof 1',
-      totalLogins: 67,
-      lastLogin: '2024-01-07',
-      videosWatched: 198,
-      qbankAttempted: 89,
-      testsTaken: 14,
-      isActive: true,
-    },
-  ]);
+  // Debounce search term
+  //   useEffect(() => {
+  //     const timer = setTimeout(() => {
+  //       setDebouncedSearchTerm(searchTerm);
+  //       setCurrentPage(1); // Reset to first page on search
+  //     }, 500);
+
+  //     return () => clearTimeout(timer);
+  //   }, [searchTerm]);
+
+  useEffect(() => {
+    fetchStudents({
+      page: currentPage,
+      limit: studentsPerPage,
+      //   search: debouncedSearchTerm,
+    });
+  }, [fetchStudents, currentPage]);
+
+  // Access data from the new API-first structure
+  const { data: students = [], loading, error } = studentsState;
+  //   console.log('StudentEngagement', students);
 
   // Calculate totals for display in headers
-  const totalVideosWatched = students.reduce((sum, student) => sum + student.videosWatched, 0);
-  const totalQbankAttempted = students.reduce((sum, student) => sum + student.qbankAttempted, 0);
-  const totalTestsTaken = students.reduce((sum, student) => sum + student.testsTaken, 0);
+  const totalVideosWatched = students.reduce(
+    (sum: number, student: any) => sum + student.videosWatched,
+    0,
+  );
+  const totalQbankAttempted = students.reduce(
+    (sum: number, student: any) => sum + student.qbankAttempted,
+    0,
+  );
+  const totalTestsTaken = students.reduce(
+    (sum: number, student: any) => sum + student.testsTaken,
+    0,
+  );
 
-  // Filter students based on search term and selected professors
-  const filteredStudents = students.filter((student) => {
-    const matchesSearch =
-      student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      student.email.toLowerCase().includes(searchTerm.toLowerCase());
-
-    const matchesProfessor =
-      selectedProfessors.length === 0 || selectedProfessors.includes(student.professor);
-
-    return matchesSearch && matchesProfessor;
-  });
-
-  // Pagination logic
-  const indexOfLastStudent = currentPage * studentsPerPage;
-  const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
-  const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
-  const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
+  // Since API now handles filtering server-side, we use the data directly
+  const currentStudents = students;
+  const totalPages = Math.ceil(studentsState.totalCount / studentsPerPage);
 
   const formatLastLogin = (dateString: string) => {
     const date = new Date(dateString);
@@ -207,19 +91,23 @@ const StudentEngagement = ({ selectedProfessors = [] }: StudentEngagementProps) 
     })}`;
   };
 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
+
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold text-gray-900">Student Engagement Metrics</h2>
-
-        <Button size="sm" color="blue">
-          <Icon icon="solar:eye-bold" className="mr-2" width={16} />
-          View All Students
-        </Button>
+        <Link to={'/tables/users'}>
+          <Button size="sm" color="blue">
+            <Icon icon="solar:eye-bold" className="mr-2" width={16} />
+            View All Students
+          </Button>
+        </Link>
       </div>
 
       {/* Search Bar */}
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <div className="relative">
           <Icon
             icon="solar:magnifer-linear"
@@ -234,36 +122,29 @@ const StudentEngagement = ({ selectedProfessors = [] }: StudentEngagementProps) 
             className="pl-10"
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Students Table */}
       <div className="overflow-x-auto">
         <Table>
           <Table.Head>
-            <Table.HeadCell>Student Name</Table.HeadCell>
-            <Table.HeadCell>Email</Table.HeadCell>
-            <Table.HeadCell>
-              Prof&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </Table.HeadCell>
-            <Table.HeadCell>Last Login</Table.HeadCell>
+            <Table.HeadCell>Student Details</Table.HeadCell>
             <Table.HeadCell>Videos Watched ({totalVideosWatched.toLocaleString()})</Table.HeadCell>
             <Table.HeadCell>
               QBank Attempted ({totalQbankAttempted.toLocaleString()})
             </Table.HeadCell>
             <Table.HeadCell>Tests Taken ({totalTestsTaken})</Table.HeadCell>
+            <Table.HeadCell>Signup Date</Table.HeadCell>
+            <Table.HeadCell>Last Login</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            {currentStudents.map((student) => (
+            {currentStudents.map((student: any) => (
               <Table.Row key={student.id} className="bg-white">
-                <Table.Cell className="font-medium text-gray-900">{student.name}</Table.Cell>
-                <Table.Cell className="text-gray-600">{student.email}</Table.Cell>
-                <Table.Cell>
-                  <span className="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">
-                    {student.professor}
-                  </span>
-                </Table.Cell>
-                <Table.Cell className="text-gray-600">
-                  {formatLastLogin(student.lastLogin)}
+                <Table.Cell className="font-medium text-gray-900">
+                  <div className="flex flex-col">
+                    <div>{student.name}</div>
+                    <div className="text-bodytext">{student.email}</div>
+                  </div>
                 </Table.Cell>
                 <Table.Cell>
                   <span className="bg-purple-100 text-purple-800 text-sm font-medium px-2.5 py-0.5 rounded">
@@ -280,6 +161,14 @@ const StudentEngagement = ({ selectedProfessors = [] }: StudentEngagementProps) 
                     {student.testsTaken}
                   </span>
                 </Table.Cell>
+                <Table.Cell>
+                  <span className="text-gray-600 text-sm font-medium py-0.5 rounded">
+                    {formatLastLogin(student.SignUp)}
+                  </span>
+                </Table.Cell>
+                <Table.Cell className="text-gray-600">
+                  {formatLastLogin(student.lastLogin)}
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
@@ -289,38 +178,67 @@ const StudentEngagement = ({ selectedProfessors = [] }: StudentEngagementProps) 
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-6">
-          <div className="text-sm text-gray-600">
-            Showing {indexOfFirstStudent + 1} to{' '}
-            {Math.min(indexOfLastStudent, filteredStudents.length)} of {filteredStudents.length}{' '}
-            students
+          <div className="text-sm text-bodytext">
+            Showing {(currentPage - 1) * studentsPerPage + 1} to{' '}
+            {Math.min(currentPage * studentsPerPage, studentsState.totalCount)} of{' '}
+            {studentsState.totalCount} students
           </div>
           <div className="flex gap-2">
-            <Button
-              size="sm"
-              color="gray"
+            <button
+              onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
               disabled={currentPage === 1}
-              onClick={() => setCurrentPage(currentPage - 1)}
+              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             >
               Previous
-            </Button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <Button
-                key={page}
-                size="sm"
-                color={currentPage === page ? 'blue' : 'gray'}
-                onClick={() => setCurrentPage(page)}
-              >
-                {page}
-              </Button>
-            ))}
-            <Button
-              size="sm"
-              color="gray"
+            </button>
+
+            {/* Windowed Pagination Logic */}
+            {(() => {
+              const pageButtons = [];
+              const window = 2; // pages to show around current
+              const showFirst = 1;
+              const showLast = totalPages;
+
+              for (let i = 1; i <= totalPages; i++) {
+                if (
+                  i === showFirst ||
+                  i === showLast ||
+                  (i >= currentPage - window && i <= currentPage + window)
+                ) {
+                  pageButtons.push(
+                    <button
+                      key={i}
+                      onClick={() => setCurrentPage(i)}
+                      className={`px-3 py-2 text-sm font-medium rounded-lg min-w-[32px] ${
+                        currentPage === i
+                          ? 'text-blue-600 bg-blue-50 border border-blue-300 dark:bg-gray-700 dark:text-white'
+                          : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+                      }`}
+                    >
+                      {i}
+                    </button>,
+                  );
+                } else if (
+                  (i === currentPage - window - 1 && i > showFirst) ||
+                  (i === currentPage + window + 1 && i < showLast)
+                ) {
+                  pageButtons.push(
+                    <span key={`ellipsis-${i}`} className="px-2 text-gray-400">
+                      ...
+                    </span>,
+                  );
+                }
+              }
+              return pageButtons;
+            })()}
+
+            <button
+              onClick={() => setCurrentPage(Math.min(currentPage + 1, totalPages))}
               disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage(currentPage + 1)}
+              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             >
               Next
-            </Button>
+            </button>
           </div>
         </div>
       )}

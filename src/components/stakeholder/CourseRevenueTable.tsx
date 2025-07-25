@@ -16,6 +16,8 @@ const CourseRevenueTable = ({
   const [sortBy, setSortBy] = useState('revenue');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   // Generate dynamic course data based on MBBS subjects
   const courseData = MEDICAL_SUBJECTS.map((subject, index) => {
@@ -78,6 +80,12 @@ const CourseRevenueTable = ({
     }
   });
 
+  // Pagination calculations
+  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = sortedData.slice(startIndex, endIndex);
+
   const handleSort = (column: string) => {
     if (sortBy === column) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -85,6 +93,11 @@ const CourseRevenueTable = ({
       setSortBy(column);
       setSortOrder('desc');
     }
+    setCurrentPage(1); // Reset to first page when sorting
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
   };
 
   const getGrowthColor = (growth: string) => {
@@ -230,7 +243,7 @@ const CourseRevenueTable = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {sortedData.map((course) => (
+            {currentData.map((course) => (
               <tr key={course.id} className="hover:bg-gray-50 transition-colors">
                 <td className="py-4 px-4">
                   <div className="flex items-center gap-3">
@@ -295,25 +308,71 @@ const CourseRevenueTable = ({
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between mt-6 pt-6 border-t border-gray-200">
-        <div className="text-sm text-gray-600">
-          Showing {sortedData.length} of {courseData.length} courses
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between mt-6 pt-6 border-t border-gray-200">
+          <div className="text-sm text-gray-600">
+            Showing {startIndex + 1} to {Math.min(endIndex, sortedData.length)} of{' '}
+            {sortedData.length} courses
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              Previous
+            </button>
+
+            {/* Windowed Pagination Logic */}
+            {(() => {
+              const pageButtons = [];
+              const window = 2; // pages to show around current
+              const showFirst = 1;
+              const showLast = totalPages;
+
+              for (let i = 1; i <= totalPages; i++) {
+                if (
+                  i === showFirst ||
+                  i === showLast ||
+                  (i >= currentPage - window && i <= currentPage + window)
+                ) {
+                  pageButtons.push(
+                    <button
+                      key={i}
+                      onClick={() => handlePageChange(i)}
+                      className={`px-3 py-2 text-sm font-medium rounded-lg min-w-[32px] ${
+                        currentPage === i
+                          ? 'text-blue-600 bg-blue-50 border border-blue-300 dark:bg-gray-700 dark:text-white'
+                          : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+                      }`}
+                    >
+                      {i}
+                    </button>,
+                  );
+                } else if (
+                  (i === currentPage - window - 1 && i > showFirst) ||
+                  (i === currentPage + window + 1 && i < showLast)
+                ) {
+                  pageButtons.push(
+                    <span key={`ellipsis-${i}`} className="px-2 text-gray-400">
+                      ...
+                    </span>,
+                  );
+                }
+              }
+              return pageButtons;
+            })()}
+
+            <button
+              onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              Next
+            </button>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <button className="px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50 transition-colors">
-            Previous
-          </button>
-          <button className="px-3 py-2 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 transition-colors">
-            1
-          </button>
-          <button className="px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50 transition-colors">
-            2
-          </button>
-          <button className="px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50 transition-colors">
-            Next
-          </button>
-        </div>
-      </div>
+      )}
 
       {/* Summary Stats */}
       <div className="mt-6 pt-6 border-t border-gray-200">

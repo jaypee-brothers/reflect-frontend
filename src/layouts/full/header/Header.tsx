@@ -1,54 +1,55 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar } from 'flowbite-react';
 import Profile from './Profile';
 import { Drawer } from 'flowbite-react';
 import MobileSidebar from '../sidebar/MobileSidebar';
+import { useUiStore } from 'src/stores/uiStore';
 
 interface HeaderProps {
   selectedTimeRange: string;
   setSelectedTimeRange: (value: string) => void;
-  selectedCollege: string;
-  setSelectedCollege: (value: string) => void;
-  selectedProfessors: string[];
-  setSelectedProfessors: (value: string[]) => void;
 }
 
-const Header = ({
-  selectedTimeRange,
-  setSelectedTimeRange,
-  selectedCollege,
-  setSelectedCollege,
-  selectedProfessors,
-  setSelectedProfessors,
-}: HeaderProps) => {
+const Header = ({ selectedTimeRange, setSelectedTimeRange }: HeaderProps) => {
   const [isSticky, setIsSticky] = useState(false);
-  const [isProfessorDropdownOpen, setIsProfessorDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Professors data
-  const professors = ['prof1', 'prof2', 'prof3', 'prof4', 'prof5'];
+  // Get additional state from UI store
+  const { startDate, endDate, setDateRange } = useUiStore();
 
-  const handleProfessorToggle = (professor: string) => {
-    if (selectedProfessors.includes(professor)) {
-      setSelectedProfessors(selectedProfessors.filter((p) => p !== professor));
-    } else {
-      setSelectedProfessors([...selectedProfessors, professor]);
-    }
+  // Handle refresh action
+  const handleRefresh = () => {
+    window.location.reload(); // Hard reload (modern browsers ignore the forceReload param)
   };
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsProfessorDropdownOpen(false);
-      }
+  // Format date range for display
+  const formatDateRange = () => {
+    if (selectedTimeRange === 'custom') {
+      const start = new Date(startDate).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      });
+      const end = new Date(endDate).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      });
+      return `${start} - ${end}`;
+    }
+
+    const rangeLabels: { [key: string]: string } = {
+      today: 'Today',
+      yesterday: 'Yesterday',
+      '7days': 'Last 7 Days',
+      '15days': 'Last 15 Days',
+      '1month': 'Last Month',
+      '3months': 'Last 3 Months',
+      '6months': 'Last 6 Months',
+      '1year': 'Last Year',
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+    return rangeLabels[selectedTimeRange] || 'Last 7 Days';
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,6 +70,8 @@ const Header = ({
   // mobile-sidebar
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => setIsOpen(false);
+  const handleOpen = () => setIsOpen(true);
+
   return (
     <>
       <header
@@ -80,107 +83,86 @@ const Header = ({
           fluid
           className={`rounded-none bg-transparent dark:bg-transparent py-4 sm:px-30 px-4`}
         >
-          {/* Mobile Toggle Icon */}
-
-          <div className="flex gap-3 items-center justify-between w-full ">
-            <div className="flex gap-2 items-center">
-              <h1 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
-            </div>
+          <div className="flex gap-3 items-center justify-between w-full">
+            {/* Hamburger menu for mobile */}
+            <button
+              className="md:hidden p-2 rounded hover:bg-gray-200 focus:outline-none"
+              onClick={handleOpen}
+              aria-label="Open sidebar"
+            >
+              <svg
+                className="h-6 w-6 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <select
-                  value={selectedTimeRange}
-                  onChange={(e) => setSelectedTimeRange(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="today">Today</option>
-                  <option value="yesterday">Yesterday</option>
-                  <option value="7days">Last 7 Days</option>
-                  <option value="15days">Last 15 Days</option>
-                  <option value="1month">Last Month</option>
-                  <option value="3months">Last 3 Months</option>
-                  <option value="6months">Last 6 Months</option>
-                  <option value="1year">Last Year</option>
-                  <option value="custom">Custom Range</option>
-                </select>
-                <select
-                  value={selectedCollege}
-                  onChange={(e) => setSelectedCollege(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="jaypee">Jaypee Medical College</option>
-                  <option value="manipal">Manipal Medical College</option>
-                  <option value="dy-patil">DY Patil Medical College</option>
-                </select>
-
-                {/* Professor Multi-Select Dropdown */}
-                <div className="relative" ref={dropdownRef}>
-                  <button
-                    onClick={() => setIsProfessorDropdownOpen(!isProfessorDropdownOpen)}
-                    className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white flex items-center gap-2 min-w-[200px] justify-between"
+              <div className="flex flex-col gap-3">
+                {/* Time Range Selector and Refresh Button */}
+                <div className="flex items-center gap-4">
+                  <select
+                    value={selectedTimeRange}
+                    onChange={(e) => setSelectedTimeRange(e.target.value)}
+                    className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
-                    <span className="text-sm">
-                      {selectedProfessors.length === 0
-                        ? 'Select Prof'
-                        : `${selectedProfessors.length} Professor${
-                            selectedProfessors.length > 1 ? 's' : ''
-                          } Selected`}
-                    </span>
-                    <svg
-                      className={`w-4 h-4 transition-transform ${
-                        isProfessorDropdownOpen ? 'rotate-180' : ''
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
+                    <option value="7days">Last 7 Days</option>
+                    <option value="15days">Last 15 Days</option>
+                    <option value="1month">Last Month</option>
+                    <option value="3months">Last 3 Months</option>
+                    <option value="6months">Last 6 Months</option>
+                    <option value="1year">Last Year</option>
+                    <option value="custom">Custom Range</option>
+                  </select>
+                  {/* Custom Date Range Inputs - Show when custom is selected */}
+                  {selectedTimeRange === 'custom' && (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="date"
+                        value={startDate}
+                        onChange={(e) => setDateRange(e.target.value, endDate)}
+                        className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       />
-                    </svg>
-                  </button>
-
-                  {isProfessorDropdownOpen && (
-                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
-                      <div className="p-2">
-                        <div className="flex items-center gap-2 mb-2 pb-2 border-b">
-                          <button
-                            onClick={() => setSelectedProfessors([])}
-                            className="text-xs px-2 py-1 bg-gray-100 rounded hover:bg-gray-200"
-                          >
-                            Clear All
-                          </button>
-                          <button
-                            onClick={() => setSelectedProfessors([...professors])}
-                            className="text-xs px-2 py-1 bg-blue-100 rounded hover:bg-blue-200"
-                          >
-                            Select All
-                          </button>
-                        </div>
-                        {professors.map((professor) => (
-                          <label
-                            key={professor}
-                            className="flex items-center gap-2 py-1 hover:bg-gray-50 cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={selectedProfessors.includes(professor)}
-                              onChange={() => handleProfessorToggle(professor)}
-                              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                            />
-                            <span className="text-sm">{professor}</span>
-                          </label>
-                        ))}
-                      </div>
+                      <span className="text-gray-500">to</span>
+                      <input
+                        type="date"
+                        value={endDate}
+                        onChange={(e) => setDateRange(startDate, e.target.value)}
+                        className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
                     </div>
                   )}
                 </div>
               </div>
             </div>
+
             <div className="flex gap-4 items-center">
+              {/* Current Range Display */}
+              <div className="text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded">
+                Current Range: <strong>{formatDateRange()}</strong>
+              </div>
+              {/* Refresh Button */}
+              <button
+                onClick={handleRefresh}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+                Refresh
+              </button>
               <Profile />
             </div>
           </div>

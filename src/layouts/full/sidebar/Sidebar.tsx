@@ -6,8 +6,16 @@ import SimpleBar from 'simplebar-react';
 import React from 'react';
 import FullLogo from '../shared/logo/FullLogo';
 import NavCollapse from './NavCollapse';
+import { useAuthStore } from 'src/stores/authStore';
 
-const SidebarLayout = () => {
+interface SidebarLayoutProps {
+  selectedCollege: string;
+  setSelectedCollege: (value: string) => void;
+}
+
+const SidebarLayout = ({ selectedCollege, setSelectedCollege }: SidebarLayoutProps) => {
+  const { colleges } = useAuthStore();
+
   return (
     <>
       <div className="xl:block hidden">
@@ -17,6 +25,27 @@ const SidebarLayout = () => {
         >
           <div className="px-6 py-4 flex items-center sidebarlogo">
             <FullLogo />
+          </div>
+
+          {/* College Selector */}
+          <div className="px-6 pb-4">
+            <div className="mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Select College
+              </label>
+              <select
+                value={selectedCollege}
+                onChange={(e) => setSelectedCollege(e.target.value)}
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              >
+                {colleges &&
+                  colleges.map((college, index) => (
+                    <option key={index} value={college.name}>
+                      {college.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
           </div>
           <SimpleBar>
             <Sidebar.Items className="px-5 mt-2">

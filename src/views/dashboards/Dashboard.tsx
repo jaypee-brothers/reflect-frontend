@@ -1,19 +1,14 @@
-import { useOutletContext } from 'react-router';
 import InstitutionOverview from '../../components/analytics/InstitutionOverview';
 import StudentEngagement from '../../components/analytics/StudentEngagement';
 import RedZoneStudents from '../../components/analytics/RedZoneStudents';
 import StudentsToWatch from '../../components/analytics/StudentsToWatch';
 import ContentAnalytics from '../../components/analytics/ContentAnalytics';
 import QbanksTestInsights from '../../components/analytics/QbanksTestInsights';
-
-interface OutletContext {
-  selectedTimeRange: string;
-  selectedCollege: string;
-  selectedProfessors: string[];
-}
+import { useUiStore } from '../../stores/uiStore';
 
 const Dashboard = () => {
-  const { selectedTimeRange, selectedProfessors } = useOutletContext<OutletContext>();
+  // Get UI state from store
+  const { selectedProf: selectedProfs } = useUiStore();
   return (
     <div className="space-y-6">
       {/* Display current filters */}
@@ -40,14 +35,14 @@ const Dashboard = () => {
       </div> */}
 
       {/* Institution Overview */}
-      <InstitutionOverview timeRange={selectedTimeRange} />
+      <InstitutionOverview />
 
       {/* QBank Insights */}
       <QbanksTestInsights />
       {/* Student Engagement & Red Zone in parallel */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <div className="xl:col-span-2">
-          <StudentEngagement selectedProfessors={selectedProfessors} />
+          <StudentEngagement />
         </div>
         <div className="xl:col-span-1">
           <RedZoneStudents />
