@@ -192,10 +192,7 @@ interface InstitutionalState {
   ) => Promise<void>;
   fetchTopStudents: (params?: { limit?: number }) => Promise<void>;
   fetchQBankModules: (params?: PaginationParams & FilterParams) => Promise<void>;
-  fetchTestSeriesInsights: (params?: {
-    type?: 'qbank' | 'test-series';
-    category?: string;
-  }) => Promise<void>;
+
   fetchQbankInsights: (params?: {
     type?: 'qbank' | 'test-series';
     category?: string;
@@ -678,39 +675,6 @@ export const useInstitutionalStore = create<InstitutionalState>((set, get) => ({
       set((state) => ({
         qbankInsights: {
           ...state.qbankInsights,
-          loading: false,
-          error: error instanceof Error ? error.message : 'Unknown error',
-        },
-      }));
-    }
-  },
-
-  fetchTestSeriesInsights: async (params = {}) => {
-    const state = get().testSeriesInsights;
-    if (state.loading || (isCacheFresh(state.lastFetched) && state.data)) return;
-    set((state) => ({
-      testSeriesInsights: { ...state.testSeriesInsights, loading: true, error: null },
-    }));
-    try {
-      const response = await institutionalAPI.getTestSeriesInsights(params);
-      if (response.success) {
-        set(() => ({
-          testSeriesInsights: {
-            data: {
-              summary: (response.data as any).summary,
-            },
-            loading: false,
-            error: null,
-            lastFetched: Date.now(),
-          },
-        }));
-      } else {
-        throw new Error(response.message || 'Failed to fetch test series insights');
-      }
-    } catch (error) {
-      set((state) => ({
-        testSeriesInsights: {
-          ...state.testSeriesInsights,
           loading: false,
           error: error instanceof Error ? error.message : 'Unknown error',
         },
@@ -1236,7 +1200,6 @@ export const useInstitutionalStore = create<InstitutionalState>((set, get) => ({
         store.fetchInactiveUsers(),
         store.fetchLowScoreUsers(),
         store.fetchTopStudents(),
-        // store.fetchTestSeriesInsights(),
         store.fetchQbankInsights(),
         store.fetchQBankModules(),
         store.fetchVideoContent(),

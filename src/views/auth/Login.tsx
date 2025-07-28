@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import { Card, Label, TextInput, Button, Alert } from 'flowbite-react';
+import { Card, TextInput, Button, Alert } from 'flowbite-react';
 import { Icon } from '@iconify/react';
 import { useAuthStore } from '../../stores/authStore';
 import FullLogo from 'src/layouts/full/shared/logo/FullLogo';
@@ -53,11 +53,11 @@ const Login = () => {
           <div className="p-6 space-y-6">
             {/* Logo and Title */}
             <div className="text-center">
-              <div className="px-24 py-4 flex items-center sidebarlogo">
+              <div className="px-24 pb-6 flex items-center sidebarlogo">
                 <FullLogo />
               </div>
               <Icon icon="solar" className="text-white" width={32} />
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h1>
+              <h1 className="text-2xl font-bold text-gray-900 mb-1">Welcome Back</h1>
               <p className="text-gray-600">Sign in to your DigiNerve dashboard</p>
             </div>
 
@@ -72,13 +72,13 @@ const Login = () => {
             )}
 
             {/* Login Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 ">
               <div>
-                <Label
+                {/* <Label
                   htmlFor="email"
                   value="Email Address"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                />
+                  className="text-center mb-2 block text-sm font-medium text-gray-700"
+                /> */}
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Icon icon="solar:letter-bold" className="text-gray-400" width={20} />
@@ -98,12 +98,12 @@ const Login = () => {
               </div>
 
               <div>
-                <Label
+                {/* <Label
                   htmlFor="password"
                   value="Password"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                />
-                <div className="relative">
+                  className="text-center mb-2 block text-sm font-medium text-gray-700"
+                /> */}
+                <div className="relative mb-6">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Icon icon="solar:lock-password-bold" className="text-gray-400" width={20} />
                   </div>
@@ -115,7 +115,7 @@ const Login = () => {
                     value={formData.password}
                     onChange={handleInputChange}
                     required
-                    className="pl-10 pr-12"
+                    className="pl-10"
                     disabled={loading}
                   />
                   <button
@@ -135,7 +135,7 @@ const Login = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                className="rounded-lg px-10 justify-self-center bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                 disabled={loading || !formData.email || !formData.password}
               >
                 {loading ? (
@@ -154,7 +154,7 @@ const Login = () => {
 
             {/* Footer */}
             <div className="text-center text-sm text-gray-500">
-              <p>Institution Dashboard System</p>
+              {/* <p>Institution Dashboard System</p> */}
               <p className="mt-1">
                 © 2025 Jaypee Brothers Medical Publishers Pvt. Ltd. All rights reserved.
               </p>
