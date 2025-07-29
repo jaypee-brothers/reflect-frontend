@@ -12,7 +12,7 @@ const Dashboard = lazy(() => import('../views/dashboards/Dashboard'));
 // const StakeholderDashboard = lazy(() => import('../views/dashboards/StakeholderDashboard'));
 
 // Profile
-// const StudentProfile = lazy(() => import('../views/profile/StudentProfile'));
+const StudentProfile = lazy(() => import('../views/profile/StudentProfile'));
 // const SalesAgentProfile = lazy(() => import('../views/profile/SalesAgentProfile'));
 
 // utilities
@@ -49,7 +49,7 @@ const Router = [
       { path: '/', exact: true, element: <Dashboard /> },
       //   { path: '/', exact: true, element: <InternalDashboard /> },
       //   { path: '/stakeholder', exact: true, element: <StakeholderDashboard /> },
-      //   { path: '/profile/student', exact: true, element: <StudentProfile /> },
+      { path: '/profile/student', exact: true, element: <StudentProfile /> },
       //   { path: '/profile/sales-agent', exact: true, element: <SalesAgentProfile /> },
       //   { path: '/ui/typography', exact: true, element: <Typography /> },
       //   { path: '/ui/table', exact: true, element: <Table /> },

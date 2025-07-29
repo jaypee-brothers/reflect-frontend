@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import Chart from 'react-apexcharts';
 import { Badge, Progress, Table } from 'flowbite-react';
@@ -21,8 +20,6 @@ interface TestHistory {
 }
 
 const StudentProfile = () => {
-  const [timeRange, setTimeRange] = useState('7days');
-
   // Sample student data
   const studentData = {
     name: 'Dr. Arjun Sharma',
@@ -55,18 +52,9 @@ const StudentProfile = () => {
   const loginHeatmapData = generateLoginHeatmap();
 
   // Video activity data
-  const videoWatchHours =
-    timeRange === '7days'
-      ? [2.5, 1.8, 3.2, 2.1, 4.0, 1.5, 2.8]
-      : [
-          12, 15, 18, 14, 20, 16, 22, 18, 25, 19, 24, 21, 26, 23, 28, 20, 30, 25, 27, 22, 29, 24,
-          31, 26, 28, 23, 32, 27, 30, 25,
-        ];
+  const videoWatchHours = [2.5, 1.8, 3.2, 2.1, 4.0, 1.5, 2.8];
 
-  const chartLabels =
-    timeRange === '7days'
-      ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-      : Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`);
+  const chartLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   const videoChartData = {
     series: [
@@ -134,12 +122,6 @@ const StudentProfile = () => {
   ];
 
   // Subject performance data
-  const subjectPerformance = [
-    { subject: 'Anatomy', attempted: 45, total: 60 },
-    { subject: 'Physiology', attempted: 38, total: 50 },
-    { subject: 'Pathology', attempted: 25, total: 40 },
-    { subject: 'Pharmacology', attempted: 12, total: 30 },
-  ];
 
   // Test history data
   const testHistory: TestHistory[] = [
@@ -201,17 +183,9 @@ const StudentProfile = () => {
 
   return (
     <div className="space-y-6 p-6">
-      {/* Page Header */}
-      <div className="bg-white rounded-xl shadow-md p-6">
-        <h1 className="text-2xl font-bold text-gray-900">Student Profile Dashboard</h1>
-        <p className="text-gray-600 mt-1">
-          Comprehensive learning analytics and performance insights
-        </p>
-      </div>
-
       {/* Profile Summary */}
       <div className="bg-white rounded-xl shadow-md p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-6">Profile Summary</h2>
+        {/* <h2 className="text-xl font-semibold text-gray-900 mb-6">Profile Summary</h2> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Student Info */}
@@ -222,9 +196,6 @@ const StudentProfile = () => {
               </div>
               <h3 className="text-lg font-semibold text-gray-900">{studentData.name}</h3>
               <p className="text-gray-600 text-sm">{studentData.email}</p>
-              <p className="text-xs text-gray-500 mt-2">
-                Last login: {new Date(studentData.lastLogin).toLocaleDateString()}
-              </p>
             </div>
           </div>
 
@@ -273,21 +244,13 @@ const StudentProfile = () => {
                 />
               ))}
             </div>
-            <div className="grid grid-cols-7 gap-1">
-              {loginHeatmapData.slice(7, 14).map((day, index) => (
-                <div
-                  key={index}
-                  className={`w-6 h-6 rounded ${
-                    day.hasLogin ? 'bg-green-500' : 'bg-gray-200'
-                  } border border-gray-300`}
-                  title={`${day.date}: ${day.hasLogin ? 'Active' : 'No activity'}`}
-                />
-              ))}
-            </div>
             <div className="flex items-center justify-between mt-2 text-xs text-gray-600">
               <span>Less</span>
               <span>More</span>
             </div>
+            <p className="text-xs text-gray-500 mt-2">
+              Last login: {new Date(studentData.lastLogin).toLocaleDateString()}
+            </p>
           </div>
         </div>
       </div>
@@ -298,19 +261,12 @@ const StudentProfile = () => {
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Video Activity</h2>
             <div className="flex gap-2">
-              {['7days', '1month'].map((period) => (
-                <button
-                  key={period}
-                  onClick={() => setTimeRange(period)}
-                  className={`px-3 py-1 text-sm rounded-md transition-colors ${
-                    timeRange === period
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  {period === '7days' ? '7 Days' : '1 Month'}
-                </button>
-              ))}
+              <button
+                className="px-3 py-1 text-sm rounded-md transition-colors
+                      bg-blue-600 text-white"
+              >
+                7 Days
+              </button>
             </div>
           </div>
 
@@ -389,7 +345,7 @@ const StudentProfile = () => {
           </div>
 
           {/* Subject Performance */}
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Questions by Subject</h3>
             <div className="space-y-3">
               {subjectPerformance.map((subject, index) => (
@@ -409,7 +365,7 @@ const StudentProfile = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Test History */}
           <div>
@@ -456,49 +412,6 @@ const StudentProfile = () => {
                 </Table.Body>
               </Table>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Performance Insights */}
-      <div className="bg-white rounded-xl shadow-md p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-6">Performance Insights</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-md p-4">
-            <div className="flex items-center gap-3 mb-2">
-              <Icon icon="solar:star-bold" className="text-green-600" width={24} />
-              <span className="font-semibold text-green-800">Strengths</span>
-            </div>
-            <ul className="text-sm text-green-700 space-y-1">
-              <li>• High video completion rate (88%)</li>
-              <li>• Consistent daily study habits</li>
-              <li>• Strong performance in Pathology</li>
-            </ul>
-          </div>
-
-          <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-md p-4">
-            <div className="flex items-center gap-3 mb-2">
-              <Icon icon="solar:target-bold" className="text-yellow-600" width={24} />
-              <span className="font-semibold text-yellow-800">Focus Areas</span>
-            </div>
-            <ul className="text-sm text-yellow-700 space-y-1">
-              <li>• Improve Pharmacology scores</li>
-              <li>• Increase test frequency</li>
-              <li>• Work on time management</li>
-            </ul>
-          </div>
-
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-md p-4">
-            <div className="flex items-center gap-3 mb-2">
-              <Icon icon="solar:graph-up-bold" className="text-blue-600" width={24} />
-              <span className="font-semibold text-blue-800">Progress Trend</span>
-            </div>
-            <ul className="text-sm text-blue-700 space-y-1">
-              <li>• +15% improvement this month</li>
-              <li>• Rank improved by 8 positions</li>
-              <li>• Study time increased 25%</li>
-            </ul>
           </div>
         </div>
       </div>

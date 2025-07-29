@@ -75,7 +75,7 @@ const QBankAnalyticsTable = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-6 bg-white">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
