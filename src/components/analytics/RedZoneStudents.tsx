@@ -2,6 +2,9 @@ import { Icon } from '@iconify/react';
 import { useState, useEffect } from 'react';
 import { Badge } from 'flowbite-react';
 import { useInstitutionalStore } from '../../data/institutional/institutionalStore';
+import { Link } from 'react-router';
+import Popover from '../shared/Popover';
+import { INFO_POPOVER_CONTENTS } from '../../utils/constants';
 
 const RedZoneStudents = () => {
   // Use separate API endpoints for inactive users and low score users
@@ -61,7 +64,13 @@ const RedZoneStudents = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 h-full">
+    <div className="bg-white rounded-xl shadow-md p-6 h-full flex flex-col">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2">
+          <h2 className="text-xl font-semibold text-gray-900">Red Zone Students</h2>
+          <Popover content={INFO_POPOVER_CONTENTS['red-zone-students']} />
+        </div>
+      </div>
       <div className="flex flex-col items-center justify-between mb-6">
         <h2 className="text-xl font-semibold text-gray-900">Non-Performing Students</h2>
         <div className="flex items-center gap-2">
@@ -102,95 +111,108 @@ const RedZoneStudents = () => {
         </div>
       </div>
 
-      {/* Tab Content */}
-      <div className="space-y-4">
-        {activeTab === 'inactivity' && (
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium text-gray-900">Inactive Users</h3>
-              <Badge color="failure" size="sm">
-                {Array.isArray(inactiveUsers.data) ? inactiveUsers.data.length : 0} Users
-              </Badge>
-            </div>
+      {/* Main Content Scrollable */}
+      <div className="flex-1 overflow-auto">
+        {/* Tab Content */}
+        <div className="space-y-4">
+          {activeTab === 'inactivity' && (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-medium text-gray-900 flex items-center gap-2">
+                  Inactive Users
+                  <Popover content="Users who have not logged in for a while" />
+                </h3>
+                <Badge color="failure" size="sm">
+                  {Array.isArray(inactiveUsers.data) ? inactiveUsers.data.length : 0} Users
+                </Badge>
+              </div>
 
-            <div className="space-y-3 max-h-96 md:max-h-[800px] overflow-y-auto">
-              {Array.isArray(inactiveUsers.data) && inactiveUsers.data.length > 0 ? (
-                inactiveUsers.data.map((user, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 bg-red-50 rounded-md border border-red-100"
-                  >
-                    <div className="flex-1">
-                      <div className="font-medium text-gray-900">{user.name}</div>
-                      <div className="text-sm text-gray-600">
-                        Last login:{' '}
-                        {user.last_login ? new Date(user.last_login).toLocaleDateString() : 'Never'}
+              <div className="space-y-3  overflow-y-auto">
+                {Array.isArray(inactiveUsers.data) && inactiveUsers.data.length > 0 ? (
+                  inactiveUsers.data.map((user, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-3 bg-red-50 rounded-md border border-red-100"
+                    >
+                      <div className="flex-1">
+                        <div className="font-medium text-gray-900">{user.name}</div>
+                        <div className="text-sm text-gray-600">
+                          Last login:{' '}
+                          {user.last_login
+                            ? new Date(user.last_login).toLocaleDateString()
+                            : 'Never'}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <Badge
+                          color="failure"
+                          size="sm"
+                          className={getDaysColor(user.days_since_login)}
+                        >
+                          {user.days_since_login} days
+                        </Badge>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <Badge
-                        color="failure"
-                        size="sm"
-                        className={getDaysColor(user.days_since_login)}
-                      >
-                        {user.days_since_login} days
-                      </Badge>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-gray-500 text-center py-4">No inactive users found</div>
-              )}
+                  ))
+                ) : (
+                  <div className="text-gray-500 text-center py-4">No inactive users found</div>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {activeTab === 'lowScores' && (
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium text-gray-900">Low Score Users</h3>
-              <Badge color="yellow" size="sm">
-                {Array.isArray(lowScoreUsers.data) ? lowScoreUsers.data.length : 0} Users
-              </Badge>
-            </div>
+          {activeTab === 'lowScores' && (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-medium text-gray-900 flex items-center gap-2">
+                  Low Score Users
+                  <Popover content="Users who have not logged in for a while" />
+                </h3>
+                <Badge color="yellow" size="sm">
+                  {Array.isArray(lowScoreUsers.data) ? lowScoreUsers.data.length : 0} Users
+                </Badge>
+              </div>
 
-            <div className="space-y-3 max-h-96 md:max-h-[800px] overflow-y-auto">
-              {Array.isArray(lowScoreUsers.data) && lowScoreUsers.data.length > 0 ? (
-                lowScoreUsers.data.map((user, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 bg-orange-50 rounded-md border border-orange-100"
-                  >
-                    <div className="flex-1">
-                      <div className="font-medium text-gray-900">{user.name}</div>
-                      <div className="text-sm text-gray-600">
-                        {user.totalAssessments
-                          ? `${user.totalAssessments} assessments taken`
-                          : 'No assessments taken'}
+              <div className="space-y-3 overflow-y-auto">
+                {Array.isArray(lowScoreUsers.data) && lowScoreUsers.data.length > 0 ? (
+                  lowScoreUsers.data.map((user, index) => (
+                    <Link
+                      key={index}
+                      to={`/profile/student/${user.id}`}
+                      className="flex items-center justify-between p-3 bg-orange-50 rounded-md border border-orange-100 hover:bg-orange-100 transition-colors cursor-pointer no-underline"
+                      style={{ textDecoration: 'none', color: 'inherit' }}
+                    >
+                      <div className="flex-1">
+                        <div className="font-medium text-gray-900">{user.name}</div>
+                        <div className="text-sm text-gray-600">
+                          {user.totalAssessments
+                            ? `${user.totalAssessments} assessments taken`
+                            : 'No assessments taken'}
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-right">
-                      <Badge color="yellow" size="sm">
-                        {user.avgScore}
-                      </Badge>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-gray-500 text-center py-4">No low score users found</div>
-              )}
+                      <div className="text-right">
+                        <Badge color="yellow" size="sm">
+                          {user.avgScore}%
+                        </Badge>
+                      </div>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="text-gray-500 text-center py-4">No low score users found</div>
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
 
-      {/* Quick Actions */}
-      <div className="mt-6 pt-4 border-t border-gray-200">
-        <div className="grid grid-cols-2 gap-2">
-          <button className="px-3 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
-            <Icon icon="solar:download-linear" className="inline mr-1" width={14} />
-            Export List
-          </button>
+        {/* Quick Actions */}
+        <div className="mt-6 pt-4 border-t border-gray-200">
+          <div className="grid grid-cols-2 gap-2">
+            <button className="px-3 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
+              <Icon icon="solar:download-linear" className="inline mr-1" width={14} />
+              Export List
+            </button>
+          </div>
         </div>
       </div>
     </div>

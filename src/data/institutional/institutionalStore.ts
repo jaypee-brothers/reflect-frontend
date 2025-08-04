@@ -585,7 +585,7 @@ export const useInstitutionalStore = create<InstitutionalState>((set, get) => ({
         // Map the API response to our interface format
         const topStudents =
           (response.data as any)?.map((student: any, index: number) => ({
-            id: student.user_id,
+            user_id: student.user_id,
             name: student.name,
             email: student.email,
             avgScore: Math.round(student.average_score), // Round to nearest integer

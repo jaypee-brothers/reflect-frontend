@@ -2,6 +2,8 @@ import { Icon } from '@iconify/react';
 import { useEffect } from 'react';
 import { useInstitutionalStore } from '../../data/institutional/institutionalStore';
 import { Link } from 'react-router';
+import Popover from '../shared/Popover';
+import { INFO_POPOVER_CONTENTS } from '../../utils/constants';
 
 const ContentAnalytics = () => {
   // Get data from the institutional store
@@ -52,7 +54,10 @@ const ContentAnalytics = () => {
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">Content-Wise Performance Analytics</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-xl font-semibold text-gray-900">Content Analytics</h2>
+          <Popover content={INFO_POPOVER_CONTENTS['video-content-analytics']} />
+        </div>
       </div>
 
       {isLoading ? (

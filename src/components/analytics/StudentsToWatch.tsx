@@ -1,6 +1,9 @@
 import { Badge } from 'flowbite-react';
 import { useInstitutionalStore } from '../../data/institutional/institutionalStore';
 import { useEffect } from 'react';
+import { Link } from 'react-router';
+import Popover from '../shared/Popover';
+import { INFO_POPOVER_CONTENTS } from '../../utils/constants';
 
 const StudentsToWatch = () => {
   const { topStudents: topStudentsState, fetchTopStudents } = useInstitutionalStore();
@@ -32,8 +35,9 @@ const StudentsToWatch = () => {
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
       <div className="flex items-center justify-between mb-6">
-        <div>
+        <div className="flex items-center gap-2">
           <h2 className="text-xl font-semibold text-gray-900">Top Performers</h2>
+          <Popover content={INFO_POPOVER_CONTENTS['students-to-watch']} />
         </div>
       </div>
 
@@ -42,9 +46,11 @@ const StudentsToWatch = () => {
         {topStudents.map(
           (student) =>
             student.avgScore && (
-              <div
-                key={student.id || Math.random()}
-                className="relative bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-4 border border-blue-200 hover:shadow-lg transition-all duration-300"
+              <Link
+                key={student.user_id || Math.random()}
+                to={`/profile/student/${student.user_id}`}
+                className="relative bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-4 border border-blue-200 hover:shadow-lg transition-all duration-300 block"
+                title="View Student Profile"
               >
                 {/* Rank Badge */}
                 <div
@@ -87,7 +93,7 @@ const StudentsToWatch = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ),
         )}
       </div>

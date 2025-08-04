@@ -16,7 +16,7 @@
 
 // Base Student interface - used across multiple components
 export interface Student {
-  id: number;
+  user_id: number;
   name: string;
   email: string;
   professor: string;
@@ -273,7 +273,7 @@ export const generateInstitutionalStudents = (): Student[] => {
     const isActive = daysAgo <= 7; // Active if logged in within 7 days
 
     students.push({
-      id: i + 1,
+      user_id: i + 1,
       name,
       email,
       professor: PROFS[Math.floor(Math.random() * PROFS.length)],

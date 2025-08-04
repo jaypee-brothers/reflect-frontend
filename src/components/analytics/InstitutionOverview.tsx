@@ -2,6 +2,8 @@ import { Icon } from '@iconify/react';
 import { useEffect, useState } from 'react';
 import { useInstitutionalStore } from '../../data/institutional/institutionalStore';
 import { getIntensityColor } from '../../data/institutionalConstants';
+import Popover from '../shared/Popover';
+import { INFO_POPOVER_CONTENTS } from '../../utils/constants';
 
 const InstitutionOverview = () => {
   // Pagination state for heatmap
@@ -126,7 +128,10 @@ const InstitutionOverview = () => {
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">Medical Institution Overview</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-xl font-semibold text-gray-900">Medical Institution Overview</h2>
+          <Popover content={INFO_POPOVER_CONTENTS['institution-overview']} />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -142,6 +147,7 @@ const InstitutionOverview = () => {
                 <div className="text-2xl font-bold text-blue-700">
                   {summaryStats.activatedLicenses}
                 </div>
+                <Popover content={INFO_POPOVER_CONTENTS['enrolled-students']} />
               </div>
               <div className="text-sm text-blue-600 font-medium">Enrolled Students</div>
             </div>
@@ -153,6 +159,7 @@ const InstitutionOverview = () => {
                   <Icon icon="solar:login-3-bold" width={20} />
                 </div>
                 <div className="text-2xl font-bold text-green-700">{summaryStats.loginRate}%</div>
+                <Popover content={INFO_POPOVER_CONTENTS['active-students']} />
               </div>
               <div className="text-sm text-green-600 font-medium">Active Students</div>
             </div>
@@ -166,6 +173,7 @@ const InstitutionOverview = () => {
                 <div className="text-2xl font-bold text-purple-700">
                   {summaryStats.avgTimeSpent}
                 </div>
+                <Popover content={INFO_POPOVER_CONTENTS['average-watch-time']} />
               </div>
               <div className="text-sm text-purple-600 font-medium">Average Watch Time</div>
             </div>
@@ -180,6 +188,7 @@ const InstitutionOverview = () => {
                 <div className="text-2xl font-bold text-yellow-800">
                   {summaryStats.avgTestScore}%
                 </div>
+                <Popover content={INFO_POPOVER_CONTENTS['average-test-score']} />
               </div>
               <span className="text-sm font-medium text-yellow-700">Average Test Score</span>
             </div>
@@ -190,6 +199,7 @@ const InstitutionOverview = () => {
                 <div className="text-2xl font-bold text-purple-800">
                   {summaryStats.avgTestAttempts}
                 </div>
+                <Popover content={INFO_POPOVER_CONTENTS['average-test-attempts']} />
               </div>
               <span className="text-sm font-medium text-purple-700">Avg Test Attempts</span>
             </div>
@@ -209,7 +219,10 @@ const InstitutionOverview = () => {
           <div className="bg-gray-50 rounded-md p-4 h-full">
             <div className="flex items-center justify-between mb-4">
               <div className="flex flex-col">
-                <h3 className="text-lg font-semibold text-gray-900">Student Activity Heatmap</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-900">Student Activity Heatmap</h3>
+                  <Popover content={INFO_POPOVER_CONTENTS['student-activity-heatmap']} />
+                </div>
                 <div className="text-sm text-gray-500 mt-1">
                   {getFormattedDateRange(currentWeekOffset)}
                 </div>

@@ -8,7 +8,7 @@ import { useUiStore } from '../../stores/uiStore';
 
 const Dashboard = () => {
   // Get UI state from store
-  const { } = useUiStore();
+  const {} = useUiStore();
   return (
     <div className="space-y-6">
       {/* Display current filters */}
@@ -41,11 +41,15 @@ const Dashboard = () => {
       <QbanksTestInsights />
       {/* Student Engagement & Red Zone in parallel */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        <div className="xl:col-span-2">
-          <StudentEngagement />
+        <div className="xl:col-span-2 h-full flex flex-col">
+          <div className="h-full flex flex-col">
+            <StudentEngagement />
+          </div>
         </div>
-        <div className="xl:col-span-1">
-          <RedZoneStudents />
+        <div className="xl:col-span-1 h-full flex flex-col">
+          <div className="h-full flex flex-col max-h-[1130px] overflow-auto">
+            <RedZoneStudents />
+          </div>
         </div>
       </div>
 

@@ -49,7 +49,7 @@ const Router = [
       { path: '/', exact: true, element: <Dashboard /> },
       //   { path: '/', exact: true, element: <InternalDashboard /> },
       //   { path: '/stakeholder', exact: true, element: <StakeholderDashboard /> },
-      { path: '/profile/student', exact: true, element: <StudentProfile /> },
+      { path: '/profile/student/:userId', exact: true, element: <StudentProfile /> },
       //   { path: '/profile/sales-agent', exact: true, element: <SalesAgentProfile /> },
       //   { path: '/ui/typography', exact: true, element: <Typography /> },
       //   { path: '/ui/table', exact: true, element: <Table /> },
@@ -78,6 +78,6 @@ const Router = [
   },
 ];
 
-const router = createBrowserRouter(Router, { basename: '/dashboard' });
+const router = createBrowserRouter(Router, { basename: '/dashboard/' });
 
 export default router;

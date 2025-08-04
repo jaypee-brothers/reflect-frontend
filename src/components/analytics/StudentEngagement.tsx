@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import { Table, Button } from 'flowbite-react';
 import { useInstitutionalStore } from '../../data/institutional/institutionalStore';
 import { Link } from 'react-router';
+import Popover from '../shared/Popover';
+import { INFO_POPOVER_CONTENTS } from '../../utils/constants';
+import { Pagination } from 'flowbite-react';
 
 interface StudentEngagementProps {
   selectedProfs?: string[];
@@ -91,13 +94,37 @@ const StudentEngagement = ({}: StudentEngagementProps) => {
     })}`;
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="bg-white rounded-xl shadow-md p-6">
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-6"></div>
+          <div className="overflow-x-auto">
+            <div className="h-12 bg-gray-200 rounded mb-2 w-full"></div>
+            {[...Array(studentsPerPage)].map((_, i) => (
+              <div key={i} className="h-10 bg-gray-200 rounded mb-2 w-full"></div>
+            ))}
+          </div>
+          <div className="flex items-center justify-between mt-6">
+            <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+            <div className="flex gap-2">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="h-8 w-8 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
+    <div className="bg-white rounded-xl shadow-md p-6 h-full flex flex-col">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">Student Engagement Metrics</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-xl font-semibold text-gray-900">Student Engagement</h2>
+          <Popover content={INFO_POPOVER_CONTENTS['student-engagement']} />
+        </div>
         <Link to={'/tables/users'}>
           <Button size="sm" color="blue">
             <Icon icon="solar:eye-bold" className="mr-2" width={16} />
@@ -125,7 +152,7 @@ const StudentEngagement = ({}: StudentEngagementProps) => {
       </div> */}
 
       {/* Students Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto flex-1">
         <Table>
           <Table.Head>
             <Table.HeadCell>Student Details</Table.HeadCell>
@@ -139,12 +166,15 @@ const StudentEngagement = ({}: StudentEngagementProps) => {
           </Table.Head>
           <Table.Body className="divide-y">
             {currentStudents.map((student: any) => (
-              <Table.Row key={student.id} className="bg-white">
+              <Table.Row key={student.user_id} className="bg-white">
                 <Table.Cell className="font-medium text-gray-900">
-                  <div className="flex flex-col">
+                  <Link
+                    to={`/profile/student/${student.user_id}`}
+                    className="flex flex-col hover:underline text-blue-700"
+                  >
                     <div>{student.name}</div>
                     <div className="text-bodytext">{student.email}</div>
-                  </div>
+                  </Link>
                 </Table.Cell>
                 <Table.Cell>
                   <span className="bg-purple-100 text-purple-800 text-sm font-medium px-2.5 py-0.5 rounded">
@@ -177,68 +207,34 @@ const StudentEngagement = ({}: StudentEngagementProps) => {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between mt-6">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-6 gap-4">
           <div className="text-sm text-bodytext">
             Showing {(currentPage - 1) * studentsPerPage + 1} to{' '}
             {Math.min(currentPage * studentsPerPage, studentsState.totalCount)} of{' '}
             {studentsState.totalCount} students
           </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          <div className="flex items-center gap-2 ml-auto">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              showIcons
+              layout="navigation"
+              previousLabel=" "
+              nextLabel=" "
+              className="mt-[-8px]"
+            />
+            <select
+              value={currentPage}
+              onChange={(e) => setCurrentPage(Number(e.target.value))}
+              className="min-w-[120px] px-2 py-2 border border-gray-300 rounded-lg text-sm bg-white"
             >
-              Previous
-            </button>
-
-            {/* Windowed Pagination Logic */}
-            {(() => {
-              const pageButtons = [];
-              const window = 2; // pages to show around current
-              const showFirst = 1;
-              const showLast = totalPages;
-
-              for (let i = 1; i <= totalPages; i++) {
-                if (
-                  i === showFirst ||
-                  i === showLast ||
-                  (i >= currentPage - window && i <= currentPage + window)
-                ) {
-                  pageButtons.push(
-                    <button
-                      key={i}
-                      onClick={() => setCurrentPage(i)}
-                      className={`px-3 py-2 text-sm font-medium rounded-lg min-w-[32px] ${
-                        currentPage === i
-                          ? 'text-blue-600 bg-blue-50 border border-blue-300 dark:bg-gray-700 dark:text-white'
-                          : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
-                      }`}
-                    >
-                      {i}
-                    </button>,
-                  );
-                } else if (
-                  (i === currentPage - window - 1 && i > showFirst) ||
-                  (i === currentPage + window + 1 && i < showLast)
-                ) {
-                  pageButtons.push(
-                    <span key={`ellipsis-${i}`} className="px-2 text-gray-400">
-                      ...
-                    </span>,
-                  );
-                }
-              }
-              return pageButtons;
-            })()}
-
-            <button
-              onClick={() => setCurrentPage(Math.min(currentPage + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              Next
-            </button>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  Page {i + 1}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       )}

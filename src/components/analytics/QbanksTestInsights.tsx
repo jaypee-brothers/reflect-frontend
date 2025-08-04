@@ -2,6 +2,8 @@ import { Icon } from '@iconify/react';
 import Chart from 'react-apexcharts';
 import { useState, useEffect } from 'react';
 import { useInstitutionalStore } from '../../data/institutional/institutionalStore';
+import Popover from '../shared/Popover';
+import { INFO_POPOVER_CONTENTS } from '../../utils/constants';
 
 const QbanksTestInsights = () => {
   const { qbankInsights, fetchQbankInsights } = useInstitutionalStore();
@@ -165,21 +167,50 @@ const QbanksTestInsights = () => {
 
   // Test Series summary (horizontal cards below QBank insights)
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="rounded-xl shadow-md bg-white p-6">
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-300 rounded w-1/3 mb-6"></div>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div className="lg:col-span-3">
+              <div className="bg-gray-100 border border-gray-200 rounded-lg shadow-sm p-6">
+                <div className="h-8 bg-gray-200 rounded w-1/2 mb-4"></div>
+                <div className="h-[500px] bg-gray-200 rounded"></div>
+              </div>
+            </div>
+            <div className="lg:col-span-1 space-y-6">
+              <div className="bg-gray-100 border border-gray-200 rounded-lg shadow-sm p-6">
+                <div className="h-6 bg-gray-200 rounded w-1/2 mb-4"></div>
+                <div className="space-y-4">
+                  <div className="h-16 bg-gray-200 rounded"></div>
+                  <div className="h-16 bg-gray-200 rounded"></div>
+                  <div className="h-40 bg-gray-200 rounded"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="rounded-xl shadow-md">
+    <div className="">
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Chart Section */}
         <div className="lg:col-span-3">
-          <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
+          <div className="bg-white border border-gray-200 rounded-md shadow-sm">
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Average Accuracy by Medical Subject
-                </h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Average Accuracy by Medical Subject
+                  </h3>
+                  <Popover content={INFO_POPOVER_CONTENTS['qbank-analytics']} />
+                </div>
                 {/* Color Legend */}
                 <div className="flex items-center gap-4 text-sm">
                   <div className="flex items-center gap-2">
@@ -210,21 +241,21 @@ const QbanksTestInsights = () => {
         </div>
 
         {/* Right Sidebar */}
-        <div className="lg:col-span-1 space-y-6">
-          {/* QBank Summary Statistics */}
-          <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+        <div className="lg:col-span-1 h-full flex flex-col">
+          <div className="bg-white border border-gray-200 rounded-md shadow-sm p-6 h-full flex flex-col">
             <h4 className="text-lg font-semibold text-gray-900 mb-4">QBank Summary</h4>
-            <div className="space-y-4">
-              <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <div className="space-y-4 flex-1 overflow-auto">
+              <div className="bg-green-50 rounded-md p-4 border border-green-200">
                 <div className="flex items-center gap-3 mb-2">
                   <Icon icon="solar:graph-up-bold" className="text-green-500" width={20} />
                   <span className="text-sm font-medium text-green-700">Average Accuracy</span>
+                  <Popover content={INFO_POPOVER_CONTENTS['qbank-average-accuracy']} />
                 </div>
                 <div className="text-2xl font-bold text-green-800">{avgAccuracy}%</div>
                 <div className="text-xs text-green-600 mt-1">Overall performance</div>
               </div>
 
-              <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+              <div className="bg-purple-50 rounded-md p-4 border border-purple-200">
                 <div className="flex items-center gap-3 mb-2">
                   <Icon
                     icon="solar:users-group-two-rounded-bold"
@@ -232,6 +263,7 @@ const QbanksTestInsights = () => {
                     width={20}
                   />
                   <span className="text-sm font-medium text-purple-700">Total Attempts</span>
+                  <Popover content={INFO_POPOVER_CONTENTS['qbank-total-attempts']} />
                 </div>
                 <div className="text-2xl font-bold text-purple-800">
                   {totalAttempts.toLocaleString()}
@@ -240,9 +272,12 @@ const QbanksTestInsights = () => {
               </div>
               {/* Difficulty Distribution */}
               <div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-4 text-center">
-                  Difficulty Distribution
-                </h4>
+                <div className="flex items-center gap-2 justify-center mb-2">
+                  <h4 className="text-lg font-semibold text-gray-900 mb-0 text-center">
+                    Difficulty Distribution
+                  </h4>
+                  <Popover content={INFO_POPOVER_CONTENTS['qbank-difficulty-distribution']} />
+                </div>
                 <Chart
                   options={difficultyChartData.options}
                   series={difficultyChartData.series}

@@ -1,3 +1,32 @@
+export const INFO_POPOVER_CONTENTS = {
+  'qbank-analytics':
+    'This table provides analytics on question banks, including attempts, accuracy, and difficulty distribution.',
+  'test-series-analytics':
+    'This table summarizes test series performance, average scores, and student participation.',
+  'video-content-analytics':
+    'This table shows analytics for video content, including views, duration, and engagement.',
+  'user-analytics': 'This table displays user activity, test completion, scores, and status.',
+  'students-to-watch':
+    'Highlights students with the highest average scores and test participation.',
+  'red-zone-students': 'Shows students who are inactive or have low scores and may need attention.',
+  'institution-overview':
+    'Provides a summary of key institutional metrics such as total students, active users, and overall engagement.',
+  'student-engagement':
+    'Shows student engagement metrics, including videos watched, QBank attempts, and test participation.',
+  'enrolled-students': 'Total number of students enrolled/licensed in the institution.',
+  'active-students': 'Percentage of enrolled students who have logged in recently.',
+  'average-watch-time': 'Average time spent by students watching educational videos.',
+  'average-test-score': 'Average score achieved by students in tests and assessments.',
+  'average-test-attempts': 'Average number of test attempts per student.',
+  'student-activity-heatmap':
+    'Visual representation of student login activity throughout the week.',
+  'qbank-average-accuracy':
+    'The average accuracy percentage across all QBank subjects, indicating overall student performance.',
+  'qbank-total-attempts': 'Total number of QBank questions attempted by students.',
+  'qbank-difficulty-distribution':
+    'Breakdown of QBank questions by difficulty level: Easy, Medium, and Hard.',
+  // Add more as needed for other sections
+};
 // Medical Education Constants for DigiNerve Platform
 
 // 19 MBBS Subjects
@@ -596,6 +625,8 @@ export const TEST_SERIES_DATA: MedicalTestData[] = [
     category: 'Clinical',
   },
 ];
+
+// Info popover content for various tables/sections
 
 // Generate sample data based on filters
 export const generateSubjectData = (timeRange: string) => {
