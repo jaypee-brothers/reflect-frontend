@@ -277,7 +277,10 @@ const Header = ({ selectedTimeRange, setSelectedTimeRange }: HeaderProps) => {
             </div>
             <div className=" px-4 py-4 bg-white flex justify-end">
               <button
-                onClick={closeDateFilter}
+                onClick={() => {
+                  closeDateFilter();
+                  window.location.reload();
+                }}
                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full font-semibold text-base"
               >
                 Apply
