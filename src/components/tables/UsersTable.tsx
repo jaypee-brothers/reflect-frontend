@@ -182,7 +182,7 @@ const UsersTable = () => {
                   </Table.Cell>
                   <Table.Cell>
                     <Badge color={getScoreBadgeColor(item.avg_score)} className="justify-center">
-                      {item.avg_score}%
+                      {item.avg_score}
                     </Badge>
                   </Table.Cell>
                   <Table.Cell>
