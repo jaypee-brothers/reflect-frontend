@@ -134,7 +134,7 @@ const RedZoneStudents = () => {
                       <div className="flex-1">
                         <div className="font-medium text-gray-900">{user.name}</div>
                         <div className="text-sm text-gray-600">
-                          Last login:{' '}
+                          Last Active:{' '}
                           {user.last_login
                             ? new Date(user.last_login).toLocaleDateString()
                             : 'Never'}
