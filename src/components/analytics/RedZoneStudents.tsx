@@ -109,11 +109,12 @@ const RedZoneStudents = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 h-full flex flex-col overflow-x-hidden">
-      <div className="flex items-center justify-between mb-6">
+      <div className=" mb-6">
         <div className="flex items-center gap-2">
           <h2 className="text-xl font-semibold text-gray-900">Red Zone Students</h2>
           <Popover content={INFO_POPOVER_CONTENTS['red-zone-students']} />
         </div>
+        <div className="text-xs ">Time filter has no impact on low performing students</div>
       </div>
       <div className="flex flex-col items-center justify-between mb-6">
         <h2 className="text-xl font-semibold text-gray-900">Non-Performing Students</h2>
