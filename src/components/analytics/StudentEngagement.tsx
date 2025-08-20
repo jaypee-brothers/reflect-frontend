@@ -159,7 +159,7 @@ const StudentEngagement = ({}: StudentEngagementProps) => {
             <Table.HeadCell>Videos Watched </Table.HeadCell>
             <Table.HeadCell>QBank Attempted</Table.HeadCell>
             <Table.HeadCell>Tests Taken </Table.HeadCell>
-            <Table.HeadCell>Last Login</Table.HeadCell>
+            <Table.HeadCell>Last Activity</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
             {currentStudents.map((student: any) => (
