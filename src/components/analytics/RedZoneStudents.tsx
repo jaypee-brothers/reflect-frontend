@@ -165,7 +165,7 @@ const RedZoneStudents = () => {
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-medium text-gray-900 flex items-center gap-2">
                   Inactive Users
-                  <Popover content="Users who have not logged in for a while" />
+                  <Popover content="List of users that are inactive for more than the selected time range" />
                 </h3>
               </div>
 
@@ -208,7 +208,7 @@ const RedZoneStudents = () => {
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-medium text-gray-900 flex items-center gap-2">
                   Low Score Users
-                  <Popover content="List of 10 lowest scoring students in the selected college" />
+                  <Popover content="List of 10 lowest scoring students in the selected college for grand tests." />
                 </h3>
                 <Badge color="yellow" size="sm">
                   {Array.isArray(lowScoreUsers.data) ? lowScoreUsers.data.length : 0} Users
