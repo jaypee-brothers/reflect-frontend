@@ -18,6 +18,50 @@ const RedZoneStudents = () => {
     fetchLowScoreUsers();
   }, [fetchInactiveUsers, fetchLowScoreUsers]);
 
+  // Utility to convert array of users to CSV
+  const exportToCSV = () => {
+    let data = [];
+    let filename = '';
+    if (activeTab === 'inactivity') {
+      data = Array.isArray(inactiveUsers.data) ? inactiveUsers.data : [];
+      filename = 'inactive_users.csv';
+    } else {
+      data = Array.isArray(lowScoreUsers.data) ? lowScoreUsers.data : [];
+      filename = 'low_score_users.csv';
+    }
+    if (!data.length) return;
+
+    let csv = '';
+    if (activeTab === 'inactivity') {
+      csv += 'Name,Last Activity,Days Since Last Activity\n';
+      csv += data
+        .map((user: any) =>
+          [
+            `"${user.name ?? ''}"`,
+            user.last_login ? new Date(user.last_login).toLocaleDateString() : 'Never',
+            user.days_since_login ?? '',
+          ].join(','),
+        )
+        .join('\n');
+    } else {
+      csv += 'Name,Assessments Taken,Average Score\n';
+      csv += data
+        .map((user: any) =>
+          [`"${user.name ?? ''}"`, user.totalAssessments ?? 0, user.avgScore ?? 0].join(','),
+        )
+        .join('\n');
+    }
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
   // Get current tab data with safe array fallback
   const currentTabData = activeTab === 'inactivity' ? inactiveUsers : lowScoreUsers;
   // Handle loading state
@@ -64,7 +108,7 @@ const RedZoneStudents = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 h-full flex flex-col">
+    <div className="bg-white rounded-xl shadow-md p-6 h-full flex flex-col overflow-x-hidden">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <h2 className="text-xl font-semibold text-gray-900">Red Zone Students</h2>
@@ -112,7 +156,7 @@ const RedZoneStudents = () => {
       </div>
 
       {/* Main Content Scrollable */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden">
         {/* Tab Content */}
         <div className="space-y-4">
           {activeTab === 'inactivity' && (
@@ -203,13 +247,22 @@ const RedZoneStudents = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="mt-6 pt-4 border-t border-gray-200">
-          <div className="grid grid-cols-2 gap-2">
-            <button className="px-3 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
-              <Icon icon="solar:download-linear" className="inline mr-1" width={14} />
-              Export List
-            </button>
-          </div>
+      </div>
+      <div className="mt-6 pt-4 border-t border-gray-200">
+        <div className="grid grid-cols-1 gap-2">
+          <button
+            className="px-3 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+            onClick={exportToCSV}
+            disabled={
+              (activeTab === 'inactivity' &&
+                (!inactiveUsers.data || inactiveUsers.data.length === 0)) ||
+              (activeTab === 'lowScores' &&
+                (!lowScoreUsers.data || lowScoreUsers.data.length === 0))
+            }
+          >
+            <Icon icon="solar:download-linear" className="inline mr-1" width={14} />
+            Export List
+          </button>
         </div>
       </div>
     </div>
