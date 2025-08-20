@@ -122,9 +122,6 @@ const RedZoneStudents = () => {
                   Inactive Users
                   <Popover content="Users who have not logged in for a while" />
                 </h3>
-                <Badge color="failure" size="sm">
-                  {Array.isArray(inactiveUsers.data) ? inactiveUsers.data.length : 0} Users
-                </Badge>
               </div>
 
               <div className="space-y-3  overflow-y-auto">
