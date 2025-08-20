@@ -244,7 +244,7 @@ const QbanksTestInsights = () => {
         <div className="lg:col-span-1 h-full flex flex-col">
           <div className="bg-white border border-gray-200 rounded-md shadow-sm p-6 h-full flex flex-col">
             <h4 className="text-lg font-semibold text-gray-900 mb-4">QBank Summary</h4>
-            <div className="space-y-4 flex-1 overflow-auto">
+            <div className="space-y-4 flex-1">
               <div className="bg-green-50 rounded-md p-4 border border-green-200">
                 <div className="flex items-center gap-3 mb-2">
                   <Icon icon="solar:graph-up-bold" className="text-green-500" width={20} />
@@ -271,7 +271,7 @@ const QbanksTestInsights = () => {
                 <div className="text-xs text-purple-600 mt-1">Student attempts</div>
               </div>
               {/* Difficulty Distribution */}
-              <div>
+              {/* <div>
                 <div className="flex items-center gap-2 justify-center mb-2">
                   <h4 className="text-lg font-semibold text-gray-900 mb-0 text-center">
                     Difficulty Distribution
@@ -284,7 +284,7 @@ const QbanksTestInsights = () => {
                   type="donut"
                   height={250}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
