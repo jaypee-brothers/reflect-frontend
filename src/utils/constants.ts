@@ -6,8 +6,7 @@ export const INFO_POPOVER_CONTENTS = {
   'video-content-analytics':
     'This table shows analytics for video content, including views, duration, and engagement.',
   'user-analytics': 'This table displays user activity, test completion, scores, and status.',
-  'students-to-watch':
-    'Highlights students with the highest average scores and test participation.',
+  'students-to-watch': 'Top 5 performers based on the Avg score in grand tests.',
   'red-zone-students': 'Shows students who are inactive or have low scores and may need attention.',
   'institution-overview':
     'Provides a summary of key institutional metrics such as total students, active users, and overall engagement.',
