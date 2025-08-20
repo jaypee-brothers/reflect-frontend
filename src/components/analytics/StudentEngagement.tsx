@@ -156,11 +156,9 @@ const StudentEngagement = ({}: StudentEngagementProps) => {
         <Table>
           <Table.Head>
             <Table.HeadCell>Student Details</Table.HeadCell>
-            <Table.HeadCell>Videos Watched ({totalVideosWatched.toLocaleString()})</Table.HeadCell>
-            <Table.HeadCell>
-              QBank Attempted ({totalQbankAttempted.toLocaleString()})
-            </Table.HeadCell>
-            <Table.HeadCell>Tests Taken ({totalTestsTaken})</Table.HeadCell>
+            <Table.HeadCell>Videos Watched </Table.HeadCell>
+            <Table.HeadCell>QBank Attempted</Table.HeadCell>
+            <Table.HeadCell>Tests Taken </Table.HeadCell>
             <Table.HeadCell>Signup Date</Table.HeadCell>
             <Table.HeadCell>Last Login</Table.HeadCell>
           </Table.Head>
