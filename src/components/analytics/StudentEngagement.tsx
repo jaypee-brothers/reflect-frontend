@@ -156,13 +156,10 @@ const StudentEngagement = ({}: StudentEngagementProps) => {
         <Table>
           <Table.Head>
             <Table.HeadCell>Student Details</Table.HeadCell>
-            <Table.HeadCell>Videos Watched ({totalVideosWatched.toLocaleString()})</Table.HeadCell>
-            <Table.HeadCell>
-              QBank Attempted ({totalQbankAttempted.toLocaleString()})
-            </Table.HeadCell>
-            <Table.HeadCell>Tests Taken ({totalTestsTaken})</Table.HeadCell>
-            <Table.HeadCell>Signup Date</Table.HeadCell>
-            <Table.HeadCell>Last Login</Table.HeadCell>
+            <Table.HeadCell>Videos Watched </Table.HeadCell>
+            <Table.HeadCell>QBank Attempted</Table.HeadCell>
+            <Table.HeadCell>Tests Taken </Table.HeadCell>
+            <Table.HeadCell>Last Activity</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
             {currentStudents.map((student: any) => (
@@ -189,11 +186,6 @@ const StudentEngagement = ({}: StudentEngagementProps) => {
                 <Table.Cell>
                   <span className="bg-orange-100 text-orange-800 text-sm font-medium px-2.5 py-0.5 rounded">
                     {student.testsTaken}
-                  </span>
-                </Table.Cell>
-                <Table.Cell>
-                  <span className="text-gray-600 text-sm font-medium py-0.5 rounded">
-                    {formatLastLogin(student.SignUp)}
                   </span>
                 </Table.Cell>
                 <Table.Cell className="text-gray-600">
