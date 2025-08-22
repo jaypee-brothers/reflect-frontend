@@ -190,7 +190,7 @@ const InstitutionOverview = () => {
                 </div>
                 <Popover content={INFO_POPOVER_CONTENTS['average-test-score']} />
               </div>
-              <span className="text-sm font-medium text-yellow-700">Average Test Score</span>
+              <span className="text-sm font-medium text-yellow-700">Average Test Accuracy</span>
             </div>
 
             <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-md p-4 border">
