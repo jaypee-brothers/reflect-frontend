@@ -41,18 +41,18 @@ const StudentEngagement = ({}: StudentEngagementProps) => {
   //   console.log('StudentEngagement', students);
 
   // Calculate totals for display in headers
-  const totalVideosWatched = students.reduce(
-    (sum: number, student: any) => sum + student.videosWatched,
-    0,
-  );
-  const totalQbankAttempted = students.reduce(
-    (sum: number, student: any) => sum + student.qbankAttempted,
-    0,
-  );
-  const totalTestsTaken = students.reduce(
-    (sum: number, student: any) => sum + student.testsTaken,
-    0,
-  );
+  //   const totalVideosWatched = students.reduce(
+  //     (sum: number, student: any) => sum + student.videosWatched,
+  //     0,
+  //   );
+  //   const totalQbankAttempted = students.reduce(
+  //     (sum: number, student: any) => sum + student.qbankAttempted,
+  //     0,
+  //   );
+  //   const totalTestsTaken = students.reduce(
+  //     (sum: number, student: any) => sum + student.testsTaken,
+  //     0,
+  //   );
 
   // Since API now handles filtering server-side, we use the data directly
   const currentStudents = students;
