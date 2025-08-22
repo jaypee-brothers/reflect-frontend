@@ -136,30 +136,31 @@ const QbanksTestInsights = () => {
   };
 
   // Donut chart for test difficulty distribution
-  const difficultyChartData = {
-    series: [
-      qbankSummary?.difficulty_distribution?.easy || 0,
-      qbankSummary?.difficulty_distribution?.medium || 0,
-      qbankSummary?.difficulty_distribution?.hard || 0,
-    ],
-    options: {
-      chart: {
-        type: 'donut' as const,
-        height: 250,
-      },
-      labels: ['Easy', 'Medium', 'Hard'],
-      colors: ['#10B981', '#F59E0B', '#EF4444'],
-      legend: {
-        position: 'bottom' as const,
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function (val: number) {
-          return Math.round(val) + '%';
-        },
-      },
-    },
-  };
+
+  //   const difficultyChartData = {
+  //     series: [
+  //       qbankSummary?.difficulty_distribution?.easy || 0,
+  //       qbankSummary?.difficulty_distribution?.medium || 0,
+  //       qbankSummary?.difficulty_distribution?.hard || 0,
+  //     ],
+  //     options: {
+  //       chart: {
+  //         type: 'donut' as const,
+  //         height: 250,
+  //       },
+  //       labels: ['Easy', 'Medium', 'Hard'],
+  //       colors: ['#10B981', '#F59E0B', '#EF4444'],
+  //       legend: {
+  //         position: 'bottom' as const,
+  //       },
+  //       dataLabels: {
+  //         enabled: true,
+  //         formatter: function (val: number) {
+  //           return Math.round(val) + '%';
+  //         },
+  //       },
+  //     },
+  //   };
 
   // Calculate summary statistics for QBank
   const totalAttempts = qbankSummary?.total_attempts || 0;
