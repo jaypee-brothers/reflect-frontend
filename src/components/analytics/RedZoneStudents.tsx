@@ -68,7 +68,7 @@ const RedZoneStudents = () => {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <h2 className="text-xl font-semibold text-gray-900">Red Zone Students</h2>
-          <Popover content={INFO_POPOVER_CONTENTS['red-zone-students']} />
+          <Popover content={INFO_POPOVER_CONTENTS['red-zone-students']} align="center" />
         </div>
       </div>
       <div className="flex flex-col items-center justify-between mb-6">
