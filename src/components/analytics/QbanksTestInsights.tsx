@@ -250,7 +250,7 @@ const QbanksTestInsights = () => {
                 <div className="flex items-center gap-3 mb-2">
                   <Icon icon="solar:graph-up-bold" className="text-green-500" width={20} />
                   <span className="text-sm font-medium text-green-700">Average Accuracy</span>
-                  <Popover content={INFO_POPOVER_CONTENTS['qbank-average-accuracy']} />
+                  <Popover content={INFO_POPOVER_CONTENTS['qbank-average-accuracy']} align="end" />
                 </div>
                 <div className="text-2xl font-bold text-green-800">{avgAccuracy}%</div>
                 <div className="text-xs text-green-600 mt-1">Overall performance</div>
@@ -264,7 +264,7 @@ const QbanksTestInsights = () => {
                     width={20}
                   />
                   <span className="text-sm font-medium text-purple-700">Total Attempts</span>
-                  <Popover content={INFO_POPOVER_CONTENTS['qbank-total-attempts']} />
+                  <Popover content={INFO_POPOVER_CONTENTS['qbank-total-attempts']} align="end" />
                 </div>
                 <div className="text-2xl font-bold text-purple-800">
                   {totalAttempts.toLocaleString()}
@@ -277,7 +277,10 @@ const QbanksTestInsights = () => {
                   <h4 className="text-lg font-semibold text-gray-900 mb-0 text-center">
                     Difficulty Distribution
                   </h4>
-                  <Popover content={INFO_POPOVER_CONTENTS['qbank-difficulty-distribution']} />
+                  <Popover
+                    content={INFO_POPOVER_CONTENTS['qbank-difficulty-distribution']}
+                    align="end"
+                  />
                 </div>
                 <Chart
                   options={difficultyChartData.options}
