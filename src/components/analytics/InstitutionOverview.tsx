@@ -273,7 +273,7 @@ const InstitutionOverview = () => {
                         className={`w-8 h-8 rounded ${getIntensityColor(
                           day.intensity,
                         )} border border-gray-200`}
-                        title={`${day.day}, ${day.date}: ${day.loginCount ?? 0} logins`}
+                        title={`${day.day}, ${day.date}: ${day.loginCount ?? 0} activities`}
                       />
                     ),
                   )}
