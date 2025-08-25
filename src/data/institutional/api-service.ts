@@ -170,6 +170,25 @@ class InstitutionalAPIService {
   async getInactiveUsers(params?: PaginationParams & { min_inactive_days?: number }) {
     const collegeId = this.getCollegeId();
     const queryParams = this.buildQueryParams({ ...params, college_id: collegeId });
+
+    // If min_inactive_days wasn't explicitly provided, compute it from start_date and end_date
+    try {
+      const sd = queryParams.start_date;
+      const ed = queryParams.end_date;
+
+      if ((params == null || params.min_inactive_days === undefined) && sd && ed) {
+        const start = new Date(sd);
+        const end = new Date(ed);
+        const diffDays = Math.max(
+          0,
+          Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)),
+        );
+        queryParams.min_inactive_days = diffDays;
+      }
+    } catch (err) {
+      console.warn('Failed to compute min_inactive_days from dates:', err);
+    }
+
     return this.apiCall('/inactive-users/', queryParams, 'GET');
   }
 

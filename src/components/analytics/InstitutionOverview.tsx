@@ -190,7 +190,7 @@ const InstitutionOverview = () => {
                 </div>
                 <Popover content={INFO_POPOVER_CONTENTS['average-test-score']} />
               </div>
-              <span className="text-sm font-medium text-yellow-700">Average Test Score</span>
+              <span className="text-sm font-medium text-yellow-700">Average Test Accuracy</span>
             </div>
 
             <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-md p-4 border">
@@ -273,7 +273,7 @@ const InstitutionOverview = () => {
                         className={`w-8 h-8 rounded ${getIntensityColor(
                           day.intensity,
                         )} border border-gray-200`}
-                        title={`${day.day}, ${day.date}: ${day.loginCount ?? 0} logins`}
+                        title={`${day.day}, ${day.date}: ${day.loginCount ?? 0} activities`}
                       />
                     ),
                   )}
