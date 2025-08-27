@@ -118,7 +118,8 @@ const StudentProfile = () => {
       // ss
     }
     if (!totalSecs) return 0;
-    return Math.round((video.watched_secs / totalSecs) * 100);
+    const percent = Math.round((video.watched_secs / totalSecs) * 100);
+    return Math.min(100, percent);
   };
   const getWatchedColor = (percent: number) => {
     if (percent >= 90) return 'green';
