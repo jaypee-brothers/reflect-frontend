@@ -21,7 +21,7 @@ export const INFO_POPOVER_CONTENTS = {
     'Visual representation of student login activity throughout the week.',
   'qbank-average-accuracy':
     'The average accuracy percentage across all QBank subjects, indicating overall student performance.',
-  'qbank-total-attempts': 'Total number of QBank questions attempted by students.',
+  'qbank-total-attempts': 'Total QBank attempts by the student.',
   'qbank-difficulty-distribution':
     'Breakdown of QBank questions by difficulty level: Easy, Medium, and Hard.',
   // Add more as needed for other sections
